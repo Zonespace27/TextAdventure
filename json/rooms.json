@@ -1,0 +1,11 @@
+{
+    "start": {
+        "desc": "Description",
+        "objects": [
+            "debug_item"
+        ],
+        "verbs": [
+
+        ]
+    }
+}
