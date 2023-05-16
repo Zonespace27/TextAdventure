@@ -4,6 +4,7 @@ from events import EVENT_VERB_EAT
 from ._verb import Verb 
 
 class VerbEat(Verb):
+    verb_id = "verb_eat"  
 
     def __init__(self) -> None:
         super().__init__()

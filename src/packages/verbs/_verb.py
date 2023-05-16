@@ -4,6 +4,8 @@ class Verb(BaseObj):
     """
     Verbs are singleton objects that are meant to be used to genericize actions that can be done to the object.
     """
+    # Custom ID of this verb
+    verb_id: str = "base"
 
     def __init__(self) -> None:
         super().__init__()
@@ -12,8 +14,6 @@ class Verb(BaseObj):
         self.action_strings: list[str] = []
         # What args this is expecting
         self.expected_args: list[BaseObj] = []
-        # Custom ID of this verb
-        self.verb_id: str = "base"
         # If this verb should fail if not provided with the correct arg count
         self.requires_all_args: bool = True
     
