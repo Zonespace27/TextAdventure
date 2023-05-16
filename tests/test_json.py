@@ -5,6 +5,7 @@ class TestClass():
         found_ids: list[str] = []
         file_locs: list[str] = [ # Once i've got a concrete file structure down, i'll convert this to something better
             'json/objects.json',
+            'json/phys_objects.json'
         ]
         for file in file_locs:
             data = load(open(file))

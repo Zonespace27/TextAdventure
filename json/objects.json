@@ -12,7 +12,7 @@
             }
         }
     },
-    "debug_item": {
+    "debug_item_2": {
         "name": "foo2",
         "desc": "bar2",
         "verbs": [
