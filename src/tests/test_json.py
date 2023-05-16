@@ -1,7 +1,7 @@
 from json import load
-from src.packages.verbs import *
-from src.packages.verbs._verb import Verb
-from src.globals import get_subclasses_recursive
+from ..packages.verbs import *
+from ..packages.verbs._verb import Verb
+from ..globals import get_subclasses_recursive
 
 class TestClass():
     object_file_locs: list[str] = [ # Once i've got a concrete file structure down, i'll convert this to something better
