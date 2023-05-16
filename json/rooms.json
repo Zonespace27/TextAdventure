@@ -2,7 +2,8 @@
     "start": {
         "desc": "Description",
         "objects": [
-            "debug_item"
+            "debug_item",
+            "debug_item_2"
         ],
         "verbs": [
 

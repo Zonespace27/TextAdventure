@@ -1,15 +1,47 @@
-class BaseObj():
+from typing import TYPE_CHECKING
+import globals
+
+if TYPE_CHECKING:
+    from packages.components._component import Component
+    from packages.verbs._verb import Verb
+
+class BaseObj(object):
     """
     The basis of everything, to allow for events to work. If it's an object that will be *inside* a room, use PhysObj instead of this.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, object_id: str = "") -> None:
         # Equivalent to signal_procs
         self.event_callbacks = {}
         # Equivalent to comp_lookup
         self.object_lookup = {}
+        # A dict of class : component reference
+        self.object_components: dict[type["Component"], "Component"] = {}
+        # What verbs have this physobj as a source, based off of string ID
+        self.source_verbs: list["Verb"] = []
 
-    def register_event(self, target, event_type, func_to_callback, override):
+        if object_id:
+            self.source_verbs = globals.object_id_data[object_id]["verbs"]
+
+            for component_id in list(globals.object_id_data[object_id]["components"].keys()):
+                component_id: str
+                component: type["Component"] = globals.component_id_to_class[component_id]
+                #component(globals.object_id_data[object_id]["components"][component_id])
+                self.add_component(globals.component_id_to_class[component_id], list(globals.object_id_data[object_id]["components"].values()))
+
+    
+    def dispose(self):
+        """
+        Used for reference cleanup PRIOR to deletion being called.
+        The reason this is used over __del__ is that del is the destructor for *after* the ref count has hit 0
+        """
+        for component in list(self.object_components.values()):
+            globals.qdel(component)
+
+        self.source_verbs = []
+
+
+    def register_event(self, target: "BaseObj", event_type: str, func_to_callback, override = False): #Some time, make sure that an object with signals elsewhere being deleted doesn't cause fuckery
         try:
             target_callbacks = self.event_callbacks[target]
 
@@ -44,7 +76,8 @@ class BaseObj():
         
         target.object_lookup = lookup
     
-    def unregister_event(self, target, event_or_events):
+
+    def unregister_event(self, target: "BaseObj", event_or_events):
         lookup: dict = target.object_lookup
         if not (self.event_callbacks or self.event_callbacks[target] or lookup):
             return
@@ -84,12 +117,14 @@ class BaseObj():
                 
                 else:
                     lookup[event].remove(self)
-        
-        self.event_callbacks[target].pop(event_or_events)
+
+        for event in event_or_events:
+            self.event_callbacks[target].pop(event)
         if not len(self.event_callbacks[target]):
             self.event_callbacks.pop(target)
 
-    def _send_event(self, event, *args):
+
+    def _send_event(self, event: str, *args):
         target = self.object_lookup[event]
         
         if not isinstance(target, list): 
@@ -104,8 +139,6 @@ class BaseObj():
             arglist = []
             for i in range(len(args[0])):
                 arglist.append(args[0][i])
-            
-            print(str(*arglist))
             
             return method_to_call(*arglist)
 
@@ -124,8 +157,30 @@ class BaseObj():
             
             return method_to_call(*args)
     
-    def send_event(self, target, event, *args):
-        if not (target.object_lookup or (event in list(target.object_lookup.keys()))):
+
+    def send_event(self, target: "BaseObj", event: str, *args):
+        if not (target.object_lookup):
+            return
+        
+        if not (event in list(target.object_lookup.keys())):
             return
         
         target._send_event(event, [target, *args])
+
+
+    def add_component(self, component_class: type["Component"], arg_dict: dict[str]):
+        if isinstance(arg_dict, list): # For the inherent components that are a list by default
+            arg_dict = arg_dict[0]
+
+        component_class(arg_dict).attempt_attachment(self)
+
+
+    def get_component(self, component_class: type["Component"]) -> "Component":
+        if component_class not in self.object_components:
+            return None
+
+        return self.object_components[component_class]
+
+    
+    def remove_component(self, component_class: type["Component"]):
+        globals.qdel(self.object_components[component_class]) # TODO: Make sure this cleans up the key

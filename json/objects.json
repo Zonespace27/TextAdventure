@@ -1,6 +1,21 @@
 {
     "debug_item": {
         "name": "foo",
-        "desc": "bar"
+        "desc": "bar",
+        "verbs": [
+        ],
+        "components": {
+            "component_edible": {
+                "total_bites": 3,
+                "eat_message": "You take a bite of that foo.",
+                "final_eat_message": "You finish off that foo."
+            }
+        }
+    },
+    "debug_item_2": {
+        "name": "foo2",
+        "desc": "bar2",
+        "verbs": [
+        ]
     }
 }
