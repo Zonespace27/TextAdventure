@@ -9,7 +9,7 @@ class TestClass():
         found_verb_names: list[str] = [] # Verb names found in the _verb_names.py file
         file = open('src/packages/verbs/_verb_names.py', "r")
         for line in file.readlines():
-            result = search(r"VERB_[A-Z_]+ = ([a-z_]+)", line)
+            result = search(r"VERB_[A-Z_]+ = \"([a-z_]+)\"", line)
             if not result.group(1):
                 continue
 
