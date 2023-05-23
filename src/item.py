@@ -1,8 +1,17 @@
 import object
 from packages.components.edible import ComponentEdible
+import globals
+from json import load
 
 class Item(object.Object):
-    pass
+    def __init__(self) -> None:
+        self.current_room = None
+        self.object_components = {}
+
+    def foobar(self):
+        print("hello")
+        globals.qdel(self)
+        return "hi"
 
 
 
@@ -23,4 +32,15 @@ def test_2():
     print(str(ComponentEdible.id))
     print(str(ComponentEdible().id))
 
-test_2()
+def test_3():
+    globals.initialize_globals()
+    print(Item().foobar())
+
+def test_4():
+    file = load(open('json/phys_objects.json'))
+    bar = None
+    for id in file:
+        bar = file[id]["foo"]
+        print(bar)
+
+test_4()

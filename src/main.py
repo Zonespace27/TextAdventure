@@ -2,6 +2,8 @@ from packages.components import *
 from packages.components._component import Component
 from packages.verbs import *
 import packages.verbs._verb as verbs
+from packages.elements import *
+from packages.elements._element import Element
 from json import load
 import room
 import globals
@@ -10,7 +12,8 @@ import player
 def genesis():
     globals.initialize_globals() # Must be first
     assemble_verbs() # Must be before object init
-    assemble_components() # Must be done before object init
+    assemble_components() # Must be before object init
+    assemble_elements() # Must be before object init
     assemble_all_objects() # Must be before room init
     assemble_room_ids() # Must be after object init
     init_player() # Must be last
@@ -20,7 +23,7 @@ def genesis():
 def assemble_all_objects():
     file_locs: list[str] = [
         'json/objects.json',
-        #'json/phys_objects.json',
+        'json/doors.json',
     ]
     for file in file_locs:
         data = load(open(file))
@@ -37,8 +40,8 @@ def assemble_all_objects():
                 data[object_id]["verbs"] = []
             if "components" not in data[object_id]:
                 data[object_id]["components"] = {}
-            if "player_visible" not in data[object_id]:
-                data[object_id]["player_visible"] = True
+            if "elements" not in data[object_id]:
+                data[object_id]["elements"] = []
 
             verb_list: list[verbs.Verb] = []
             
@@ -51,7 +54,7 @@ def assemble_all_objects():
                 "desc": data[object_id]["desc"],
                 "verbs": verb_list,
                 "components": data[object_id]["components"],
-                "player_visible": data[object_id]["player_visible"],
+                "elements": data[object_id]["elements"]
             }
 
 
@@ -64,7 +67,19 @@ def assemble_verbs():
 def assemble_room_ids():
     data = load(open('json/rooms.json'))
     for room_id in data:
-        globals.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]["objects"], data[room_id]["verbs"])
+        if not ("desc" in data[room_id]):
+            data[room_id]["desc"] = ""
+        if not ("objects" in data[room_id]):
+            data[room_id]["objects"]: list[str] = []
+        if not ("verbs" in data[room_id]):
+            data[room_id]["verbs"]: list[str] = []
+        if not ("components" in data[room_id]):
+            data[room_id]["components"]: dict[str, dict[str]] = {}
+        if not ("elements" in data[room_id]):
+            data[room_id]["elements"]: list[str] = []
+
+
+        globals.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
 
 
 def assemble_components():
@@ -75,8 +90,14 @@ def assemble_components():
 
 def init_player():
     globals.player_ref = player.Player()
-    globals.roomid_to_room["start"].add_to_room(globals.player_ref)
+    globals.roomid_to_room["bedroom"].add_to_room(globals.player_ref)
     globals.player_ref.begin_taking_input()
+
+
+def assemble_elements():
+    for subclass in globals.get_subclasses_recursive(Element):
+        new_subclass: Element = subclass()
+        globals.element_id_to_ref[new_subclass.id] = new_subclass
 
 
 if __name__ == "__main__":

@@ -22,12 +22,20 @@ class Verb(BaseObj):
             return True
         return False
     
-    def argument_is_valid(self):
-        pass
 
+    def argument_is_valid(self, argument, index):
+        return True
+    
+
+    def can_execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []) -> bool:
+        if self.requires_all_args and not (len(arguments) == len(self.expected_args)):
+            return False
+        
+        return True
+    
 
     def try_execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []) -> bool:
-        if self.requires_all_args and not (len(arguments) == len(self.expected_args)):
+        if not self.can_execute_verb(owning_obj, arguments):
             return False
         
         self.execute_verb(owning_obj, arguments)
@@ -35,4 +43,11 @@ class Verb(BaseObj):
     
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []):
-        pass
+        return
+
+
+    def can_attach_to(self, object_to_attach: BaseObj):
+        """
+        Function to decide if this verb can be attached to object_to_attach.
+        """
+        return True

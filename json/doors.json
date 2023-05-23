@@ -1,0 +1,42 @@
+{
+    "door_debug_to_debug2": {
+        "name": "door",
+        "desc": "openable door",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "debug2"
+            }
+        }
+    },
+    "door_debug2_to_debug": {
+        "name": "door2",
+        "desc": "openable door2",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "debug"
+            }
+        }
+    },
+    "door_bedroom_to_bathroom": {
+        "name": "door",
+        "desc": "You see an open door, with some sort of bathroom inside that room.",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "bathroom"
+            }
+        }
+    },
+    "door_bathroom_to_bedroom": {
+        "name": "door",
+        "desc": "You see an open door, with some sort of bedroom inside that room.",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "bedroom"
+            }
+        }
+    }
+}

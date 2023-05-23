@@ -3,6 +3,7 @@ from base_obj import BaseObj
 from physical_obj import PhysObj
 from events import EVENT_VERB_EAT
 from globals import qdel
+from ..verbs._verb_names import VERB_EAT
 
 class ComponentEdible(Component):
     id = "component_edible"
@@ -30,7 +31,7 @@ class ComponentEdible(Component):
             return False
 
         self.register_event(object_to_attach, EVENT_VERB_EAT, self.on_eat)
-        object_to_attach.add_verb("verb_eat")
+        object_to_attach.add_verb(VERB_EAT)
     
 
     def detach_from_parent(self):
@@ -38,7 +39,7 @@ class ComponentEdible(Component):
 
         if phys_parent:
             self.unregister_event(phys_parent, EVENT_VERB_EAT)
-            phys_parent.remove_verb("verb_eat")
+            phys_parent.remove_verb(VERB_EAT)
 
 
         return super().detach_from_parent()

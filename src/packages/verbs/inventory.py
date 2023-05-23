@@ -1,21 +1,19 @@
-from physical_obj import PhysObj
 from base_obj import BaseObj
-from events import EVENT_VERB_EAT
-from ._verb import Verb
-from ._verb_names import VERB_EAT
+from events import EVENT_VERB_CHECK_INVENTORY
+from ._verb import Verb 
+from ._verb_names import VERB_CHECK_INVENTORY
 
-class VerbEat(Verb):
-    verb_id = VERB_EAT  
+class VerbCheckInventory(Verb):
+    verb_id = VERB_CHECK_INVENTORY
 
     def __init__(self) -> None:
         super().__init__()
-        self.expected_args = [ 
-            PhysObj,
-        ]
+        self.expected_args = []
         self.action_strings = [
-            "eat",
-            "munch",
-            "bite",
+            "check inventory",
+            "check backpack",
+            "look backpack",
+            "look_inventory"
         ]
     
 
@@ -23,11 +21,8 @@ class VerbEat(Verb):
         if len(arguments) < len(self.expected_args):
             return False
         
-        if not (owning_obj == arguments[0]):
-            return False
-
         return super().can_execute_verb(owning_obj, arguments)
         
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []):
-        self.send_event(owning_obj, EVENT_VERB_EAT)
+        self.send_event(owning_obj, EVENT_VERB_CHECK_INVENTORY)

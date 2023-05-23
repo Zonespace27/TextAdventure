@@ -1,0 +1,6 @@
+VERB_EAT = "verb_eat"
+VERB_CHECK_INVENTORY = "verb_check_inventory"
+VERB_PICKUP = "verb_pickup"
+VERB_LOOK_AROUND = "verb_look_around"
+VERB_OPEN_DOOR = "verb_open_door"
+VERB_DROP = "verb_drop"

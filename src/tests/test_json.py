@@ -6,8 +6,9 @@ from globals import get_subclasses_recursive
 class TestClass():
     object_file_locs: list[str] = [ # Once i've got a concrete file structure down, i'll convert this to something better
         'json/objects.json',
+        'json/doors.json',
     ]
-    room_file_locs: list[str] = [
+    room_file_locs: list[str] = [ # Same here
         'json/rooms.json',
     ]
 

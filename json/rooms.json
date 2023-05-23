@@ -1,12 +1,54 @@
 {
-    "start": {
+    "debug": {
         "desc": "Description",
         "objects": [
             "debug_item",
-            "debug_item_2"
+            "debug_item_2",
+            "door_debug_to_debug2"
         ],
-        "verbs": [
-
-        ]
+        "verbs": [],
+        "components": {}
+    },
+    "debug2": {
+        "desc": "Description 2",
+        "objects": [
+            "debug_item",
+            "debug_item_2",
+            "door_debug2_to_debug"
+        ],
+        "verbs": [],
+        "components": {
+            "component_first_enter_message": {
+                "enter_message": "Initial message",
+                "block_all_messages": true
+            }
+        }
+    },
+    "bedroom": {
+        "desc": "You see your bedroom, a small room that could charitably be called \"cozy\". Stepping into the room, you can feel the stiff carpet shift beneath your weight.",
+        "objects": [
+            "liquor_bottle",
+            "door_bedroom_to_bathroom"
+        ],
+        "verbs": [],
+        "components": {
+            "component_first_enter_message": {
+                "enter_message": "You wake up, your back feeling stiff from the solid mattress. Sitting up, you suddenly feel an intense soreness in your head, likely from last night's binge. On your bedside table, you spot an empty bottle and a desk lamp. To your left, there's an ajar door that looks to go to some sort of bathroom.",
+                "block_all_messages": true
+            }
+        }
+    },
+    "bathroom": {
+        "desc": "You see your bathroom, the floor tiled in the perfectly generic way of any mass-manufactured apartment.",
+        "objects": [
+            "door_bathroom_to_bedroom"
+        ],
+        "verbs": [],
+        "components": {
+            "component_first_enter_message": {
+                "enter_message": "Entering your bathroom, you look around, gazing at the drywall making up all four walls of this room. To your left sits the vanity, sink slowly dripping. Further on is the toilet, with the seat up. On your right is the bathtub-shower combination, obscured by a curtain drawn shut.",
+                "block_all_messages": true
+            }
+        }
     }
 }

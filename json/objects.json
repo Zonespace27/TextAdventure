@@ -1,9 +1,8 @@
 {
     "debug_item": {
-        "name": "foo",
-        "desc": "bar",
-        "verbs": [
-        ],
+        "name": "edible",
+        "desc": "Edible Object",
+        "verbs": [],
         "components": {
             "component_edible": {
                 "total_bites": 3,
@@ -13,9 +12,25 @@
         }
     },
     "debug_item_2": {
-        "name": "foo2",
-        "desc": "bar2",
-        "verbs": [
-        ]
+        "name": "item",
+        "desc": "item object",
+        "verbs": [],
+        "components": {
+            "component_item": {}
+        }
+    },
+    "liquor_bottle": {
+        "name": "bottle",
+        "alternate_names": [
+            "liquor bottle",
+            "alcohol bottle",
+            "booze bottle"
+        ],
+        "desc": "You see an empty bottle of liquor. The brand is indeterminate.",
+        "verbs": [],
+        "components": {
+            "component_item": {}
+        },
+        "elements": {}
     }
 }

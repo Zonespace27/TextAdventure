@@ -34,6 +34,11 @@ def initialize_globals():
 
     component_id_to_class = {}
 
+    # Dict of "element_id" : Element singleton ref
+    global element_id_to_ref
+
+    element_id_to_ref = {}
+
 
 def get_subclasses_recursive(class_to_use: type) -> list[type]:
     return_list: list[type] = []

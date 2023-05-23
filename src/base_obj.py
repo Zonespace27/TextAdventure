@@ -4,6 +4,7 @@ import globals
 if TYPE_CHECKING:
     from packages.components._component import Component
     from packages.verbs._verb import Verb
+    from packages.elements._element import Element
 
 class BaseObj(object):
     """
@@ -21,13 +22,15 @@ class BaseObj(object):
         self.source_verbs: list["Verb"] = []
 
         if object_id:
-            self.source_verbs = globals.object_id_data[object_id]["verbs"]
+            self.source_verbs = globals.object_id_data[object_id]["verbs"].copy()
 
             for component_id in list(globals.object_id_data[object_id]["components"].keys()):
                 component_id: str
                 component: type["Component"] = globals.component_id_to_class[component_id]
-                #component(globals.object_id_data[object_id]["components"][component_id])
                 self.add_component(globals.component_id_to_class[component_id], list(globals.object_id_data[object_id]["components"].values()))
+            
+            for element_id in globals.object_id_data[object_id]["elements"]:
+                self.add_element(element_id)
 
     
     def dispose(self):
@@ -136,6 +139,9 @@ class BaseObj(object):
             except AttributeError:
                 print(f"{listening_object.event_callbacks[self][event]} isn't an attribute of {listening_object}.") # Check if this runtimes either lmao
             
+            except KeyError: # The object no longer exists in the listening_object's event_callbacks
+                return
+            
             arglist = []
             for i in range(len(args[0])):
                 arglist.append(args[0][i])
@@ -165,7 +171,7 @@ class BaseObj(object):
         if not (event in list(target.object_lookup.keys())):
             return
         
-        target._send_event(event, [target, *args])
+        return target._send_event(event, [target, *args])
 
 
     def add_component(self, component_class: type["Component"], arg_dict: dict[str]):
@@ -176,7 +182,7 @@ class BaseObj(object):
 
 
     def get_component(self, component_class: type["Component"]) -> "Component":
-        if component_class not in self.object_components:
+        if component_class not in list(self.object_components.keys()):
             return None
 
         return self.object_components[component_class]
@@ -184,3 +190,46 @@ class BaseObj(object):
     
     def remove_component(self, component_class: type["Component"]):
         globals.qdel(self.object_components[component_class]) # TODO: Make sure this cleans up the key
+
+
+    def add_verb(self, verb_id: str) -> bool:
+        if verb_id not in globals.verb_id_data:
+            return False
+        
+        if globals.verb_id_data[verb_id] in self.source_verbs:
+            return True
+
+        verb: "Verb" = globals.verb_id_data[verb_id]
+        
+        if not verb.can_attach_to(self):
+            return False
+
+        self.source_verbs.append(globals.verb_id_data[verb_id])
+        return True
+
+
+    def remove_verb(self, verb_id: str) -> bool:
+        if verb_id not in list(globals.verb_id_data.keys()):
+            return False
+    
+        if not (globals.verb_id_data[verb_id] in self.source_verbs):
+            return True
+        
+        self.source_verbs.remove(globals.verb_id_data[verb_id])
+        return True
+    
+
+    def add_element(self, element_id: str):
+        if element_id not in list(globals.element_id_to_ref.keys()):
+           return False
+
+        element: "Element" = globals.element_id_to_ref[element_id]
+        return element.hook_object(self)
+    
+
+    def remove_element(self, element_id: str):
+        if element_id not in list(globals.element_id_to_ref.keys()):
+           return False
+
+        element: "Element" = globals.element_id_to_ref[element_id]
+        return element.unhook_object(self)
