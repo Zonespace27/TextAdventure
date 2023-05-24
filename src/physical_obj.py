@@ -15,7 +15,7 @@ class PhysObj(BaseObj):
 
     json_location: str = 'textadventure/json/phys_objects.json'
     
-    def __init__(self, object_id: str) -> None:
+    def __init__(self, object_id: str = "") -> None:
         super().__init__(object_id)
 
         # The _primary_ name something will be referred to as

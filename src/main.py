@@ -18,6 +18,18 @@ def genesis():
     assemble_room_ids() # Must be after object init
     init_player() # Must be last
 
+def unit_test_genesis(load_all_rooms: bool = False):
+    """
+    A version of genesis() used for unit testing so only necessary things are loaded
+    """
+    globals.initialize_globals() # Must be first
+    assemble_verbs() # Must be before object init
+    assemble_components() # Must be before object init
+    assemble_elements() # Must be before object init
+    assemble_all_objects() # Must be before room init
+    if load_all_rooms:
+        assemble_room_ids() # Must be after object init
+
 
 # Assembles objects, physobjects, items, etc.
 def assemble_all_objects():

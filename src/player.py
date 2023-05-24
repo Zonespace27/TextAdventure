@@ -13,8 +13,8 @@ if TYPE_CHECKING:
 
 class Player(physical_obj.PhysObj):
     
-    def __init__(self, object_id: str = "") -> None:
-        super().__init__(object_id)
+    def __init__(self) -> None:
+        super().__init__()
 
         self.max_health: int = 100
         self.health = self.max_health
