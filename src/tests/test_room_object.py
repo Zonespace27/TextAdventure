@@ -61,7 +61,7 @@ class TestClass():
         inventory_component: ComponentInventory = globals.player_ref.get_component(ComponentInventory)
 
         item_component1: ComponentItem = object1.get_component(ComponentItem)
-        item_component1.attempt_pickup()
+        item_component1.attempt_pickup(None)
 
         assert (object1 in inventory_component.inventory) # It should be in the inventory
         assert not (object1 in self.fresh_room.contents) # While not being in the room's contents
