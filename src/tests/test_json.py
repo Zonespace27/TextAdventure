@@ -35,9 +35,6 @@ class TestClass():
         for file in self.room_file_locs:
             data = load(open(file))
             for room_id in data:
-                if not ("objects" in data[room_id]):
-                    continue
-                
                 for object in data[room_id]["objects"]:
                     assert (object in found_object_ids)
     
@@ -51,18 +48,12 @@ class TestClass():
         for file in self.room_file_locs:
             data = load(open(file))
             for room_id in data:
-                if not ("verbs" in data[room_id]):
-                    continue
-                
                 for verb_id in data[room_id]["verbs"]:
                     assert (verb_id in found_verb_ids)
         
         for file in self.object_file_locs:
             data = load(open(file))
             for object_id in data:
-                if not ("verbs" in data[object_id]):
-                    continue            
-    
                 for verb_id in data[object_id]["verbs"]:
                     assert (verb_id in found_verb_ids)
 
@@ -76,18 +67,12 @@ class TestClass():
         for file in self.room_file_locs:
             data = load(open(file))
             for room_id in data:
-                if not ("components" in data[room_id]):
-                    continue
-                
                 for component_id in list(data[room_id]["components"].keys()):
                     assert (component_id in found_component_ids)
         
         for file in self.object_file_locs:
             data = load(open(file))
             for object_id in data:
-                if not ("components" in data[object_id]):
-                    continue            
-                
                 for component_id in list(data[object_id]["components"].keys()):
                     assert (component_id in found_component_ids)
 
@@ -101,17 +86,11 @@ class TestClass():
         for file in self.room_file_locs:
             data = load(open(file))
             for room_id in data:
-                if not ("elements" in data[room_id]):
-                    continue
-                
                 for element_id in data[room_id]["elements"]:
                     assert (element_id in found_element_ids)
         
         for file in self.object_file_locs:
             data = load(open(file))
             for object_id in data:
-                if not ("elements" in data[object_id]):
-                    continue        
-                
                 for element_id in data[object_id]["elements"]:
                     assert (element_id in found_element_ids)
