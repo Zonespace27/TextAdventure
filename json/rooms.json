@@ -21,8 +21,10 @@
             "component_first_enter_message": {
                 "enter_message": "Initial message",
                 "block_all_messages": true
-            }
-        }
+            },
+            "other_test_fail": {}
+        },
+        "elements": ["fail_test_pls"]
     },
     "bedroom": {
         "desc": "You see your bedroom, a small room that could charitably be called \"cozy\". Stepping into the room, you can feel the stiff carpet shift beneath your weight.",

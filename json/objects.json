@@ -29,8 +29,9 @@
         "desc": "You see an empty bottle of liquor. The brand is indeterminate.",
         "verbs": [],
         "components": {
-            "component_item": {}
+            "component_item": {},
+            "test_fail": {}
         },
-        "elements": {}
+        "elements": ["TestFail"]
     }
 }
