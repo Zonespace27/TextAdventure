@@ -1,6 +1,10 @@
 from json import load
 from packages.verbs import *
 from packages.verbs._verb import Verb
+from packages.components import *
+from packages.components._component import Component
+from packages.elements import *
+from packages.elements._element import Element
 from globals import get_subclasses_recursive
 
 class TestClass():
@@ -31,6 +35,9 @@ class TestClass():
         for file in self.room_file_locs:
             data = load(open(file))
             for room_id in data:
+                if not ("objects" in data[room_id]):
+                    continue
+                
                 for object in data[room_id]["objects"]:
                     assert (object in found_object_ids)
     
@@ -44,13 +51,67 @@ class TestClass():
         for file in self.room_file_locs:
             data = load(open(file))
             for room_id in data:
+                if not ("verbs" in data[room_id]):
+                    continue
+                
                 for verb_id in data[room_id]["verbs"]:
                     assert (verb_id in found_verb_ids)
         
         for file in self.object_file_locs:
             data = load(open(file))
             for object_id in data:
+                if not ("verbs" in data[object_id]):
+                    continue            
+    
                 for verb_id in data[object_id]["verbs"]:
-                    assert (verb_id in found_verb_ids) # Ideally, I'd like to deprecate adding raw verbs by json (and make them be added via component instead), but until then, i'll test for it  
+                    assert (verb_id in found_verb_ids)
 
+    
+    def test_all_components_valid(self):
+        found_component_ids: list[str] = []
+        component_subclasses: list[Component] = get_subclasses_recursive(Component)
+        for subclass in component_subclasses:
+            found_component_ids.append(subclass.id)
         
+        for file in self.room_file_locs:
+            data = load(open(file))
+            for room_id in data:
+                if not ("components" in data[room_id]):
+                    continue
+                
+                for component_id in list(data[room_id]["components"].keys()):
+                    assert (component_id in found_component_ids)
+        
+        for file in self.object_file_locs:
+            data = load(open(file))
+            for object_id in data:
+                if not ("components" in data[object_id]):
+                    continue            
+                
+                for component_id in list(data[object_id]["components"].keys()):
+                    assert (component_id in found_component_ids)
+
+
+    def test_all_elements_valid(self):
+        found_element_ids: list[str] = []
+        element_subclasses: list[Element] = get_subclasses_recursive(Element)
+        for subclass in element_subclasses:
+            found_element_ids.append(subclass.id)
+        
+        for file in self.room_file_locs:
+            data = load(open(file))
+            for room_id in data:
+                if not ("elements" in data[room_id]):
+                    continue
+                
+                for element_id in data[room_id]["elements"]:
+                    assert (element_id in found_element_ids)
+        
+        for file in self.object_file_locs:
+            data = load(open(file))
+            for object_id in data:
+                if not ("elements" in data[object_id]):
+                    continue        
+                
+                for element_id in data[object_id]["elements"]:
+                    assert (element_id in found_element_ids)

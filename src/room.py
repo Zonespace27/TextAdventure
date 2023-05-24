@@ -6,7 +6,7 @@ import globals
 
 class Room(base_obj.BaseObj):
 
-    def __init__(self, room_id: str, room_desc: str, room_objects: list[str], room_verbs: list[str], room_components: dict[str, dict[str]], room_elements: list[str]) -> None:
+    def __init__(self, room_id: str, room_desc: str, room_objects: list[str] = [], room_verbs: list[str] = [], room_components: dict[str, dict[str]] = {}, room_elements: list[str] = []) -> None:
         super().__init__()
 
         self.id = room_id
@@ -15,7 +15,7 @@ class Room(base_obj.BaseObj):
         self.contents: list[physical_obj.PhysObj] = []
         self.verbs = {}
         for obj in room_objects:
-            self.add_to_room(object.Object(obj)) # TODO: Extend this to items and etc #TODO2: Check if calling the add proc might mess things up
+            self.add_to_room(object.Object(obj))
 
         for verb in room_verbs:
             self.add_verb(verb)

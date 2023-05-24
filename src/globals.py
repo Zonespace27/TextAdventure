@@ -53,5 +53,6 @@ def qdel(object_to_delete: "BaseObj"):
     """
     Use this over the `del` function to delete objects
     """
-    object_to_delete.dispose()
+    if object_to_delete:
+        object_to_delete.dispose()
     del object_to_delete
