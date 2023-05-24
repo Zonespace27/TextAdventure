@@ -20,5 +20,8 @@ class ElementInvisible(Element):
         return super().unhook_object(object_to_unhook)
     
 
-    def block_examine(self):
+    def block_examine(self, source):
+        """
+        ### EVENT FUNCT
+        """
         return EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION
