@@ -37,9 +37,9 @@ def unit_test_genesis(load_all_rooms: bool = False):
 # Assembles objects, physobjects, items, etc.
 def assemble_all_objects():
     file_locs: list[str] = [
-        globals.resource_path('json\objects.json'),
-        globals.resource_path('json\doors.json'),
-        globals.resource_path('json\objects\containers.json'),
+        globals.resource_path('json/objects.json'),
+        globals.resource_path('json/doors.json'),
+        globals.resource_path('json/objects/containers.json'),
     ]
     for file in file_locs:
         data = load(open(file))
@@ -81,7 +81,7 @@ def assemble_verbs():
 
 
 def assemble_room_ids():
-    data = load(open(globals.resource_path('json\\rooms.json')))
+    data = load(open(globals.resource_path('json/rooms.json')))
     for room_id in data:
         if not ("desc" in data[room_id]):
             data[room_id]["desc"] = ""
