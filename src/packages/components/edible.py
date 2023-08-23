@@ -1,7 +1,7 @@
 from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
-from events import EVENT_VERB_EAT
+from events.verb_events import EVENT_VERB_EAT
 from globals import qdel
 from ..verbs._verb_names import VERB_EAT
 
@@ -11,14 +11,14 @@ class ComponentEdible(Component):
     def __init__(self, args_dict = dict[str]) -> None:
         super().__init__()
 
-        total_bites = self.arg_set(args_dict, "total_bites", True)
+        total_bites: int = self.arg_set(args_dict, "total_bites", int)
 
         # How many bites this edible object has left
         self.remaining_bites: int = total_bites
         # The message sent to the user when this is eaten
-        self.eat_message: str = self.arg_set(args_dict, "eat_message")
+        self.eat_message: str = self.arg_set(args_dict, "eat_message", str)
         # The message send to the user when they've eaten the final bite
-        self.final_eat_message: str = self.arg_set(args_dict, "final_eat_message")
+        self.final_eat_message: str = self.arg_set(args_dict, "final_eat_message", str)
 
 
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:

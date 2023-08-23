@@ -1,11 +1,11 @@
 from physical_obj import PhysObj
 from base_obj import BaseObj
-from events.verb_events import EVENT_VERB_OPEN_DOOR
+from events.verb_events import EVENT_VERB_OPEN_CONTAINER
 from ._verb import Verb
-from ._verb_names import VERB_OPEN_DOOR
+from ._verb_names import VERB_OPEN_CONTAINER
 
-class VerbOpenDoor(Verb):
-    verb_id = VERB_OPEN_DOOR
+class VerbOpenContainer(Verb):
+    verb_id = VERB_OPEN_CONTAINER
 
     def __init__(self) -> None:
         super().__init__()
@@ -14,9 +14,8 @@ class VerbOpenDoor(Verb):
         ]
         self.action_strings = [
             "open",
-            "walk into",
         ]
-    
+
 
     def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
@@ -24,12 +23,9 @@ class VerbOpenDoor(Verb):
 
         if not (owning_obj == arguments[0]):
             return False
-        
-        # Add a signal to block it here
 
         return super().try_execute_verb(owning_obj, arguments)
-        
+
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
-        self.send_event(owning_obj, EVENT_VERB_OPEN_DOOR)
-    
+        self.send_event(owning_obj, EVENT_VERB_OPEN_CONTAINER)

@@ -20,14 +20,17 @@ class BaseObj(object):
         self.object_components: dict[type["Component"], "Component"] = {}
         # What verbs have this physobj as a source, based off of string ID
         self.source_verbs: list["Verb"] = []
+        # A dict of "trait" : ["sources"], traits should be used when you want to have generic things (e.g. the inability to use verbs) possibly come from multiple sources at once
+        self.traits: dict[str, list[str]] = {}
 
         if object_id:
             self.source_verbs = globals.object_id_data[object_id]["verbs"].copy()
 
             for component_id in list(globals.object_id_data[object_id]["components"].keys()):
                 component_id: str
-                component: type["Component"] = globals.component_id_to_class[component_id]
-                self.add_component(globals.component_id_to_class[component_id], list(globals.object_id_data[object_id]["components"].values()))
+                key_index: int = list(globals.object_id_data[object_id]["components"].keys()).index(component_id)
+                dictkey: str = list(globals.object_id_data[object_id]["components"].keys())[key_index]
+                self.add_component(globals.component_id_to_class[component_id], globals.object_id_data[object_id]["components"][dictkey]) # There's a better way to do this i'm sure
             
             for element_id in globals.object_id_data[object_id]["elements"]:
                 self.add_element(element_id)
@@ -149,29 +152,37 @@ class BaseObj(object):
             return method_to_call(*arglist)
 
         # Basically, this exists to allow for objects to unregister in the event itself, but still let every other listening object recieve the event too
-        queued_calls: list = []
+        queued_calls: dict = {}
 
         for listening_object in target: #fixme
             queued_calls[listening_object] = listening_object.event_callbacks[self][event]
         
+        return_bitflag: int = 0
         for listening_object in queued_calls:
             try:
-                method_to_call = getattr(listening_object, listening_object.event_callbacks[self][event])
+               # method_to_call = getattr(listening_object, listening_object.event_callbacks[self][event])
+                method_to_call = listening_object.event_callbacks[self][event] 
 
             except AttributeError:
                 print(f"{listening_object.event_callbacks[self][event]} isn't an attribute of {listening_object}.") # Check if this runtimes either lmao      
             
-            return method_to_call(*args)
+            return_bitflag |= (method_to_call(*args) or 0)
+        
+        return return_bitflag
     
 
-    def send_event(self, target: "BaseObj", event: str, *args):
+    def send_event(self, target: "BaseObj", event: str, *args) -> int:
+        """
+        This method is used to send an event to a target. See `docs/signals.md` for detail on how signals work.\n
+        This will only ever return BITFLAGS. Never check the return value of this with `==`, always use `&`.
+        """
         if not (target.object_lookup):
-            return
+            return 0
         
         if not (event in list(target.object_lookup.keys())):
-            return
+            return 0
         
-        return target._send_event(event, [target, *args])
+        return target._send_event(event, [target, *args]) or 0 # Since we're always returning a bitflag, return 0 if the event doesn't return anything
 
 
     def add_component(self, component_class: type["Component"], arg_dict: dict[str]):
@@ -219,7 +230,7 @@ class BaseObj(object):
         return True
     
 
-    def add_element(self, element_id: str):
+    def add_element(self, element_id: str) -> bool:
         if element_id not in list(globals.element_id_to_ref.keys()):
            return False
 
@@ -227,9 +238,56 @@ class BaseObj(object):
         return element.hook_object(self)
     
 
-    def remove_element(self, element_id: str):
+    def remove_element(self, element_id: str) -> bool:
         if element_id not in list(globals.element_id_to_ref.keys()):
            return False
 
         element: "Element" = globals.element_id_to_ref[element_id]
         return element.unhook_object(self)
+
+
+    def add_trait(self, trait_to_add: str, trait_source: str):
+        if trait_to_add in self.traits:
+            self.traits[trait_to_add].append(trait_source)
+        
+        else:
+            self.traits[trait_to_add] = [trait_source]
+
+    
+    def remove_trait(self, trait_to_remove: str, trait_source: str):
+        if not (trait_to_remove in self.traits):
+            return
+        
+        if not (trait_source in self.traits[trait_to_remove]):
+            return
+        
+        self.traits[trait_to_remove].remove(trait_source)
+        if not len(self.traits[trait_to_remove]):
+            self.traits.pop(trait_to_remove)
+    
+
+    def force_remove_trait(self, trait_to_remove: str):
+        """
+        Remove a trait no matter what or how many sources it has. Use with care.
+        """
+        if not (trait_to_remove in self.traits):
+            return
+
+        self.traits.pop(trait_to_remove)
+
+    
+    def has_trait(self, trait_to_find: str) -> bool:
+        """
+        Returns True if self has the specified trait from any source, returns False otherwise.
+        """
+        return (trait_to_find in self.traits)
+    
+
+    def has_trait_from(self, trait_to_find: str, trait_source: str) -> bool:
+        """
+        Returns True if self has the specified trait from specified source, returns False otherwise.
+        """
+        if not (trait_to_find in self.traits):
+            return False
+        
+        return (trait_source in self.traits[trait_to_find])

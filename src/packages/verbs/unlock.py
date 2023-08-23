@@ -1,26 +1,29 @@
 from physical_obj import PhysObj
 from base_obj import BaseObj
-from events.verb_events import EVENT_VERB_DROP
+from events.events import EVENT_LOCK_ATTEMPT_UNLOCK
 from ._verb import Verb 
-from ._verb_names import VERB_DROP
+from ._verb_names import VERB_UNLOCK
+from ..components.key import ComponentKey
+from ..components.locked import ComponentLocked
 from ..components.item import ComponentItem
 from ..components.inventory import ComponentInventory
 import globals
 
-class VerbDrop(Verb):
-    verb_id = VERB_DROP
+class VerbUnlock(Verb):
+    """
+    This verb is attached with the Key component, NOT the Locked component
+    """
+    verb_id = VERB_UNLOCK
 
     def __init__(self) -> None:
         super().__init__()
         self.expected_args = [ 
             PhysObj,
+            PhysObj,
         ]
         self.action_strings = [
-            "get rid",
-            "drop",
-            "toss",
-            "throw away",
-            "lose",
+            "use",
+            "unlock",
         ]
     
 
@@ -54,9 +57,14 @@ class VerbDrop(Verb):
         
         if not (owning_obj.location == globals.player_ref.get_component(ComponentInventory)):
             return False
+        
+        object_to_unlock: PhysObj = arguments[1]
+        if not object_to_unlock.get_component(ComponentLocked):
+            return False
 
         return super().try_execute_verb(owning_obj, arguments)
         
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
-        self.send_event(owning_obj, EVENT_VERB_DROP)
+        key_component: ComponentKey = owning_obj.get_component(ComponentKey)
+        self.send_event(arguments[1], EVENT_LOCK_ATTEMPT_UNLOCK, key_component.key_id)

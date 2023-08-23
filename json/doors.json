@@ -38,5 +38,25 @@
                 "door_to": "bedroom"
             }
         }
+    },
+    "door_bedroom_to_livingroom": {
+        "name": "door",
+        "desc": "You ",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "bedroom"
+            }
+        }
+    },
+    "door_livingroom_to_bedroom": {
+        "name": "door",
+        "desc": "You ",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "bedroom"
+            }
+        }
     }
 }

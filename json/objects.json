@@ -9,7 +9,8 @@
                 "eat_message": "You take a bite of that foo.",
                 "final_eat_message": "You finish off that foo."
             }
-        }
+        },
+        "elements": {}
     },
     "debug_item_2": {
         "name": "item",
@@ -17,7 +18,8 @@
         "verbs": [],
         "components": {
             "component_item": {}
-        }
+        },
+        "elements": {}
     },
     "liquor_bottle": {
         "name": "bottle",
@@ -29,7 +31,42 @@
         "desc": "You see an empty bottle of liquor. The brand is indeterminate.",
         "verbs": [],
         "components": {
-            "component_item": {}
+            "component_item": {
+                "unmoved_examine": "You see a bottle of liquor resting on its side, its contents empty."
+            }
+        },
+        "elements": {}
+    },
+    "tan_trenchcoat": {
+        "name": "tan trench coat",
+        "alternate_names": [
+            "tan trenchcoat",
+            "trenchcoat",
+            "tan coat",
+            "trench coat",
+            "coat"
+        ],
+        "desc": "You see your well-worn tan trench coat, made of a heavy cotton.",
+        "verbs": [],
+        "components": {
+            "component_item": {
+                "unmoved_examine": "You see your well-worn tan trench coat hung on a thin wire coat hangar, it barely holding up the weight of the heavy cotton."
+            }
+        },
+        "elements": {}
+    },
+    "red_pen": {
+        "name": "red pen",
+        "alternate_names": [
+            "pen",
+            "writing tool"
+        ],
+        "desc": "You see a cheap red ballpoint pen.",
+        "verbs": [],
+        "components": {
+            "component_item": {
+                "unmoved_examine": "A red ballpoint pen resting on top of it."
+            }
         },
         "elements": {}
     }

@@ -1,6 +1,6 @@
 from physical_obj import PhysObj
 from base_obj import BaseObj
-from events import EVENT_VERB_EAT
+from events.verb_events import EVENT_VERB_EAT
 from ._verb import Verb
 from ._verb_names import VERB_EAT
 
@@ -19,7 +19,7 @@ class VerbEat(Verb):
         ]
     
 
-    def can_execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []) -> bool:
+    def can_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
             return False
         
@@ -29,5 +29,5 @@ class VerbEat(Verb):
         return super().can_execute_verb(owning_obj, arguments)
         
 
-    def execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []):
+    def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
         self.send_event(owning_obj, EVENT_VERB_EAT)

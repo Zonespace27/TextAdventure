@@ -1,6 +1,6 @@
 import object
 import physical_obj
-import events
+import events.events as events
 import base_obj as base_obj
 import globals
 
@@ -34,7 +34,7 @@ class Room(base_obj.BaseObj):
     
         self.contents.append(physobj_to_add)
         physobj_to_add.current_room = self
-        physobj_to_add.location = self
+        physobj_to_add.location = self # This one is explicitly not using the location_move function
 
         self.send_event(physobj_to_add, events.EVENT_PHYSOBJ_ENTERED_ROOM, self)
     

@@ -1,6 +1,6 @@
 from physical_obj import PhysObj
 from base_obj import BaseObj
-from events import EVENT_VERB_PICKUP
+from events.verb_events import EVENT_VERB_PICKUP
 from ._verb import Verb 
 from ._verb_names import VERB_PICKUP
 from ..components.item import ComponentItem
@@ -44,7 +44,7 @@ class VerbPickup(Verb):
         return super().can_attach_to(object_to_attach)
     
 
-    def try_execute_verb(self, owning_obj: PhysObj, arguments: list[str] = []) -> bool:
+    def try_execute_verb(self, owning_obj: PhysObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
             return False
         
@@ -57,5 +57,5 @@ class VerbPickup(Verb):
         return super().try_execute_verb(owning_obj, arguments)
         
 
-    def execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []):
+    def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
         self.send_event(owning_obj, EVENT_VERB_PICKUP)

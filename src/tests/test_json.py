@@ -5,15 +5,16 @@ from packages.components import *
 from packages.components._component import Component
 from packages.elements import *
 from packages.elements._element import Element
-from globals import get_subclasses_recursive
+from globals import get_subclasses_recursive, resource_path
 
 class TestClass():
     object_file_locs: list[str] = [ # Once i've got a concrete file structure down, i'll convert this to something better
-        'json/objects.json',
-        'json/doors.json',
+        resource_path('json/objects.json'),
+        resource_path('json/doors.json'),
+        resource_path('json/objects/containers.json'),
     ]
     room_file_locs: list[str] = [ # Same here
-        'json/rooms.json',
+        resource_path('json/rooms.json'),
     ]
 
     def test_unique_object_ids(self):

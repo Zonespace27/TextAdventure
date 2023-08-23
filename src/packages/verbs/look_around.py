@@ -16,14 +16,14 @@ class VerbLookAround(Verb):
         ]
     
 
-    def try_execute_verb(self, owning_obj: Player, arguments: list[str] = []) -> bool:
+    def try_execute_verb(self, owning_obj: Player, arguments: list = []) -> bool:
         if not owning_obj.current_room: # Somehow?????
             return False
 
         return super().try_execute_verb(owning_obj, arguments)
         
 
-    def execute_verb(self, owning_obj: Player, arguments: list[str] = []):
+    def execute_verb(self, owning_obj: Player, arguments: list = []):
         owning_obj.look_around_room()
     
 
