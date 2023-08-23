@@ -1,7 +1,7 @@
 from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
-from events import EVENT_VERB_OPEN_DOOR
+from events.verb_events import EVENT_VERB_OPEN_DOOR
 from ..verbs._verb_names import VERB_OPEN_DOOR
 import globals
 from traits import TRAIT_LOCKED

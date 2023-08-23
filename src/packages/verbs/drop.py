@@ -1,6 +1,6 @@
 from physical_obj import PhysObj
 from base_obj import BaseObj
-from events import EVENT_VERB_DROP
+from events.verb_events import EVENT_VERB_DROP
 from ._verb import Verb 
 from ._verb_names import VERB_DROP
 from ..components.item import ComponentItem

@@ -1,5 +1,5 @@
 from base_obj import BaseObj
-from events import EVENT_VERB_GET_UP
+from events.verb_events import EVENT_VERB_GET_UP
 from ._verb import Verb
 from ._verb_names import VERB_GET_UP
 from ..components.laying_down import ComponentLayingDown

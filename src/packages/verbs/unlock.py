@@ -1,6 +1,6 @@
 from physical_obj import PhysObj
 from base_obj import BaseObj
-from events import EVENT_LOCK_ATTEMPT_UNLOCK
+from events.events import EVENT_LOCK_ATTEMPT_UNLOCK
 from ._verb import Verb 
 from ._verb_names import VERB_UNLOCK
 from ..components.key import ComponentKey

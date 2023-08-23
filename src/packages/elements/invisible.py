@@ -1,7 +1,7 @@
 from ._element import Element
 from ._element_names import ELEMENT_INVISIBLE
 from base_obj import BaseObj
-from events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION
+from events.events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION
 
 class ElementInvisible(Element):
     """

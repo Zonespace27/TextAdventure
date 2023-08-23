@@ -1,6 +1,6 @@
 import object
 import physical_obj
-import events
+import events.events as events
 import base_obj as base_obj
 import globals
 

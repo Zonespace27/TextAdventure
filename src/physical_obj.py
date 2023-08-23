@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 from base_obj import BaseObj
 import globals
-from events import EVENT_PHYSOBJ_LOCATION_MOVE 
+from events.events import EVENT_PHYSOBJ_LOCATION_MOVE 
 
 if TYPE_CHECKING:
     import room

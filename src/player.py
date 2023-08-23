@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 import physical_obj
-import events
+import events.events as events
 import re
 from packages.components.inventory import ComponentInventory
 from packages.verbs._verb_names import VERB_LOOK_AROUND
 from packages.elements._element_names import ELEMENT_INVISIBLE
-from events import EVENT_INVENTORY_GET_CONTENTS, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION, EVENT_PLAYER_FIND_CONTENTS
+from events.events import EVENT_INVENTORY_GET_CONTENTS, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION, EVENT_PLAYER_FIND_CONTENTS
 
 if TYPE_CHECKING:
     import room

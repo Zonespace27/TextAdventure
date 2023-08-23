@@ -2,7 +2,7 @@ from ._component import Component
 from physical_obj import PhysObj
 from base_obj import BaseObj
 import globals
-from events import EVENT_LOCK_ATTEMPT_UNLOCK, EVENT_BASEOBJ_PRINT_DESCRIPTION
+from events.events import EVENT_LOCK_ATTEMPT_UNLOCK, EVENT_BASEOBJ_PRINT_DESCRIPTION
 from traits import TRAIT_LOCKED
 
 class ComponentLocked(Component):

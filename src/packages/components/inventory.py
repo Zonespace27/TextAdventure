@@ -1,7 +1,18 @@
 from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
-from events import *
+from events.events import EVENT_INVENTORY_ADD_OBJECT, \
+                        EVENT_INVENTORY_REMOVE_OBJECT, \
+                        EVENT_INVENTORY_GET_CONTENTS, \
+                        EVENT_RETVAL_BLOCK_INVENTORY_ADD, \
+                        EVENT_OBJECT_ADDING_TO_INVENTORY, \
+                        EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_ADD, \
+                        EVENT_RETVAL_BLOCK_INVENTORY_REMOVE, \
+                        EVENT_OBJECT_ADDED_TO_INVENTORY, \
+                        EVENT_OBJECT_REMOVING_FROM_INVENTORY, \
+                        EVENT_OBJECT_REMOVED_FROM_INVENTORY, \
+                        EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_REMOVE
+from events.verb_events import EVENT_VERB_CHECK_INVENTORY
 from object import Object
 from ..verbs._verb_names import VERB_CHECK_INVENTORY
 

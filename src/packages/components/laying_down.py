@@ -1,7 +1,7 @@
 from ._component import Component
 from base_obj import BaseObj
 from player import Player
-from events import EVENT_VERB_GET_UP
+from events.verb_events import EVENT_VERB_GET_UP
 from ..verbs._verb_names import VERB_GET_UP
 import globals
 from typing import TYPE_CHECKING
