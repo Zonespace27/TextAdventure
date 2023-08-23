@@ -36,11 +36,11 @@
         },
         "elements": {}
     },
-    "safe": {
-        "name": "safe",
+    "wall_safe": {
+        "name": "wall safe",
         "alternate_names": [
         ],
-        "desc": "You see a heavy safe.",
+        "desc": "You see a wall-mounted safe.",
         "verbs": [],
         "components": {
             "component_container": {
@@ -48,8 +48,8 @@
                 "show_contents_examine": true,
                 "open_message": "You open the safe.",
                 "close_message": "You close the safe.",
-                "open_examine_message": "You see the dark inside of the safe. Inside is:\n",
-                "closed_examine_message": "You see a heavy, imposing safe.",
+                "open_examine_message": "You see a small cavity in the wall, lined with metal. A safe door hangs to the side, disengaged. Inside is:\n",
+                "closed_examine_message": "You see a safe door jutting out of the wall.",
                 "initial_contents": [
                     "red_pen"
                 ]

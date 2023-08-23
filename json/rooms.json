@@ -72,7 +72,7 @@
         "objects": [
             "liquor_bottle",
             "calendar",
-            "safe"
+            "wall_safe"
         ],
         "verbs": [],
         "components": {

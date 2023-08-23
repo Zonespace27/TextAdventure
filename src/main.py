@@ -121,7 +121,7 @@ if __name__ == "__main__":
     if getcwd().endswith("\\src"): # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\\src"))
 
-    input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
+    """input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
     system("cls")
     sleep(0.5)
     print("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
@@ -131,5 +131,5 @@ if __name__ == "__main__":
     print("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
     sleep(1)
     input("Press ENTER to begin.")
-    system("cls")
+    system("cls")""" # Undo me when in prod
     genesis()

@@ -124,11 +124,16 @@ class ComponentInventory(Component):
         ### EVENT FUNCT
         """
         remaining_space = self.inventory_size - len(self.inventory)
-        contents = "You currently have: \n"
-        for index, inv_object in enumerate(self.inventory):
-            contents += inv_object.name + ("\n" if (self.inventory[index] == self.inventory[len(self.inventory) - 1]) else ", ")
+        if(len(self.inventory)):
+            contents = "You currently have: \n"
+            for index, inv_object in enumerate(self.inventory):
+                contents += inv_object.name + ("\n" if (self.inventory[index] == self.inventory[len(self.inventory) - 1]) else ", ")
 
-        contents += f"in your inventory, it looks like it could hold {remaining_space} more thing" + ("s." if remaining_space != 1 else ".")
+            contents += f"in your inventory, it looks like it could hold {remaining_space} more thing" + ("s." if remaining_space != 1 else ".")
+        
+        else:
+            contents = f"You currently have nothing in your inventory. It looks like it could hold {remaining_space} more thing" + ("s." if remaining_space != 1 else ".")
+
         print(contents)
     
 
