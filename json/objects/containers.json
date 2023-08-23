@@ -1,0 +1,65 @@
+{    
+    "bedroom_closet": {
+        "name": "closet",
+        "alternate_names": [],
+        "desc": "You see a closet.",
+        "verbs": [],
+        "components": {
+            "component_container": {
+                "open_message": "You open the closet.",
+                "close_message": "You close the closet.",
+                "open_examine_message": "You see your small closet, a few stray coat hangars hanging from a wooden rod that bisects the room horizontally. Hanging from it, you see:\n",
+                "close_examine_message": "You see a closed folding door, presumably for the closet behind it.",
+                "show_contents_examine": true,
+                "initial_contents": [
+                    "tan_trenchcoat"
+                ]
+            }
+        },
+        "elements": {}
+    },
+    "calendar": {
+        "name": "calendar",
+        "alternate_names": [
+        ],
+        "desc": "You see a yellowed calendar. In big black letters at the top, \"APRIL\" is visible.",
+        "verbs": [],
+        "components": {
+            "component_container": {
+                "requires_open": false,
+                "show_contents_examine": true,
+                "no_open_close_examine_message": "Looking closer, you see that the 1st through 18th have a slash through them, made by a red pen. On the 19th box, you see \"MEETING\" scribbled in. How descriptive. As you step back from the calendar, you notice:\n",
+                "initial_contents": [
+                    "red_pen"
+                ]
+            }
+        },
+        "elements": {}
+    },
+    "safe": {
+        "name": "safe",
+        "alternate_names": [
+        ],
+        "desc": "You see a heavy safe.",
+        "verbs": [],
+        "components": {
+            "component_container": {
+                "requires_open": true,
+                "show_contents_examine": true,
+                "open_message": "You open the safe.",
+                "close_message": "You close the safe.",
+                "open_examine_message": "You see the dark inside of the safe. Inside is:\n",
+                "close_examine_message": "You see a heavy, imposing safe.",
+                "initial_contents": [
+                    "red_pen"
+                ]
+            },
+            "component_locked": {
+                "lock_id": "safe_lock",
+                "unlock_message": "You insert the key, turning it with a satisfying *CLACK*.",
+                "examine_message": "You see a keyhole on the door of the safe."
+            }
+        },
+        "elements": {}
+    }
+}

@@ -1,4 +1,7 @@
 from typing import TYPE_CHECKING
+import sys
+from os import path, getcwd
+import argparse
 
 if TYPE_CHECKING:
     from base_obj import BaseObj
@@ -39,6 +42,17 @@ def initialize_globals():
 
     element_id_to_ref = {}
 
+    parser = argparse.ArgumentParser(description='Run the program.')
+    parser.add_argument('-d', '--development', action='store_true')
+
+    args = parser.parse_args()
+
+    # If we are running development mode or not, affecting some backend things
+    global development_mode
+
+    #development_mode = args.development
+    development_mode = False # Fix me later when i figure out what the fuck the exe is looking for
+
 
 def get_subclasses_recursive(class_to_use: type) -> list[type]:
     return_list: list[type] = []
@@ -56,3 +70,11 @@ def qdel(object_to_delete: "BaseObj"):
     if object_to_delete:
         object_to_delete.dispose()
     del object_to_delete
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+
+    return relative_path # Yet another thing to fix later when EXE has been figured out
+    #base_path = getattr(sys, '_MEIPASS', path.dirname(path.abspath(__file__ if not development_mode else getcwd())))
+   # return path.join(base_path, relative_path)

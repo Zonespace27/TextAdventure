@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 from base_obj import BaseObj
 import globals
+from events import EVENT_PHYSOBJ_LOCATION_MOVE 
 
 if TYPE_CHECKING:
     import room
@@ -12,8 +13,6 @@ class PhysObj(BaseObj):
     Anything physical inside a room (not the room itself) should be a child of this.
     Player, object, item, person, etc.
     """
-
-    json_location: str = 'textadventure/json/phys_objects.json'
     
     def __init__(self, object_id: str = "") -> None:
         super().__init__(object_id)
@@ -65,3 +64,8 @@ class PhysObj(BaseObj):
         if name_to_try.lower() in self.alternate_names:
             return True
         return False
+    
+
+    def move_location(self, location_to_move_to: BaseObj) -> bool:
+        self.location = location_to_move_to
+        self.send_event(self, EVENT_PHYSOBJ_LOCATION_MOVE)

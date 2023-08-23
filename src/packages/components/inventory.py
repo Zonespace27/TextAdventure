@@ -14,7 +14,7 @@ class ComponentInventory(Component):
         self.inventory: list[Object] = []
 
         # How many items can fit into this inventory
-        self.inventory_size: int = self.arg_set(args_dict, "inventory_size", True)
+        self.inventory_size: int = self.arg_set(args_dict, "inventory_size", int)
 
 
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
@@ -69,7 +69,7 @@ class ComponentInventory(Component):
     def add_object(self, object_to_add: Object, silent: bool = False):
         physobj_parent: PhysObj = self.parent
         object_to_add.current_room = physobj_parent.current_room
-        object_to_add.location = self
+        object_to_add.move_location(self)
 
         self.inventory.append(object_to_add)
         
@@ -98,7 +98,7 @@ class ComponentInventory(Component):
 
         self.inventory.remove(object_to_remove)
         object_to_remove.current_room = physobj_parent.current_room
-        object_to_remove.location = object_to_remove.current_room
+        object_to_remove.move_location(object_to_remove.current_room)
 
         object_to_remove.current_room.add_to_room(object_to_remove)
         
@@ -112,11 +112,12 @@ class ComponentInventory(Component):
         """
         ### EVENT FUNCT
         """
+        remaining_space = self.inventory_size - len(self.inventory)
         contents = "You currently have: \n"
         for index, inv_object in enumerate(self.inventory):
             contents += inv_object.name + ("\n" if (self.inventory[index] == self.inventory[len(self.inventory) - 1]) else ", ")
 
-        contents += "in your inventory."
+        contents += f"in your inventory, it looks like it could hold {remaining_space} more thing" + ("s." if remaining_space != 1 else ".")
         print(contents)
     
 

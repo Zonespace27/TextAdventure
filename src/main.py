@@ -1,5 +1,6 @@
 from packages.components import *
 from packages.components._component import Component
+from packages.components.laying_down import ComponentLayingDown
 from packages.verbs import *
 import packages.verbs._verb as verbs
 from packages.elements import *
@@ -8,6 +9,9 @@ from json import load
 import room
 import globals
 import player
+from os import system, getcwd, chdir
+from time import sleep
+import asyncio
 
 def genesis():
     globals.initialize_globals() # Must be first
@@ -30,12 +34,12 @@ def unit_test_genesis(load_all_rooms: bool = False):
     if load_all_rooms:
         assemble_room_ids() # Must be after object init
 
-
 # Assembles objects, physobjects, items, etc.
 def assemble_all_objects():
     file_locs: list[str] = [
-        'json/objects.json',
-        'json/doors.json',
+        globals.resource_path('json\objects.json'),
+        globals.resource_path('json\doors.json'),
+        globals.resource_path('json\objects\containers.json'),
     ]
     for file in file_locs:
         data = load(open(file))
@@ -77,7 +81,7 @@ def assemble_verbs():
 
 
 def assemble_room_ids():
-    data = load(open('json/rooms.json'))
+    data = load(open(globals.resource_path('json\\rooms.json')))
     for room_id in data:
         if not ("desc" in data[room_id]):
             data[room_id]["desc"] = ""
@@ -102,8 +106,9 @@ def assemble_components():
 
 def init_player():
     globals.player_ref = player.Player()
-    globals.roomid_to_room["bedroom"].add_to_room(globals.player_ref)
-    globals.player_ref.begin_taking_input()
+    globals.roomid_to_room["office_backroom"].add_to_room(globals.player_ref)
+    globals.player_ref.add_component(ComponentLayingDown, {"get_up_message": "You get up from the floor, accidentally knocking away an empty bottle. You look down at your clothes, your form a general mess. Your dress shirt is stained with a few different substances, your coat looks like it's been in the possession of a dozen cats, and your shoes... is that vomit on them? Eugh. It might be a good idea to look around, get your bearings, instead of staring at your clothes, however."})
+    asyncio.run(globals.player_ref.begin_taking_input())
 
 
 def assemble_elements():
@@ -113,4 +118,18 @@ def assemble_elements():
 
 
 if __name__ == "__main__":
+    if getcwd().endswith("\src"): # Gross hack that works for .bat junk
+        chdir(getcwd().removesuffix("\src"))
+
+    input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
+    system("cls")
+    sleep(0.5)
+    print("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
+    sleep(0.5)
+    print("Work hasn't been great recently, you've been getting steadily fewer clients as the weeks and months go by, but since it's just you, you're still in business.")
+    sleep(0.5)
+    print("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
+    sleep(1)
+    input("Press ENTER to begin.")
+    system("cls")
     genesis()

@@ -5,11 +5,12 @@ import re
 from packages.components.inventory import ComponentInventory
 from packages.verbs._verb_names import VERB_LOOK_AROUND
 from packages.elements._element_names import ELEMENT_INVISIBLE
-from events import EVENT_INVENTORY_GET_CONTENTS, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION
+from events import EVENT_INVENTORY_GET_CONTENTS, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION, EVENT_PLAYER_FIND_CONTENTS
 
 if TYPE_CHECKING:
     import room
     from packages.verbs._verb import Verb
+    from object import Object
 
 class Player(physical_obj.PhysObj):
     
@@ -18,6 +19,9 @@ class Player(physical_obj.PhysObj):
 
         self.max_health: int = 100
         self.health = self.max_health
+
+        # Bitflags for various player things
+        self.player_flags = 0
 
         self.register_event(self, events.EVENT_PHYSOBJ_ENTERED_ROOM, self.on_enter_room)
         self.add_component(ComponentInventory, {"inventory_size": 5})
@@ -52,13 +56,13 @@ class Player(physical_obj.PhysObj):
             print(obj.desc)
     
 
-    def begin_taking_input(self):
+    async def begin_taking_input(self):
         while(True):
             self.take_input()
 
     
     def take_input(self):
-        user_input = input("What do you do?\n")
+        user_input = input("\nWhat do you do?\n")
         self.parse_text(user_input)
 
     
@@ -159,10 +163,20 @@ class Player(physical_obj.PhysObj):
                     if verb:
                         valid_objects.append((item, i2, verb))
             
-            for object in self.current_room.contents: # might want to find a fix for this hitting the player again, but no biggie atm
+            for object in self.current_room.contents:
+                if object == self:
+                    continue
+                
                 verb = object.action_is_valid(command)
                 if verb:
                     valid_objects.append((object, i2, verb))
+                
+                object_contents: list["Object"] = self.send_event(object, EVENT_PLAYER_FIND_CONTENTS) or []
+                for contained_object in object_contents:
+                    verb = contained_object.action_is_valid(command)
+                    if verb:
+                        valid_objects.append((contained_object, i2, verb))
+                
         return valid_objects
 
     
@@ -174,9 +188,17 @@ class Player(physical_obj.PhysObj):
                 item: physical_obj.PhysObj
                 if obj_name in item.alternate_names:
                     return_list.append(item)
+                extra_items: list[physical_obj.PhysObj] = self.send_event(item, EVENT_PLAYER_FIND_CONTENTS) or []
+                for extra_item in extra_items:
+                    if obj_name in extra_item.alternate_names:
+                        return_list.append(extra_item)
 
         for object in self.current_room.contents:
             if obj_name in object.alternate_names:
                 return_list.append(object)
+            extra_objects: list[physical_obj.PhysObj] = self.send_event(object, EVENT_PLAYER_FIND_CONTENTS) or []
+            for extra_object in extra_objects:
+                if obj_name in extra_object.alternate_names:
+                    return_list.append(extra_object)
         
         return return_list

@@ -1,4 +1,6 @@
 from base_obj import BaseObj
+import globals
+from bitflags import PLAYER_LAYING_DOWN, VERB_OVERRIDE_LAYDOWN
 
 class Verb(BaseObj):
     """
@@ -16,6 +18,8 @@ class Verb(BaseObj):
         self.expected_args: list[BaseObj] = []
         # If this verb should fail if not provided with the correct arg count
         self.requires_all_args: bool = True
+        # Bitflags for various verb things that don't need their own variable
+        self.verb_flags = 0
     
     def action_string_is_valid(self, owning_obj: BaseObj, verb_string: str):
         if verb_string in self.action_strings:
@@ -27,14 +31,18 @@ class Verb(BaseObj):
         return True
     
 
-    def can_execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []) -> bool:
+    def can_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if self.requires_all_args and not (len(arguments) == len(self.expected_args)):
+            return False
+        
+        if (globals.player_ref.player_flags & PLAYER_LAYING_DOWN) and not (self.verb_flags & VERB_OVERRIDE_LAYDOWN):
+            print("You can't do this while laying down!")
             return False
         
         return True
     
 
-    def try_execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []) -> bool:
+    def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if not self.can_execute_verb(owning_obj, arguments):
             return False
         
@@ -42,7 +50,7 @@ class Verb(BaseObj):
         return True
     
 
-    def execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []):
+    def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
         return
 
 

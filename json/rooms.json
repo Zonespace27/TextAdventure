@@ -28,12 +28,13 @@
         "desc": "You see your bedroom, a small room that could charitably be called \"cozy\". Stepping into the room, you can feel the stiff carpet shift beneath your weight.",
         "objects": [
             "liquor_bottle",
-            "door_bedroom_to_bathroom"
+            "door_bedroom_to_bathroom",
+            "bedroom_closet"
         ],
         "verbs": [],
         "components": {
             "component_first_enter_message": {
-                "enter_message": "You wake up, your back feeling stiff from the solid mattress. Sitting up, you suddenly feel an intense soreness in your head, likely from last night's binge. On your bedside table, you spot an empty bottle and a desk lamp. To your left, there's an ajar door that looks to go to some sort of bathroom.",
+                "enter_message": "You wake up, your back feeling stiff from the solid mattress. Sitting up, you suddenly feel an intense soreness in your head, likely from last night's binge. On your bedside table, you spot an empty bottle and a desk lamp. To your left is what you presume is a closet with its doors closed. In the far corner of the room, there's an ajar door that looks to go to some sort of bathroom.",
                 "block_all_messages": true
             }
         }
@@ -47,6 +48,36 @@
         "components": {
             "component_first_enter_message": {
                 "enter_message": "Entering your bathroom, you look around, gazing at the drywall making up all four walls of this room. To your left sits the vanity, sink slowly dripping. Further on is the toilet, with the seat up. On your right is the bathtub-shower combination, obscured by a curtain drawn shut.",
+                "block_all_messages": true
+            }
+        }
+    },
+    "living_room": {
+        "desc": "You see your living room-slash-kitchen.",
+        "objects": [],
+        "verbs": [],
+        "components": {
+            "component_first_enter_message": {
+                "enter_message": "Entering the biggest room in your apartment, you feel acutely aware of the fact that this place isn't actually very big. Across from you is a ratty brown couch, facing a fairly old cathode-ray television that's placed on a wooden stand hardly any larger than the television is. Not far to your right is what would be called a kitchenette in any reasonably-sized abode, containing a microwave, a stove, a refrigerator, and what precious little counter space you could spare. Further right is a door with a peephole in it.",
+                "block_all_messages": true
+            }
+        }
+    },
+
+
+
+
+    "office_backroom": {
+        "desc": "You see the back room of your office. The aged lights give off a low hum as they bathe the room in a dim yellow color. As you enter, the hard-worn grey and olive carpet creaks beneath your feet.",
+        "objects": [
+            "liquor_bottle",
+            "calendar",
+            "safe"
+        ],
+        "verbs": [],
+        "components": {
+            "component_first_enter_message": {
+                "enter_message": "You suddenly wake, eyes flying open to meet... the ceiling of your office, it seems. The dull, flickering fluorescent light shines in your eyes, an annoyance in a confusing awakening. Your first thought is how you got there, only to be interrupted by the mother of all hangovers hitting your head like a pickaxe. Groaning, you try to remember how you ended up here, but it's as if it never happened, you can't think of a thing.",
                 "block_all_messages": true
             }
         }

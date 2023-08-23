@@ -1,11 +1,11 @@
 from physical_obj import PhysObj
 from base_obj import BaseObj
-from events import EVENT_VERB_EAT
+from events import EVENT_VERB_CLOSE_CONTAINER
 from ._verb import Verb
-from ._verb_names import VERB_EAT
+from ._verb_names import VERB_CLOSE_CONTAINER
 
-class VerbEat(Verb):
-    verb_id = VERB_EAT  
+class VerbCloseContainer(Verb):
+    verb_id = VERB_CLOSE_CONTAINER
 
     def __init__(self) -> None:
         super().__init__()
@@ -13,21 +13,19 @@ class VerbEat(Verb):
             PhysObj,
         ]
         self.action_strings = [
-            "eat",
-            "munch",
-            "bite",
+            "close",
+            "shut",
         ]
-    
 
-    def can_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
+    def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
             return False
-        
+
         if not (owning_obj == arguments[0]):
             return False
 
-        return super().can_execute_verb(owning_obj, arguments)
-        
+        return super().try_execute_verb(owning_obj, arguments)
+
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
-        self.send_event(owning_obj, EVENT_VERB_EAT)
+        self.send_event(owning_obj, EVENT_VERB_CLOSE_CONTAINER)

@@ -1,21 +1,20 @@
-from physical_obj import PhysObj
 from base_obj import BaseObj
-from events import EVENT_VERB_EAT
-from ._verb import Verb
-from ._verb_names import VERB_EAT
+from physical_obj import PhysObj
+from events import EVENT_VERB_EXAMINE
+from ._verb import Verb 
+from ._verb_names import VERB_EXAMINE
 
-class VerbEat(Verb):
-    verb_id = VERB_EAT  
+class VerbExamine(Verb):
+    verb_id = VERB_EXAMINE
 
     def __init__(self) -> None:
         super().__init__()
-        self.expected_args = [ 
+        self.expected_args = [
             PhysObj,
         ]
         self.action_strings = [
-            "eat",
-            "munch",
-            "bite",
+            "examine",
+            "view",
         ]
     
 
@@ -30,4 +29,4 @@ class VerbEat(Verb):
         
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
-        self.send_event(owning_obj, EVENT_VERB_EAT)
+        self.send_event(owning_obj, EVENT_VERB_EXAMINE)

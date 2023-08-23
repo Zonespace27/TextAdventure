@@ -4,7 +4,7 @@ from globals import get_subclasses_recursive
 from re import search
 
 class TestClass():
-    def test_verb_names(self): #untested
+    def test_verb_names(self):
         verb_ids: list[str] = [] # Verb IDs found from subclasses of Verb
         found_verb_names: list[str] = [] # Verb names found in the _verb_names.py file
         file = open('src/packages/verbs/_verb_names.py', "r")

@@ -28,7 +28,7 @@ class Component(BaseObj):
         self.attach_to_parent(object_to_attach)
 
 
-    def attach_to_parent(self, object_to_attach: BaseObj) -> bool: # TODO: Test this shit
+    def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
         object_to_attach.object_components[self.__class__] = self
         self.parent = object_to_attach
         return True
@@ -38,11 +38,18 @@ class Component(BaseObj):
         self.parent = None
 
 
-    def arg_set(self, dict_to_use: dict[str], key_name: str, return_int: bool = False): # 3rd arg is a little gross but i'll live w/ it for now
+    def arg_set(self, dict_to_use: dict[str], key_name: str, return_type: type):
         """
         Used as part of setting a component's argument from a passed in dict
         """
         if key_name not in list(dict_to_use.keys()):
-            return (0 if return_int else "")
+            if return_type == bool:
+                return False
+            elif return_type == str:
+                return ""
+            elif return_type == int:
+                return 0
+            elif return_type == list:
+                return []
 
         return dict_to_use[key_name]

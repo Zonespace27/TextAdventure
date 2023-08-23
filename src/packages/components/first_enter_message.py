@@ -11,9 +11,9 @@ class ComponentFirstEnterMessage(Component):
         super().__init__()
 
         # What message is sent the first time the user enter the room
-        self.enter_message: str = self.arg_set(args_dict, "enter_message")
+        self.enter_message: str = self.arg_set(args_dict, "enter_message", str)
         # If this should only block everything instead of just the room's description
-        self.block_all_messages: bool = self.arg_set(args_dict, "block_all_messages")
+        self.block_all_messages: bool = self.arg_set(args_dict, "block_all_messages", bool)
 
 
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:

@@ -37,7 +37,7 @@ def test_3():
     print(Item().foobar())
 
 def test_4():
-    file = load(open('json/phys_objects.json'))
+    file = load(open('json\phys_objects.json'))
     bar = None
     for id in file:
         bar = file[id]["foo"]

@@ -17,12 +17,12 @@ class VerbCheckInventory(Verb):
         ]
     
 
-    def can_execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []) -> bool:
+    def can_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
             return False
         
         return super().can_execute_verb(owning_obj, arguments)
         
 
-    def execute_verb(self, owning_obj: BaseObj, arguments: list[str] = []):
+    def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
         self.send_event(owning_obj, EVENT_VERB_CHECK_INVENTORY)

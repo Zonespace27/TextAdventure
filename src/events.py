@@ -23,6 +23,17 @@ EVENT_VERB_CHECK_INVENTORY = "verb_check_inventory"
 # From
 EVENT_VERB_OPEN_DOOR = "verb_open_door"
 
+EVENT_VERB_GET_UP = "verb_get_up"
+
+EVENT_VERB_OPEN_CONTAINER = "verb_open_container"
+EVENT_VERB_CLOSE_CONTAINER = "verb_close_container"
+
+EVENT_VERB_EXAMINE = "verb_examine"
+
+# From Player.find_nearby_objects_by_name() and Player.check_command(), called on all objects in a room and in the player's inventory, expected to return nothing or a list of contained (not in room) objects
+EVENT_PLAYER_FIND_CONTENTS = "player_find_contents"
+
+
 
 # From ComponentItem.attempt_pickup(), called on an object to add another object to the first one's inventory, should they have one (object_to_add<PhysObj>, silent<bool>)
 # Return EVENT_RETVAL_BLOCK_INVENTORY_ADD to block the addition
@@ -61,3 +72,11 @@ EVENT_OBJECT_REMOVED_FROM_INVENTORY = "object_removed_from_inventory"
 EVENT_BASEOBJ_PRINT_DESCRIPTION = "baseobj_print_description"
 EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION = "block_baseobj_print_description"
 EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION = "block_all_print_description"
+
+
+# From PhysObj.location_move(), called on an object when it is moved to another location
+EVENT_PHYSOBJ_LOCATION_MOVE = "physobj_location_move"
+
+
+# From ComponentKey.attempt_unlock(), called on an object when an object with a key component is used on it (key_id<str>)
+EVENT_LOCK_ATTEMPT_UNLOCK = "lock_attempt_unlock"
