@@ -9,12 +9,12 @@ from globals import get_subclasses_recursive, resource_path
 
 class TestClass():
     object_file_locs: list[str] = [ # Once i've got a concrete file structure down, i'll convert this to something better
-        resource_path('json\objects.json'),
-        resource_path('json\doors.json'),
-        resource_path('json\objects/containers.json'),
+        resource_path('json/objects.json'),
+        resource_path('json/doors.json'),
+        resource_path('json/objects/containers.json'),
     ]
     room_file_locs: list[str] = [ # Same here
-        resource_path('json\\rooms.json'),
+        resource_path('json/rooms.json'),
     ]
 
     def test_unique_object_ids(self):

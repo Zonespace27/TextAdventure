@@ -118,7 +118,7 @@ def assemble_elements():
 
 
 if __name__ == "__main__":
-    if getcwd().endswith("\src"): # Gross hack that works for .bat junk
+    if getcwd().endswith("\\src"): # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\src"))
 
     input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
