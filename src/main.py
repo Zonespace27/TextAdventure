@@ -107,7 +107,7 @@ def assemble_components():
 def init_player():
     globals.player_ref = player.Player()
     globals.roomid_to_room["office_backroom"].add_to_room(globals.player_ref)
-    globals.player_ref.add_component(ComponentLayingDown, {"get_up_message": "You get up from the floor, accidentally knocking away an empty bottle. You look down at your clothes, your form a general mess. Your dress shirt is stained with a few different substances, your coat looks like it's been in the possession of a dozen cats, and your shoes... is that vomit on them? Eugh. It might be a good idea to look around, get your bearings, instead of staring at your clothes, however."})
+    globals.player_ref.add_component(ComponentLayingDown, {"get_up_message": "You get up from the floor, accidentally knocking away an empty bottle. You look down at your clothes, your form a general mess. Your dress shirt is stained with a few different substances, your coat looks like it's been in the possession of a dozen cats, and your shoes... is that vomit on them? Eugh. Though, it might be a good idea to look around instead of staring at your clothes."})
     asyncio.run(globals.player_ref.begin_taking_input())
 
 

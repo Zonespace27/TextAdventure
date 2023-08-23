@@ -28,7 +28,9 @@ class BaseObj(object):
 
             for component_id in list(globals.object_id_data[object_id]["components"].keys()):
                 component_id: str
-                self.add_component(globals.component_id_to_class[component_id], list(globals.object_id_data[object_id]["components"][list(globals.object_id_data[object_id]["components"].keys()).index(component_id)]))
+                key_index: int = list(globals.object_id_data[object_id]["components"].keys()).index(component_id)
+                dictkey: str = list(globals.object_id_data[object_id]["components"].keys())[key_index]
+                self.add_component(globals.component_id_to_class[component_id], globals.object_id_data[object_id]["components"][dictkey]) # There's a better way to do this i'm sure
             
             for element_id in globals.object_id_data[object_id]["elements"]:
                 self.add_element(element_id)
@@ -155,6 +157,7 @@ class BaseObj(object):
         for listening_object in target: #fixme
             queued_calls[listening_object] = listening_object.event_callbacks[self][event]
         
+        return_bitflag: int = 0
         for listening_object in queued_calls:
             try:
                # method_to_call = getattr(listening_object, listening_object.event_callbacks[self][event])
@@ -163,17 +166,23 @@ class BaseObj(object):
             except AttributeError:
                 print(f"{listening_object.event_callbacks[self][event]} isn't an attribute of {listening_object}.") # Check if this runtimes either lmao      
             
-            return method_to_call(*args)
+            return_bitflag |= (method_to_call(*args) or 0)
+        
+        return return_bitflag
     
 
-    def send_event(self, target: "BaseObj", event: str, *args):
+    def send_event(self, target: "BaseObj", event: str, *args) -> int:
+        """
+        This method is used to send an event to a target. See `docs/signals.md` for detail on how signals work.\n
+        This will only ever return BITFLAGS. Never check the return value of this with `==`, always use `&`.
+        """
         if not (target.object_lookup):
-            return
+            return 0
         
         if not (event in list(target.object_lookup.keys())):
-            return
+            return 0
         
-        return target._send_event(event, [target, *args])
+        return target._send_event(event, [target, *args]) or 0 # Since we're always returning a bitflag, return 0 if the event doesn't return anything
 
 
     def add_component(self, component_class: type["Component"], arg_dict: dict[str]):
@@ -259,7 +268,7 @@ class BaseObj(object):
 
     def force_remove_trait(self, trait_to_remove: str):
         """
-        Remove a trait no matter what or how many sources it has. Use with care
+        Remove a trait no matter what or how many sources it has. Use with care.
         """
         if not (trait_to_remove in self.traits):
             return

@@ -68,7 +68,7 @@
 
 
     "office_backroom": {
-        "desc": "You see the back room of your office. The aged lights give off a low hum as they bathe the room in a dim yellow color. As you enter, the hard-worn grey and olive carpet creaks beneath your feet.",
+        "desc": "You see the back room of your office. The aged lights give off a low hum as they bathe the room in a dim yellow color. The hard-worn grey and olive carpet creaks beneath your feet.",
         "objects": [
             "liquor_bottle",
             "calendar",
@@ -77,7 +77,7 @@
         "verbs": [],
         "components": {
             "component_first_enter_message": {
-                "enter_message": "You suddenly wake, eyes flying open to meet... the ceiling of your office, it seems. The dull, flickering fluorescent light shines in your eyes, an annoyance in a confusing awakening. Your first thought is how you got there, only to be interrupted by the mother of all hangovers hitting your head like a pickaxe. Groaning, you try to remember how you ended up here, but it's as if it never happened, you can't think of a thing.",
+                "enter_message": "You suddenly wake, eyes flying open to meet... the ceiling of your office, it seems. The dull, flickering fluorescent light shines in your eyes, an annoyance in a confusing awakening. The beginning of forming a thought is immediately interrupted by the mother of all hangovers hitting your head like a pickaxe. Groaning, you try to remember how you ended up in your office, but you can't think of a thing.",
                 "block_all_messages": true
             }
         }

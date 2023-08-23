@@ -1,6 +1,5 @@
 from base_obj import BaseObj
-import globals
-from bitflags import PLAYER_LAYING_DOWN, VERB_OVERRIDE_LAYDOWN
+from events.verb_events import EVENT_VERB_CAN_EXECUTE, EVENT_RETVAL_BLOCK_VERB_EXECUTE
 
 class Verb(BaseObj):
     """
@@ -35,8 +34,7 @@ class Verb(BaseObj):
         if self.requires_all_args and not (len(arguments) == len(self.expected_args)):
             return False
         
-        if (globals.player_ref.player_flags & PLAYER_LAYING_DOWN) and not (self.verb_flags & VERB_OVERRIDE_LAYDOWN):
-            print("You can't do this while laying down!")
+        if self.send_event(owning_obj, EVENT_VERB_CAN_EXECUTE, self) & EVENT_RETVAL_BLOCK_VERB_EXECUTE:
             return False
         
         return True

@@ -49,7 +49,7 @@
                 "open_message": "You open the safe.",
                 "close_message": "You close the safe.",
                 "open_examine_message": "You see the dark inside of the safe. Inside is:\n",
-                "close_examine_message": "You see a heavy, imposing safe.",
+                "closed_examine_message": "You see a heavy, imposing safe.",
                 "initial_contents": [
                     "red_pen"
                 ]

@@ -1,6 +1,6 @@
 # Blocks a player from using any verb that doesn't have the VERB_OVERRIDE_LAYDOWN flag
-PLAYER_LAYING_DOWN = (1<<0)
+PLAYER_LAYING_DOWN = (1<<0) # DEPRECATED
 
 
-# Overrides the PLAYER_LAYING_DOWN flag
-VERB_OVERRIDE_LAYDOWN = (1<<0)
+# If a verb should ignore the player laying down
+VERB_IGNORE_LAYDOWN = (1<<0)

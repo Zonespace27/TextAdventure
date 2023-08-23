@@ -50,7 +50,7 @@ class Player(physical_obj.PhysObj):
             print(room_to_look.desc)
 
         for obj in room_to_look.contents:
-            if (self.send_event(obj, EVENT_BASEOBJ_PRINT_DESCRIPTION) == EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION):
+            if (self.send_event(obj, EVENT_BASEOBJ_PRINT_DESCRIPTION) & EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION):
                 continue
                 
             print(obj.desc)

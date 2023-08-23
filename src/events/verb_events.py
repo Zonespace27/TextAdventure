@@ -1,5 +1,8 @@
+# From Verb.can_execute_verb(), called on the owning object to confirm that it will allow the verb to succeed (executing_verb<Verb>)
+EVENT_VERB_CAN_EXECUTE = "verb_can_execute"
+EVENT_RETVAL_BLOCK_VERB_EXECUTE = (1<<0)
 
-# From VerbEat.execute_verb(), called on an object when the eat verb succeeds on it (eaten)
+# From VerbEat.execute_verb(), called on an object when the eat verb succeeds on it (eaten<bool>)
 EVENT_VERB_EAT = "verb_eat"
 
 
