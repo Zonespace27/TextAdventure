@@ -128,7 +128,10 @@ class Player(physical_obj.PhysObj):
         for i in reverse_list:  
             argument = ""      
             for i2 in range(i + 1):
-                argument += arg_list[i2]
+                if argument:
+                    argument += f" {arg_list[i2]}"
+                else:
+                    argument += arg_list[i2]
 
                 if isinstance(verb.expected_args[verb_argument_pos], str):
                     return (argument, i2)
