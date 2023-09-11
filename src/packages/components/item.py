@@ -51,7 +51,7 @@ class ComponentItem(Component):
         ### EVENT FUNCT
         """
 
-        if self.send_event(globals.player_ref, EVENT_INVENTORY_ADD_OBJECT, self.parent) == EVENT_RETVAL_BLOCK_INVENTORY_ADD:
+        if self.send_event(globals.player_ref, EVENT_INVENTORY_ADD_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_ADD:
             return False
         
         return True
@@ -62,7 +62,7 @@ class ComponentItem(Component):
         ### EVENT FUNCT
         """
 
-        if self.send_event(globals.player_ref, EVENT_INVENTORY_REMOVE_OBJECT, self.parent) == EVENT_RETVAL_BLOCK_INVENTORY_REMOVE:
+        if self.send_event(globals.player_ref, EVENT_INVENTORY_REMOVE_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_REMOVE:
             return False
         
         return True

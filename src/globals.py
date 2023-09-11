@@ -1,10 +1,14 @@
 from typing import TYPE_CHECKING
-import sys
+from sys import getrefcount
 from os import path, getcwd
 import argparse
+from gc import get_referrers
 
 if TYPE_CHECKING:
     from base_obj import BaseObj
+
+# If True, will print any remaining references to an object on qdel
+GC_HUNTING = True
 
 def initialize_globals():
     # Dict of "roomid" : Room reference
@@ -69,6 +73,12 @@ def qdel(object_to_delete: "BaseObj"):
     """
     if object_to_delete:
         object_to_delete.dispose()
+
+    if GC_HUNTING:
+        referrers = get_referrers(object_to_delete)
+        print(f"References of {object_to_delete}: {getrefcount(referrers)}")
+        print(str(referrers))
+
     del object_to_delete
 
 

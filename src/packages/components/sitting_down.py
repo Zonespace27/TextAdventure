@@ -5,16 +5,16 @@ from events.verb_events import EVENT_VERB_GET_UP, EVENT_VERB_CAN_EXECUTE, EVENT_
 from ..verbs._verb_names import VERB_GET_UP
 from ..verbs._verb import Verb
 import globals
-from bitflags import VERB_IGNORE_LAYDOWN, PLAYER_LAYING_DOWN
+from bitflags import VERB_IGNORE_SITDOWN
 
-class ComponentLayingDown(Component):
-    id = "component_laying_down"
+class ComponentSittingDown(Component):
+    id = "component_sitting_down"
 
     def __init__(self, args_dict = dict[str]) -> None:
         super().__init__()
 
         # What message is given when you get up
-        self.get_up_message = self.arg_set(args_dict, "get_up_message", str) or "You get up from the floor."
+        self.get_up_message = self.arg_set(args_dict, "get_up_message", str) or "You get up from the chair."
 
 
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
@@ -29,7 +29,6 @@ class ComponentLayingDown(Component):
         object_to_attach.add_verb(VERB_GET_UP)
         self.register_event(object_to_attach, EVENT_VERB_GET_UP, self.get_up)
         self.register_event(object_to_attach, EVENT_VERB_CAN_EXECUTE, self.on_verb_execute)
-        object_to_attach.player_flags |= PLAYER_LAYING_DOWN
 
 
     def detach_from_parent(self):
@@ -39,7 +38,6 @@ class ComponentLayingDown(Component):
             player_parent.remove_verb(VERB_GET_UP)
             self.unregister_event(player_parent, EVENT_VERB_GET_UP)
             self.unregister_event(player_parent, EVENT_VERB_CAN_EXECUTE)
-            player_parent.player_flags &= ~PLAYER_LAYING_DOWN
 
         return super().detach_from_parent()
 
@@ -48,7 +46,7 @@ class ComponentLayingDown(Component):
         """
         ### EVENT FUNCT
         """
-        print(self.get_up_message)
+        print(self.get_up_message) #TODO: make this work for sitting down in a chair
         globals.qdel(self)
 
     
@@ -56,7 +54,7 @@ class ComponentLayingDown(Component):
         """
         ### EVENT FUNCT
         """
-        if(executing_verb.verb_flags & VERB_IGNORE_LAYDOWN):
+        if(executing_verb.verb_flags & VERB_IGNORE_SITDOWN):
             return
-        print("You can't do this while lying down!")
+        print("You can't do this while sitting down!")
         return EVENT_RETVAL_BLOCK_VERB_EXECUTE

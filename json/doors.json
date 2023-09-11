@@ -19,43 +19,61 @@
             }
         }
     },
-    "door_bedroom_to_bathroom": {
-        "name": "door",
-        "desc": "You see an open door, with some sort of bathroom inside that room.",
+    "door_office_backroom_to_office_bathroom": {
+        "name": "wooden door",
+        "alternate_names": [
+            "worn door",
+            "door",
+            "white door",
+            "wood door"
+        ],
+        "desc": "You see a white, worn down wooden door in the back of the room.",
         "verbs": [],
         "components": {
             "component_door": {
-                "door_to": "bathroom"
+                "door_to": "office_bathroom"
             }
         }
     },
-    "door_bathroom_to_bedroom": {
-        "name": "door",
-        "desc": "You see an open door, with some sort of bedroom inside that room.",
+    "door_office_bathroom_to_office_backroom": {
+        "name": "wooden door",
+        "alternate_names": [
+            "worn door",
+            "door",
+            "white door",
+            "wood door"
+        ],
+        "desc": "You see a white, worn down wooden door opposite the sink.",
         "verbs": [],
         "components": {
             "component_door": {
-                "door_to": "bedroom"
+                "door_to": "office_backroom"
             }
         }
     },
-    "door_bedroom_to_livingroom": {
-        "name": "door",
-        "desc": "You ",
+    "door_office_backroom_to_office_frontroom": {
+        "name": "boring door",
+        "alternate_names": [
+            "brown door"
+        ],
+        "desc": "You see a fairly boring-looking brown door.",
         "verbs": [],
         "components": {
             "component_door": {
-                "door_to": "bedroom"
+                "door_to": "office_frontroom"
             }
         }
     },
-    "door_livingroom_to_bedroom": {
-        "name": "door",
-        "desc": "You ",
+    "door_office_frontroom_to_office_backroom": {
+        "name": "boring door",
+        "alternate_names": [
+            "brown door"
+        ],
+        "desc": "You see a fairly boring-looking brown door behind the reception desk.",
         "verbs": [],
         "components": {
             "component_door": {
-                "door_to": "bedroom"
+                "door_to": "office_frontroom"
             }
         }
     }

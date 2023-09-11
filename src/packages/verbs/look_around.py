@@ -2,6 +2,7 @@ from base_obj import BaseObj
 from player import Player
 from ._verb import Verb 
 from ._verb_names import VERB_LOOK_AROUND
+from bitflags import VERB_IGNORE_LAYDOWN, VERB_IGNORE_SITDOWN
 
 class VerbLookAround(Verb):
     verb_id = VERB_LOOK_AROUND
@@ -14,6 +15,7 @@ class VerbLookAround(Verb):
             "look room",
             "check room",
         ]
+        self.verb_flags = VERB_IGNORE_LAYDOWN | VERB_IGNORE_SITDOWN
     
 
     def try_execute_verb(self, owning_obj: Player, arguments: list = []) -> bool:

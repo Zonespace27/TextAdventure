@@ -68,7 +68,7 @@ class ComponentInventory(Component):
         if len(self.inventory) >= self.inventory_size:
             return EVENT_RETVAL_BLOCK_INVENTORY_ADD
 
-        if self.send_event(object_to_add, EVENT_OBJECT_ADDING_TO_INVENTORY, self.parent, self) == EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_ADD: #unused currently
+        if self.send_event(object_to_add, EVENT_OBJECT_ADDING_TO_INVENTORY, self.parent, self) & EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_ADD: #unused currently
             return EVENT_RETVAL_BLOCK_INVENTORY_ADD
         
         if object_to_add.current_room:
@@ -98,7 +98,7 @@ class ComponentInventory(Component):
         if not (object_to_remove in self.inventory):
             return EVENT_RETVAL_BLOCK_INVENTORY_REMOVE
 
-        if self.send_event(object_to_remove, EVENT_OBJECT_REMOVING_FROM_INVENTORY, self.parent, self) == EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_REMOVE: #unused as well
+        if self.send_event(object_to_remove, EVENT_OBJECT_REMOVING_FROM_INVENTORY, self.parent, self) & EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_REMOVE: #unused as well
             return EVENT_RETVAL_BLOCK_INVENTORY_REMOVE
         
         self.remove_object(object_to_remove, silent)

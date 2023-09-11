@@ -69,5 +69,66 @@
             }
         },
         "elements": {}
+    },
+    "bathroom_sink": {
+        "name": "sink",
+        "alternate_names": [
+            "basin",
+            "water basin"
+        ],
+        "desc": "You see a chipped, sad-looking sink mounted to the far wall.",
+        "verbs": [],
+        "components": {},
+        "elements": {}
+    },
+    "broken_mirror": {
+        "name": "shattered mirror",
+        "alternate_names": [
+            "broken mirror",
+            "mirror"
+        ],
+        "desc": "You see a frame that presumably held a mirror at one point. Now, though, the frame sits blank with only a few disjointed shards of the reflective glass jutting out of the sides.",
+        "verbs": [],
+        "components": {},
+        "elements": {}
+    },
+    "reception_desk": {
+        "name": "reception desk",
+        "alternate_names": [
+            "desk",
+            "receptionist's desk"
+        ],
+        "desc": "You see a diminuative and brown desk guarding the door to the back room of your office. At one point, you recall, you had a receptionist sitting there.",
+        "verbs": [],
+        "components": {},
+        "elements": {} 
+    },
+    "reception_chair": {
+        "name": "chair",
+        "alternate_names": [
+            "seat",
+            "sitting object",
+            "seating"
+        ],
+        "desc": "You see a worn-out office chair behind the reception desk. Its black cushioning is worn down in the exact spot where someone would sit.",
+        "verbs": [],
+        "components": {
+            "component_chair": {}
+        },
+        "elements": {} 
+    },
+    "front_office_chair": {
+        "name": "chair",
+        "alternate_names": [
+            "seat",
+            "sitting object",
+            "seating"
+        ],
+        "desc": "You see a cheap chair, its back pressed up against the wall. The seating cushion is a faded tan, with the arms and legs being some kind of black metal.",
+        "verbs": [],
+        "components": {
+            "component_chair": {}
+        },
+        "elements": {} 
     }
 }

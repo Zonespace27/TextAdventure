@@ -35,6 +35,7 @@ class Component(BaseObj):
 
     
     def detach_from_parent(self):
+        self.parent.object_components.pop(self.__class__)
         self.parent = None
 
 

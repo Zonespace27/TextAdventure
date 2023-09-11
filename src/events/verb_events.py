@@ -25,3 +25,7 @@ EVENT_VERB_OPEN_CONTAINER = "verb_open_container"
 EVENT_VERB_CLOSE_CONTAINER = "verb_close_container"
 
 EVENT_VERB_EXAMINE = "verb_examine"
+
+EVENT_VERB_SIT = "verb_sit"
+
+EVENT_VERB_GET_UP = "verb_get_up"

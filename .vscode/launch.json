@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "Python: main.py (Integrated Terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/main.py",
+            "console": "integratedTerminal",
+        }
+    ]
+}

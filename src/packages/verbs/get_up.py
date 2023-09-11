@@ -2,8 +2,7 @@ from base_obj import BaseObj
 from events.verb_events import EVENT_VERB_GET_UP
 from ._verb import Verb
 from ._verb_names import VERB_GET_UP
-from ..components.laying_down import ComponentLayingDown
-from bitflags import VERB_IGNORE_LAYDOWN
+from bitflags import VERB_IGNORE_LAYDOWN, VERB_IGNORE_SITDOWN
 
 class VerbGetUp(Verb):
     verb_id = VERB_GET_UP
@@ -16,14 +15,7 @@ class VerbGetUp(Verb):
             "stand up",
             "get up",
         ]
-        self.verb_flags = VERB_IGNORE_LAYDOWN
-
-    def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
-        if not owning_obj.get_component(ComponentLayingDown):
-            return False
-
-        return super().try_execute_verb(owning_obj, arguments)
-
+        self.verb_flags = VERB_IGNORE_LAYDOWN | VERB_IGNORE_SITDOWN
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
         self.send_event(owning_obj, EVENT_VERB_GET_UP)

@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from exception import NonExistentJsonObject
 import globals
 
 if TYPE_CHECKING:
@@ -24,7 +25,10 @@ class BaseObj(object):
         self.traits: dict[str, list[str]] = {}
 
         if object_id:
-            self.source_verbs = globals.object_id_data[object_id]["verbs"].copy()
+            try:
+                self.source_verbs = globals.object_id_data[object_id]["verbs"].copy()
+            except KeyError:
+                raise NonExistentJsonObject
 
             for component_id in list(globals.object_id_data[object_id]["components"].keys()):
                 component_id: str
@@ -98,8 +102,6 @@ class BaseObj(object):
             if isinstance(lookup[event], list):
                 lookup_event_len = len(lookup[event])
 
-
-
                 if lookup_event_len == 2:
                     lookup[event] = (lookup[event] - self)[0]
                 
@@ -123,6 +125,9 @@ class BaseObj(object):
                 
                 else:
                     lookup[event].remove(self)
+            
+            else:
+                lookup.pop(event)
 
         for event in event_or_events:
             self.event_callbacks[target].pop(event)
@@ -136,7 +141,6 @@ class BaseObj(object):
         if not isinstance(target, list): 
             listening_object = target #Type me later
             try:
-               # method_to_call = getattr(listening_object, listening_object.event_callbacks[self][event])
                method_to_call = listening_object.event_callbacks[self][event]
 
             except AttributeError:
@@ -160,7 +164,6 @@ class BaseObj(object):
         return_bitflag: int = 0
         for listening_object in queued_calls:
             try:
-               # method_to_call = getattr(listening_object, listening_object.event_callbacks[self][event])
                 method_to_call = listening_object.event_callbacks[self][event] 
 
             except AttributeError:
