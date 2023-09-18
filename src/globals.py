@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from base_obj import BaseObj
 
 # If True, will print any remaining references to an object on qdel
-GC_HUNTING = True
+GC_HUNTING = False
 
 def initialize_globals():
     # Dict of "roomid" : Room reference

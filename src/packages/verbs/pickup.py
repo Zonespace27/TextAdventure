@@ -44,17 +44,17 @@ class VerbPickup(Verb):
         return super().can_attach_to(object_to_attach)
     
 
-    def try_execute_verb(self, owning_obj: PhysObj, arguments: list = []) -> bool:
+    def can_execute_verb(self, owning_obj: PhysObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
             return False
         
-        if not (owning_obj == arguments[0]):
+        if not self.check_object_argument(owning_obj, arguments, 0):
             return False
         
         if (owning_obj.location == globals.player_ref.get_component(ComponentInventory)):
             return False
 
-        return super().try_execute_verb(owning_obj, arguments)
+        return super().can_execute_verb(owning_obj, arguments)
         
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):

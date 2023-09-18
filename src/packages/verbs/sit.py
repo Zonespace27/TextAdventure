@@ -4,7 +4,6 @@ from ._verb import Verb
 from ._verb_names import VERB_SIT  
 from ..components.chair import ComponentChair
 from physical_obj import PhysObj
-from bitflags import VERB_IGNORE_LAYDOWN
 
 class VerbSit(Verb):
     verb_id = VERB_SIT
@@ -20,17 +19,17 @@ class VerbSit(Verb):
             "rest",
         ]
 
-    def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
+    def can_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
             return False
         
-        if not (owning_obj == arguments[0]):
+        if not self.check_object_argument(owning_obj, arguments, 0):
             return False
         
         if not owning_obj.get_component(ComponentChair):
             return False
 
-        return super().try_execute_verb(owning_obj, arguments)
+        return super().can_execute_verb(owning_obj, arguments)
 
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):

@@ -2,7 +2,6 @@ from ._component import Component
 from physical_obj import PhysObj
 from base_obj import BaseObj
 from ..verbs._verb_names import VERB_UNLOCK
-from traits import TRAIT_LOCKED
 
 class ComponentKey(Component):
     id = "component_key"

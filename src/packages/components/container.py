@@ -1,7 +1,8 @@
 from ._component import Component
+from .inventory import ComponentInventory
 from base_obj import BaseObj
 from physical_obj import PhysObj
-from events.events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PLAYER_FIND_CONTENTS
+from events.events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PLAYER_FIND_CONTENTS, EVENT_OBJECT_ADDED_TO_INVENTORY
 from events.verb_events import EVENT_VERB_OPEN_CONTAINER, EVENT_VERB_CLOSE_CONTAINER, EVENT_VERB_EXAMINE
 from object import Object
 from ..verbs._verb_names import VERB_OPEN_CONTAINER, VERB_EXAMINE
@@ -75,13 +76,22 @@ class ComponentContainer(Component):
     
 
     def add_object(self, object: Object, silent: bool = False):
+        self.register_event(object, EVENT_OBJECT_ADDED_TO_INVENTORY, self.on_object_taken)
         self.contents.append(object)
         object.move_location(self.parent)
     
     
     def remove_object(self, object: Object, silent: bool = False):
+        self.unregister_event(object, EVENT_OBJECT_ADDED_TO_INVENTORY)
         self.contents.remove(object)
-    
+
+
+    def on_object_taken(self, source, inventory_owner: PhysObj, inventory: ComponentInventory):
+        """
+        ### EVENT FUNCT
+        """
+        self.remove_object(source)
+
 
     def open_container(self, source):
         """

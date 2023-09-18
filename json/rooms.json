@@ -31,7 +31,8 @@
             "liquor_bottle",
             "calendar",
             "wall_safe",
-            "door_office_backroom_to_office_bathroom"
+            "door_office_backroom_to_office_bathroom",
+            "door_office_backroom_to_office_frontroom"
         ],
         "verbs": [],
         "components": {
@@ -58,7 +59,8 @@
             "reception_chair",
             "front_office_chair",
             "front_office_chair",
-            "front_office_chair"
+            "front_office_chair",
+            "door_office_frontroom_to_office_backroom"
         ],
         "verbs": [],
         "components": {}

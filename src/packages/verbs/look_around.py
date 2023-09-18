@@ -18,11 +18,11 @@ class VerbLookAround(Verb):
         self.verb_flags = VERB_IGNORE_LAYDOWN | VERB_IGNORE_SITDOWN
     
 
-    def try_execute_verb(self, owning_obj: Player, arguments: list = []) -> bool:
+    def can_execute_verb(self, owning_obj: Player, arguments: list = []) -> bool:
         if not owning_obj.current_room: # Somehow?????
             return False
 
-        return super().try_execute_verb(owning_obj, arguments)
+        return super().can_execute_verb(owning_obj, arguments)
         
 
     def execute_verb(self, owning_obj: Player, arguments: list = []):

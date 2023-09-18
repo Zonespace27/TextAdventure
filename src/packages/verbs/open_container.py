@@ -17,14 +17,14 @@ class VerbOpenContainer(Verb):
         ]
 
 
-    def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
+    def can_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if len(arguments) < len(self.expected_args):
             return False
 
-        if not (owning_obj == arguments[0]):
+        if not self.check_object_argument(owning_obj, arguments, 0):
             return False
 
-        return super().try_execute_verb(owning_obj, arguments)
+        return super().can_execute_verb(owning_obj, arguments)
 
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):

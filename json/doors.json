@@ -54,7 +54,8 @@
     "door_office_backroom_to_office_frontroom": {
         "name": "boring door",
         "alternate_names": [
-            "brown door"
+            "brown door",
+            "door"
         ],
         "desc": "You see a fairly boring-looking brown door.",
         "verbs": [],
@@ -67,13 +68,14 @@
     "door_office_frontroom_to_office_backroom": {
         "name": "boring door",
         "alternate_names": [
-            "brown door"
+            "brown door",
+            "door"
         ],
         "desc": "You see a fairly boring-looking brown door behind the reception desk.",
         "verbs": [],
         "components": {
             "component_door": {
-                "door_to": "office_frontroom"
+                "door_to": "office_backroom"
             }
         }
     }
