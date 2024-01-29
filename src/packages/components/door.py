@@ -2,6 +2,7 @@ from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_OPEN_DOOR
+from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN
 from ..verbs._verb_names import VERB_OPEN_DOOR
 import globals
 from traits import TRAIT_LOCKED
@@ -49,6 +50,9 @@ class ComponentDoor(Component):
         """
         if self.parent.has_trait(TRAIT_LOCKED):
             print("You can't open this, it's locked!")
+            return
+        
+        if self.send_event(self, EVENT_DOOR_ATTEMPT_OPEN) & EVENT_RETVAL_BLOCK_DOOR_OPEN:
             return
     
         room_to_go_to: "Room" = globals.roomid_to_room[self.door_to]

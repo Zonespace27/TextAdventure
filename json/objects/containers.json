@@ -28,7 +28,7 @@
             "component_container": {
                 "requires_open": false,
                 "show_contents_examine": true,
-                "no_open_close_examine_message": "Looking closer, you see that the 1st through 18th have a slash through them, made by a red pen. On the 19th box, you see \"MEETING\" scribbled in. How descriptive. As you step back from the calendar, you notice:\n",
+                "no_open_close_examine_message": "Looking closer, you see that the 1st through 18th have a red-colored slash through them. On the 19th box, you see \"MEETING\" scribbled in. How descriptive. As you step back from the calendar, you notice:\n",
                 "initial_contents": [
                     "red_pen"
                 ]
@@ -39,6 +39,7 @@
     "wall_safe": {
         "name": "wall safe",
         "alternate_names": [
+            "safe"
         ],
         "desc": "You see a wall-mounted safe.",
         "verbs": [],
@@ -49,17 +50,43 @@
                 "open_message": "You open the safe.",
                 "close_message": "You close the safe.",
                 "open_examine_message": "You see a small cavity in the wall, lined with metal. A safe door hangs to the side, disengaged. Inside is:\n",
-                "closed_examine_message": "You see a safe door jutting out of the wall.",
+                "closed_examine_message": "You see a steel safe door jutting out of the wall, perfectly flat and sheen aside from a keyhole.",
                 "initial_contents": [
-                    "red_pen"
+                    "pencil"
                 ]
             },
             "component_locked": {
-                "lock_id": "safe_lock",
+                "lock_id": "office_safe_lock",
                 "unlock_message": "You insert the key, turning it with a satisfying *CLACK*.",
                 "examine_message": "You see a keyhole on the door of the safe."
             }
         },
         "elements": {}
+    },
+    "reception_desk": {
+        "name": "reception desk",
+        "alternate_names": [
+            "desk",
+            "receptionist's desk",
+            "drawer",
+            "desk drawer"
+        ],
+        "desc": "You see a diminutive, brown desk guarding the door to the inner sanctum of your office. At one point, you recall, you had a receptionist sitting there.",
+        "verbs": [],
+        "components": {
+            "component_container": {
+                "requires_open": true,
+                "show_contents_examine": true,
+                "open_message": "You open the desk drawer.",
+                "close_message": "You close the desk drawer.",
+                "open_examine_message": "Looking inside the desk drawer, you see:\n",
+                "closed_examine_message": "You spot a singular, battered drawer on the underside of the desk.",
+                "view_message": "Its desk drawer is",
+                "initial_contents": [
+                    "office_safe_key"
+                ]
+            }
+        },
+        "elements": {} 
     }
 }

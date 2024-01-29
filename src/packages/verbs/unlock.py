@@ -26,17 +26,24 @@ class VerbUnlock(Verb):
             "unlock",
         ]
     
-
     def argument_is_valid(self, argument, index):
         if not isinstance(argument, PhysObj):
             return False
 
         argument: PhysObj
-        if not (argument.location.__class__ == ComponentInventory):
+        #if not (argument.location.__class__ == ComponentInventory):
+        if not (argument.get_component(ComponentLocked)):
             return False
         
         return super().argument_is_valid(argument, index)
     
+
+    def check_object_argument(self, owning_obj: BaseObj, arguments: list = [], argument_index: int = 0) -> bool:
+        if (len(arguments) - 1) < argument_index:
+            return False
+        
+        return True
+
 
     def can_attach_to(self, object_to_attach: BaseObj):
         if not object_to_attach.get_component(ComponentItem):

@@ -78,5 +78,35 @@
                 "door_to": "office_backroom"
             }
         }
+    },
+    "door_office_frontroom_to_outside": {
+        "name": "glass door",
+        "alternate_names": [
+            "clear door",
+            "door",
+            "outside door"
+        ],
+        "desc": "You see a glass door, letting you see outside to the road not far from your office.",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "outside"
+            }
+        }
+    },
+    "door_outside_to_office_frontroom": {
+        "name": "office door",
+        "alternate_names": [
+            "clear door",
+            "door",
+            "outside door"
+        ],
+        "desc": "You see a door to your office.",
+        "verbs": [],
+        "components": {
+            "component_door": {
+                "door_to": "office_frontroom"
+            }
+        }
     }
 }

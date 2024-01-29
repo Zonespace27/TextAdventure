@@ -40,6 +40,7 @@ def assemble_all_objects():
         globals.resource_path('json/objects.json'),
         globals.resource_path('json/doors.json'),
         globals.resource_path('json/objects/containers.json'),
+        globals.resource_path('json/objects/items.json')
     ]
     for file in file_locs:
         data = load(open(file))

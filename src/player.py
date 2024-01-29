@@ -111,7 +111,7 @@ class Player(PhysObj):
 
                 argument, arg_words_used = return_tuple
 
-                final_arg_list.append(argument) # Todo here: add a way
+                final_arg_list.append(argument) # Todo here: add a way  # What did he mean by this
 
                 arg_words_used = list(range(arg_words_used))
                 arg_words_used.reverse()
@@ -201,7 +201,7 @@ class Player(PhysObj):
                         valid_objects.append(nearby_obj)
                 
                 if len(valid_objects) == 0:
-                    return
+                    continue
                 
                 elif len(valid_objects) == 1:
                     return (valid_objects[0], i2)

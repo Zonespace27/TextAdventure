@@ -56,3 +56,6 @@ EVENT_PHYSOBJ_LOCATION_MOVE = "physobj_location_move"
 
 # From ComponentKey.attempt_unlock(), called on an object when an object with a key component is used on it (key_id<str>)
 EVENT_LOCK_ATTEMPT_UNLOCK = "lock_attempt_unlock"
+
+EVENT_DOOR_ATTEMPT_OPEN = "door_attempt_open"
+EVENT_RETVAL_BLOCK_DOOR_OPEN = (1<<0)

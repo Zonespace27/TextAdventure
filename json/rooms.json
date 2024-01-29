@@ -1,68 +1,75 @@
 {
-    "debug": {
-        "desc": "Description",
-        "objects": [
-            "debug_item",
-            "debug_item_2",
-            "door_debug_to_debug2"
-        ],
-        "verbs": [],
-        "components": {}
-    },
-    "debug2": {
-        "desc": "Description 2",
-        "objects": [
-            "debug_item",
-            "debug_item_2",
-            "door_debug2_to_debug"
-        ],
-        "verbs": [],
-        "components": {
-            "component_first_enter_message": {
-                "enter_message": "Initial message",
-                "block_all_messages": true
-            }
-        }
-    },
-
-    "office_backroom": {
-        "desc": "You see the back room of your office. The aged lights give off a low hum as they bathe the room in a dim yellow color. The hard-worn grey and olive carpet creaks beneath your feet.",
-        "objects": [
-            "liquor_bottle",
-            "calendar",
-            "wall_safe",
-            "door_office_backroom_to_office_bathroom",
-            "door_office_backroom_to_office_frontroom"
-        ],
-        "verbs": [],
-        "components": {
-            "component_first_enter_message": {
-                "enter_message": "You suddenly wake, eyes flying open to meet... the ceiling of your office, it seems. The dull, flickering fluorescent light shines in your eyes, an annoyance in a confusing awakening. The beginning of forming a thought is immediately interrupted by the mother of all hangovers hitting your head like a pickaxe. Groaning, you try to remember how you ended up in your office, but you can't think of a thing.",
-                "block_all_messages": true
-            }
-        }
-    },
-    "office_bathroom": {
-        "desc": "You see your office's bathroom, as wretched as it is. The light blue color of the wall tiling's faded over time, giving the room an especially depressing look.",
-        "objects": [
-            "bathroom_sink",
-            "broken_mirror",
-            "door_office_bathroom_to_office_backroom"
-        ],
-        "verbs": [],
-        "components": {}
-    },
-    "office_frontroom": {
-        "desc": "You see the reception area of your office. The yellowing wallpaper gives the room a level of antiquity that seems consistent throughout the rest of your office.",
-        "objects": [
-            "reception_desk",
-            "reception_chair",
-            "front_office_chair",
-            "front_office_chair",
-            "front_office_chair",
-            "door_office_frontroom_to_office_backroom"
-        ],
-        "verbs": [],
-        "components": {}
+  "debug": {
+    "desc": "Description",
+    "objects": [
+        "debug_item", 
+        "debug_item_2", 
+        "door_debug_to_debug2"
+    ],
+    "verbs": [],
+    "components": {}
+  },
+  "debug2": {
+    "desc": "Description 2",
+    "objects": [
+        "debug_item", 
+        "debug_item_2", 
+        "door_debug2_to_debug"
+    ],
+    "verbs": [],
+    "components": {
+      "component_first_enter_message": {
+        "enter_message": "Initial message",
+        "block_all_messages": true
+      }
     }
+  },
+
+  "office_backroom": {
+    "desc": "You see the back room of your office. The aged lights give off a low hum as they bathe the room in a dim yellow color. The hard-worn grey and olive carpet creaks beneath your feet.",
+    "objects": [
+      "liquor_bottle",
+      "calendar",
+      "wall_safe",
+      "door_office_backroom_to_office_bathroom",
+      "door_office_backroom_to_office_frontroom"
+    ],
+    "verbs": [],
+    "components": {
+      "component_first_enter_message": {
+        "enter_message": "You suddenly wake, eyes flying open to meet... the ceiling of your office, it seems. The dull, flickering fluorescent light shines in your eyes, an annoyance in a confusing awakening. The beginning of forming a thought is immediately interrupted by the mother of all hangovers hitting your head like a pickaxe. Groaning, you try to remember how you ended up in your office, but you can't think of a thing.",
+        "block_all_messages": true
+      }
+    }
+  },
+  "office_bathroom": {
+    "desc": "You see your office's bathroom, wretched as it may be. The light blue color of the wall tiling's faded over time, giving the room an especially depressing look.",
+    "objects": [
+      "bathroom_sink",
+      "broken_mirror",
+      "door_office_bathroom_to_office_backroom"
+    ],
+    "verbs": [],
+    "components": {}
+  },
+  "office_frontroom": {
+    "desc": "You see the reception area of your office. The yellowing wallpaper gives the room a level of antiquity that seems consistent throughout the rest of your office.",
+    "objects": [
+      "reception_desk",
+      "reception_chair",
+      "front_office_chair",
+      "front_office_chair",
+      "front_office_chair",
+      "door_office_frontroom_to_office_backroom",
+      "door_office_frontroom_to_outside"
+    ],
+    "verbs": [],
+    "components": {}
+  },
+  "outside": {
+    "desc": "Are you there, God? It's me, Deckard.",
+    "objects": [
+        "door_outside_to_office_frontroom"
+    ]
+  }
 }

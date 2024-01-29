@@ -5,7 +5,7 @@ from physical_obj import PhysObj
 from events.events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PLAYER_FIND_CONTENTS, EVENT_OBJECT_ADDED_TO_INVENTORY
 from events.verb_events import EVENT_VERB_OPEN_CONTAINER, EVENT_VERB_CLOSE_CONTAINER, EVENT_VERB_EXAMINE
 from object import Object
-from ..verbs._verb_names import VERB_OPEN_CONTAINER, VERB_EXAMINE
+from ..verbs._verb_names import VERB_OPEN_CONTAINER, VERB_EXAMINE, VERB_CLOSE_CONTAINER
 from traits import TRAIT_LOCKED
 
 class ComponentContainer(Component):
@@ -33,7 +33,9 @@ class ComponentContainer(Component):
         # Message shown to the user when they examine the container when it is open
         self.open_examine_message = self.arg_set(args_dict, "open_examine_message", str) or "You look closer at the container. Inside, you see:\n"
         # Message shown to the user when they examine the container when it is closed
-        self.closed_examine_message = self.arg_set(args_dict, "closed_examine_message", str) or "You look closer at the container."     
+        self.closed_examine_message = self.arg_set(args_dict, "closed_examine_message", str) or "You look closer at the container."
+        # Message shown to the user when they look around the room that contains this container
+        self.view_message = self.arg_set(args_dict, "view_message", str) or "It is"
 
         self.set_initial_contents(self.arg_set(args_dict, "initial_contents", list))
 
@@ -50,6 +52,7 @@ class ComponentContainer(Component):
         self.register_event(object_to_attach, EVENT_PLAYER_FIND_CONTENTS, self.get_contents)
         self.register_event(object_to_attach, EVENT_VERB_EXAMINE, self.on_examine)
         object_to_attach.add_verb(VERB_OPEN_CONTAINER)
+        object_to_attach.add_verb(VERB_CLOSE_CONTAINER)
         object_to_attach.add_verb(VERB_EXAMINE)
 
         return super().attach_to_parent(object_to_attach)
@@ -65,6 +68,7 @@ class ComponentContainer(Component):
             self.unregister_event(phys_parent, EVENT_PLAYER_FIND_CONTENTS)
             self.unregister_event(phys_parent, EVENT_VERB_EXAMINE)
             self.remove_verb(VERB_OPEN_CONTAINER)
+            self.remove_verb(VERB_CLOSE_CONTAINER)
             self.remove_verb(VERB_EXAMINE)
 
         return super().detach_from_parent()
@@ -127,7 +131,7 @@ class ComponentContainer(Component):
             return
 
         phys_parent: PhysObj = self.parent
-        open_or_close_string: str = "It is " + ("open." if self.open else "closed.")
+        open_or_close_string: str = f"{self.view_message} " + ("open." if self.open else "closed.")
 
         print(f"{phys_parent.desc} {open_or_close_string}")
         return EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION
