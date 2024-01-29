@@ -10,6 +10,9 @@ if TYPE_CHECKING:
 # If True, will print any remaining references to an object on qdel
 GC_HUNTING = False
 
+# If True, will run the code in unit testing mode
+UNIT_TESTING = False
+
 def initialize_globals():
     # Dict of "roomid" : Room reference
     global roomid_to_room

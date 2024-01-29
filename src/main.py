@@ -12,6 +12,7 @@ import player
 from os import system, getcwd, chdir
 from time import sleep
 import asyncio
+import pytest
 
 def genesis():
     globals.initialize_globals() # Must be first
@@ -122,15 +123,19 @@ if __name__ == "__main__":
     if getcwd().endswith("\\src"): # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\\src"))
 
-    """input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
-    system("cls")
-    sleep(0.5)
-    print("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
-    sleep(0.5)
-    print("Work hasn't been great recently, you've been getting steadily fewer clients as the weeks and months go by, but since it's just you, you're still in business.")
-    sleep(0.5)
-    print("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
-    sleep(1)
-    input("Press ENTER to begin.")
-    system("cls")""" # Undo me when in prod
-    genesis()
+    if globals.UNIT_TESTING:
+        pytest.main()
+    
+    else:
+        """input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
+        system("cls")
+        sleep(0.5)
+        print("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
+        sleep(0.5)
+        print("Work hasn't been great recently, you've been getting steadily fewer clients as the weeks and months go by, but since it's just you, you're still in business.")
+        sleep(0.5)
+        print("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
+        sleep(1)
+        input("Press ENTER to begin.")
+        system("cls")""" # Undo me when in prod
+        genesis()
