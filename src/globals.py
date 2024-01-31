@@ -13,6 +13,7 @@ GC_HUNTING = False
 # If True, will run the code in unit testing mode
 UNIT_TESTING = False
 
+
 def initialize_globals():
     # Dict of "roomid" : Room reference
     global roomid_to_room
@@ -38,7 +39,7 @@ def initialize_globals():
     global player_ref
 
     player_ref = None
-    
+
     # Dict of "component_id" : Component class
     global component_id_to_class
 
@@ -57,8 +58,9 @@ def initialize_globals():
     # If we are running development mode or not, affecting some backend things
     global development_mode
 
-    #development_mode = args.development
-    development_mode = False # Fix me later when i figure out what the fuck the exe is looking for
+    # development_mode = args.development
+    # Fix me later when i figure out what the fuck the exe is looking for
+    development_mode = False
 
 
 def get_subclasses_recursive(class_to_use: type) -> list[type]:
@@ -66,7 +68,7 @@ def get_subclasses_recursive(class_to_use: type) -> list[type]:
     for subclass in class_to_use.__subclasses__():
         return_list.append(subclass)
         return_list.extend(get_subclasses_recursive(subclass))
-    
+
     return return_list
 
 
@@ -88,6 +90,6 @@ def qdel(object_to_delete: "BaseObj"):
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
 
-    return relative_path # Yet another thing to fix later when EXE has been figured out
-    #base_path = getattr(sys, '_MEIPASS', path.dirname(path.abspath(__file__ if not development_mode else getcwd())))
+    return relative_path  # Yet another thing to fix later when EXE has been figured out
+    # base_path = getattr(sys, '_MEIPASS', path.dirname(path.abspath(__file__ if not development_mode else getcwd())))
    # return path.join(base_path, relative_path)

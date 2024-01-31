@@ -14,28 +14,32 @@ from time import sleep
 import asyncio
 import pytest
 
+
 def genesis():
-    globals.initialize_globals() # Must be first
-    assemble_verbs() # Must be before object init
-    assemble_components() # Must be before object init
-    assemble_elements() # Must be before object init
-    assemble_all_objects() # Must be before room init
-    assemble_room_ids() # Must be after object init
-    init_player() # Must be last
+    globals.initialize_globals()  # Must be first
+    assemble_verbs()  # Must be before object init
+    assemble_components()  # Must be before object init
+    assemble_elements()  # Must be before object init
+    assemble_all_objects()  # Must be before room init
+    assemble_room_ids()  # Must be after object init
+    init_player()  # Must be last
+
 
 def unit_test_genesis(load_all_rooms: bool = False):
     """
     A version of genesis() used for unit testing so only necessary things are loaded
     """
-    globals.initialize_globals() # Must be first
-    assemble_verbs() # Must be before object init
-    assemble_components() # Must be before object init
-    assemble_elements() # Must be before object init
-    assemble_all_objects() # Must be before room init
+    globals.initialize_globals()  # Must be first
+    assemble_verbs()  # Must be before object init
+    assemble_components()  # Must be before object init
+    assemble_elements()  # Must be before object init
+    assemble_all_objects()  # Must be before room init
     if load_all_rooms:
-        assemble_room_ids() # Must be after object init
+        assemble_room_ids()  # Must be after object init
 
 # Assembles objects, physobjects, items, etc.
+
+
 def assemble_all_objects():
     file_locs: list[str] = [
         globals.resource_path('json/objects.json'),
@@ -51,7 +55,7 @@ def assemble_all_objects():
             if "name" not in data[object_id]:
                 data[object_id]["name"] = ""
             if "alternate_names" not in data[object_id]:
-                data[object_id]["alternate_names"] = []             
+                data[object_id]["alternate_names"] = []
             if "desc" not in data[object_id]:
                 data[object_id]["desc"] = ""
             if "verbs" not in data[object_id]:
@@ -62,9 +66,10 @@ def assemble_all_objects():
                 data[object_id]["elements"] = []
 
             verb_list: list[verbs.Verb] = []
-            
+
             for verb_id in data[object_id]["verbs"]:
-                verb_list.append(globals.verb_id_data[verb_id]) # Makes a list of verb singletons from a list of verb IDs
+                # Makes a list of verb singletons from a list of verb IDs
+                verb_list.append(globals.verb_id_data[verb_id])
 
             globals.object_id_data[object_id] = {
                 "name": data[object_id]["name"],
@@ -96,20 +101,21 @@ def assemble_room_ids():
         if not ("elements" in data[room_id]):
             data[room_id]["elements"]: list[str] = []
 
-
-        globals.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
+        globals.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]
+                                                    ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
 
 
 def assemble_components():
     for subclass in globals.get_subclasses_recursive(Component):
         subclass: type[Component]
         globals.component_id_to_class[subclass.id] = subclass
-    
+
 
 def init_player():
     globals.player_ref = player.Player()
     globals.roomid_to_room["office_backroom"].add_to_room(globals.player_ref)
-    globals.player_ref.add_component(ComponentLayingDown, {"get_up_message": "You get up from the floor, accidentally knocking away an empty bottle. You look down at your clothes, your form a general mess. Your dress shirt is stained with a few different substances, your coat looks like it's been in the possession of a dozen cats, and your shoes... is that vomit on them? Eugh. Though, it might be a good idea to look around instead of staring at your clothes."})
+    globals.player_ref.add_component(ComponentLayingDown, {
+                                     "get_up_message": "You get up from the floor, accidentally knocking away an empty bottle. You look down at your clothes, your form a general mess. Your dress shirt is stained with a few different substances, your coat looks like it's been in the possession of a dozen cats, and your shoes... is that vomit on them? Eugh. Though, it might be a good idea to look around instead of staring at your clothes."})
     asyncio.run(globals.player_ref.begin_taking_input())
 
 
@@ -120,12 +126,12 @@ def assemble_elements():
 
 
 if __name__ == "__main__":
-    if getcwd().endswith("\\src"): # Gross hack that works for .bat junk
+    if getcwd().endswith("\\src"):  # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\\src"))
 
     if globals.UNIT_TESTING:
         pytest.main()
-    
+
     else:
         """input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
         system("cls")
@@ -137,5 +143,5 @@ if __name__ == "__main__":
         print("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
         sleep(1)
         input("Press ENTER to begin.")
-        system("cls")""" # Undo me when in prod
+        system("cls")"""  # Undo me when in prod
         genesis()

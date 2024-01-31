@@ -4,6 +4,7 @@ from ._verb import Verb
 from ._verb_names import VERB_GET_UP
 from bitflags import VERB_IGNORE_LAYDOWN, VERB_IGNORE_SITDOWN
 
+
 class VerbGetUp(Verb):
     verb_id = VERB_GET_UP
 

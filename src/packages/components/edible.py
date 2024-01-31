@@ -5,10 +5,11 @@ from events.verb_events import EVENT_VERB_EAT
 from globals import qdel
 from ..verbs._verb_names import VERB_EAT
 
+
 class ComponentEdible(Component):
     id = "component_edible"
 
-    def __init__(self, args_dict = dict[str]) -> None:
+    def __init__(self, args_dict=dict[str]) -> None:
         super().__init__()
 
         total_bites: int = self.arg_set(args_dict, "total_bites", int)
@@ -18,13 +19,13 @@ class ComponentEdible(Component):
         # The message sent to the user when this is eaten
         self.eat_message: str = self.arg_set(args_dict, "eat_message", str)
         # The message send to the user when they've eaten the final bite
-        self.final_eat_message: str = self.arg_set(args_dict, "final_eat_message", str)
-
+        self.final_eat_message: str = self.arg_set(
+            args_dict, "final_eat_message", str)
 
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
         if not isinstance(object_to_attach, PhysObj):
             return False
-        
+
         object_to_attach: PhysObj
 
         if not super().attach_to_parent(object_to_attach):
@@ -32,7 +33,6 @@ class ComponentEdible(Component):
 
         self.register_event(object_to_attach, EVENT_VERB_EAT, self.on_eat)
         object_to_attach.add_verb(VERB_EAT)
-    
 
     def detach_from_parent(self):
         phys_parent: PhysObj = self.parent
@@ -41,9 +41,7 @@ class ComponentEdible(Component):
             self.unregister_event(phys_parent, EVENT_VERB_EAT)
             phys_parent.remove_verb(VERB_EAT)
 
-
         return super().detach_from_parent()
-    
 
     def on_eat(self, source):
         """

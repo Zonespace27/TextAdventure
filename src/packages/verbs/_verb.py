@@ -3,6 +3,7 @@ from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_TRY_EXECUTE, EVENT_RETVAL_BLOCK_VERB_EXECUTE
 import globals
 
+
 class Verb(BaseObj):
     """
     Verbs are singleton objects that are meant to be used to genericize actions that can be done to the object.
@@ -21,21 +22,19 @@ class Verb(BaseObj):
         self.requires_all_args: bool = True
         # Bitflags for various verb things that don't need their own variable
         self.verb_flags = 0
-    
+
     def action_string_is_valid(self, owning_obj: BaseObj, verb_string: str):
         if verb_string in self.action_strings:
             return True
         return False
-    
 
     def argument_is_valid(self, argument, index):
         return True
-    
 
     def can_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
         if self.requires_all_args and not (len(arguments) == len(self.expected_args)):
             return False
-        
+
         """for argument in arguments:
             if not isinstance(argument, list):
                 continue
@@ -65,39 +64,38 @@ class Verb(BaseObj):
 
                 arguments[arguments.index(argument)] = element_number_dict[picked_number] # TODO: test this works
                 break"""
-        
+
         return True
-    
+
     def check_object_argument(self, owning_obj: BaseObj, arguments: list = [], argument_index: int = 0) -> bool:
         """
         A method used where, given an object, list, and index, will check if the item in list[index] is the object, or is a list with the object inside it
         """
         if (len(arguments) - 1) < argument_index:
             return False
-        
+
         if isinstance(arguments[argument_index], list):
             if owning_obj in arguments[argument_index]:
                 return True
-        
+
         else:
             if owning_obj == arguments[argument_index]:
                 return True
-        
+
         return False
 
-    def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool: # Might be deprecated.
-        #if not self.can_execute_verb(owning_obj, arguments):
+    # Might be deprecated.
+    def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
+        # if not self.can_execute_verb(owning_obj, arguments):
         #    return False
         if self.send_event(globals.player_ref, EVENT_VERB_TRY_EXECUTE, self, owning_obj) & EVENT_RETVAL_BLOCK_VERB_EXECUTE:
             return False
-        
+
         self.execute_verb(owning_obj, arguments)
         return True
-    
 
     def execute_verb(self, owning_obj: BaseObj, arguments: list = []):
         return
-
 
     def can_attach_to(self, object_to_attach: BaseObj):
         """

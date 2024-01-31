@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 from base_obj import BaseObj
 import globals
-from events.events import EVENT_PHYSOBJ_LOCATION_MOVE 
+from events.events import EVENT_PHYSOBJ_LOCATION_MOVE
 
 if TYPE_CHECKING:
     import room
@@ -13,7 +13,7 @@ class PhysObj(BaseObj):
     Anything physical inside a room (not the room itself) should be a child of this.
     Player, object, item, person, etc.
     """
-    
+
     def __init__(self, object_id: str = "") -> None:
         super().__init__(object_id)
 
@@ -23,7 +23,7 @@ class PhysObj(BaseObj):
         self.alternate_names: list[str] = []
         # A general, light description of this obj
         self.desc: str = ""
-        
+
         # The current room loc of this Obj
         self.current_room: "room.Room" = None
         # If this object is in some form of inventory, instead of being directly in a room or such
@@ -33,29 +33,26 @@ class PhysObj(BaseObj):
 
         if object_id:
             self.name = globals.object_id_data[object_id]["name"]
-            self.alternate_names = globals.object_id_data[object_id]["alternate_names"].copy()
+            self.alternate_names = globals.object_id_data[object_id]["alternate_names"].copy(
+            )
             self.desc = globals.object_id_data[object_id]["desc"]
-        
+
         self.alternate_names.append(self.name)
-    
 
     def dispose(self):
         if self.current_room:
             self.current_room.remove_from_room(self, True)
         return super().dispose()
 
-    
     def move_rooms(self, new_room: "room.Room"):
         self.current_room.remove_from_room(self)
         new_room.add_to_room(self)
-    
 
     def action_is_valid(self, action_string: str) -> "Verb":
         for verb in self.source_verbs:
             if verb.action_string_is_valid(self, action_string):
                 return verb
         return None
-    
 
     def name_is_valid(self, name_to_try: str) -> bool:
         """
@@ -64,7 +61,6 @@ class PhysObj(BaseObj):
         if name_to_try.lower() in self.alternate_names:
             return True
         return False
-    
 
     def move_location(self, location_to_move_to: BaseObj) -> bool:
         self.location = location_to_move_to
