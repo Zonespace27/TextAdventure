@@ -4,7 +4,7 @@ from player import Player
 from events.verb_events import EVENT_VERB_GET_UP, EVENT_VERB_TRY_EXECUTE, EVENT_RETVAL_BLOCK_VERB_EXECUTE
 from ..verbs._verb_names import VERB_GET_UP
 from ..verbs._verb import Verb
-import globals
+import global_textadv
 from bitflags import VERB_IGNORE_SITDOWN
 
 
@@ -47,7 +47,7 @@ class ComponentSittingDown(Component):
         ### EVENT FUNCT
         """
         print(self.get_up_message)  # TODO: make this work for sitting down in a chair #TODO: check if this TODO is valid
-        globals.qdel(self)
+        global_textadv.qdel(self)
 
     def on_verb_execute(self, source, executing_verb: Verb, owning_obj: BaseObj):
         """

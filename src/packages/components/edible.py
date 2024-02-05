@@ -2,7 +2,7 @@ from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_EAT
-from globals import qdel
+from global_textadv import qdel
 from ..verbs._verb_names import VERB_EAT
 
 
@@ -18,7 +18,7 @@ class ComponentEdible(Component):
         self.remaining_bites: int = total_bites
         # The message sent to the user when this is eaten
         self.eat_message: str = self.arg_set(args_dict, "eat_message", str)
-        # The message send to the user when they've eaten the final bite
+        # The message sent to the user when they've eaten the final bite
         self.final_eat_message: str = self.arg_set(
             args_dict, "final_eat_message", str)
 

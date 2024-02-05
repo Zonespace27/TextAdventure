@@ -7,7 +7,7 @@ from ..components.key import ComponentKey
 from ..components.locked import ComponentLocked
 from ..components.item import ComponentItem
 from ..components.inventory import ComponentInventory
-import globals
+import global_textadv
 
 
 class VerbUnlock(Verb):
@@ -60,7 +60,7 @@ class VerbUnlock(Verb):
         if not self.check_object_argument(owning_obj, arguments, 0):
             return False
 
-        if not (owning_obj.location == globals.player_ref.get_component(ComponentInventory)):
+        if not (owning_obj.location == global_textadv.player_ref.get_component(ComponentInventory)):
             return False
 
         object_to_unlock: PhysObj = arguments[1]

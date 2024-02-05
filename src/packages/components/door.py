@@ -4,7 +4,7 @@ from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_OPEN_DOOR
 from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN
 from ..verbs._verb_names import VERB_OPEN_DOOR
-import globals
+import global_textadv
 from traits import TRAIT_LOCKED
 from typing import TYPE_CHECKING
 
@@ -54,5 +54,5 @@ class ComponentDoor(Component):
         if self.send_event(self, EVENT_DOOR_ATTEMPT_OPEN) & EVENT_RETVAL_BLOCK_DOOR_OPEN:
             return
 
-        room_to_go_to: "Room" = globals.roomid_to_room[self.door_to]
-        globals.player_ref.move_rooms(room_to_go_to)
+        room_to_go_to: "Room" = global_textadv.roomid_to_room[self.door_to]
+        global_textadv.player_ref.move_rooms(room_to_go_to)

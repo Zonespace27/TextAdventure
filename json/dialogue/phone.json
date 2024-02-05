@@ -1,0 +1,20 @@
+{
+    "phone_start": {
+        "text": "You pick up the phone.",
+        "select_text": "",
+        "result_nodes": [
+            "phone_branch_1",
+            "phone_branch_2"
+        ]
+    },
+    "phone_branch_1": {
+        "text": "You say something serious into the phone.",
+        "select_text": "Serious",
+        "result_nodes": []
+    },
+    "phone_branch_2": {
+        "text": "You say something funny into the phone.",
+        "select_text": "Funny",
+        "result_nodes": []
+    }
+}

@@ -48,5 +48,22 @@
             "component_chair": {}
         },
         "elements": {} 
+    },
+    "front_office_telephone": {
+        "name": "red telephone",
+        "alternate_names": [
+            "rotary phone",
+            "telephone",
+            "phone"
+        ],
+        "desc": "You see a red rotary telephone resting on the receptionist's desk. The handset shows signs of years of use, and the numbers inside the rotary dial are heavily faded.",
+        "verbs": [],
+        "components": {
+            "component_dialogue": {
+                "dialogue_node": "phone_start",
+                "telephone": true
+            }
+        },
+        "elements": {}
     }
 }

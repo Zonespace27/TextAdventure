@@ -1,10 +1,10 @@
-import object
-from packages.components.edible import ComponentEdible
-import globals
+# import object
+# from packages.components.edible import ComponentEdible
+# import globals
 from json import load
 
 
-class Item(object.Object):
+"""class Item(object.Object):
     def __init__(self) -> None:
         self.current_room = None
         self.object_components = {}
@@ -13,6 +13,11 @@ class Item(object.Object):
         print("hello")
         globals.qdel(self)
         return "hi"
+        """
+
+
+class Item():
+    pass
 
 
 def test():
@@ -28,11 +33,6 @@ def test():
             return (i, i2)
 
 
-def test_2():
-    print(str(ComponentEdible.id))
-    print(str(ComponentEdible().id))
-
-
 def test_3():
     globals.initialize_globals()
     print(Item().foobar())
@@ -46,4 +46,9 @@ def test_4():
         print(bar)
 
 
-test_4()
+def test_5():
+    s = "Iem"
+    print(globals()[s])
+
+
+test_5()

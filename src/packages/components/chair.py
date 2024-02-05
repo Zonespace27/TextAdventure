@@ -4,7 +4,7 @@ from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_SIT
 from ..verbs._verb_names import VERB_SIT
 from .sitting_down import ComponentSittingDown
-import globals
+import global_textadv
 
 
 class ComponentChair(Component):
@@ -46,5 +46,5 @@ class ComponentChair(Component):
         ### EVENT FUNCT
         """
         print(self.sit_down_message)
-        globals.player_ref.add_component(
+        global_textadv.player_ref.add_component(
             ComponentSittingDown, {"get_up_message": self.get_up_message})

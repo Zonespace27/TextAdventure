@@ -29,3 +29,7 @@ EVENT_VERB_EXAMINE = "verb_examine"
 EVENT_VERB_SIT = "verb_sit"
 
 EVENT_VERB_GET_UP = "verb_get_up"
+
+EVENT_VERB_SPEAK = "verb_speak"
+
+EVENT_VERB_ANSWER_PHONE = "verb_answer_phone"

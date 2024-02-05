@@ -1,7 +1,7 @@
 from base_obj import BaseObj
 from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_TRY_EXECUTE, EVENT_RETVAL_BLOCK_VERB_EXECUTE
-import globals
+import global_textadv
 
 
 class Verb(BaseObj):
@@ -86,9 +86,7 @@ class Verb(BaseObj):
 
     # Might be deprecated.
     def try_execute_verb(self, owning_obj: BaseObj, arguments: list = []) -> bool:
-        # if not self.can_execute_verb(owning_obj, arguments):
-        #    return False
-        if self.send_event(globals.player_ref, EVENT_VERB_TRY_EXECUTE, self, owning_obj) & EVENT_RETVAL_BLOCK_VERB_EXECUTE:
+        if self.send_event(global_textadv.player_ref, EVENT_VERB_TRY_EXECUTE, self, owning_obj) & EVENT_RETVAL_BLOCK_VERB_EXECUTE:
             return False
 
         self.execute_verb(owning_obj, arguments)

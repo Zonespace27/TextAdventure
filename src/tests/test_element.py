@@ -1,6 +1,6 @@
 from packages.elements import *
 from packages.elements._element import Element
-from globals import get_subclasses_recursive
+from global_textadv import get_subclasses_recursive
 from re import search
 
 

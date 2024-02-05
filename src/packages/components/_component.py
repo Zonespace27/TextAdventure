@@ -1,5 +1,5 @@
 from base_obj import BaseObj
-from globals import qdel
+from global_textadv import qdel
 
 
 class Component(BaseObj):

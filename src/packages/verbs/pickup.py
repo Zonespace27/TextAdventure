@@ -5,7 +5,7 @@ from ._verb import Verb
 from ._verb_names import VERB_PICKUP
 from ..components.item import ComponentItem
 from ..components.inventory import ComponentInventory
-import globals
+import global_textadv
 
 
 class VerbPickup(Verb):
@@ -50,7 +50,7 @@ class VerbPickup(Verb):
         if not self.check_object_argument(owning_obj, arguments, 0):
             return False
 
-        if (owning_obj.location == globals.player_ref.get_component(ComponentInventory)):
+        if (owning_obj.location == global_textadv.player_ref.get_component(ComponentInventory)):
             return False
 
         return super().can_execute_verb(owning_obj, arguments)

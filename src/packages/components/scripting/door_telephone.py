@@ -1,9 +1,8 @@
 from .._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
-from events.verb_events import EVENT_VERB_OPEN_DOOR
-from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN
-from globals import qdel
+from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN, EVENT_ENABLE_DIALOGUE
+from global_textadv import qdel
 from ...verbs._verb_names import VERB_OPEN_DOOR
 
 
@@ -45,6 +44,10 @@ class ComponentDoorTelephone(Component):
         if not self.opened:
             print("As your hand moves to unlock the door, you hear the rotary phone on the reception desk behind you start to ring. You feel like you should probably answer.")
             self.opened = True
+            phys_parent: PhysObj = self.parent
+            self.send_event(phys_parent.current_room.get_content_object(
+                "front_office_telephone"), EVENT_ENABLE_DIALOGUE)
+
         else:
             print(
                 "You consider trying to leave the phone unanswered, but decide against it.")

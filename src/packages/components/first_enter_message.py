@@ -1,7 +1,7 @@
 from ._component import Component
 from base_obj import BaseObj
 from events.events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION
-import globals
+import global_textadv
 from room import Room
 
 
@@ -40,5 +40,5 @@ class ComponentFirstEnterMessage(Component):
         ### EVENT FUNCT
         """
         print("\n" + self.enter_message)
-        globals.qdel(self)
+        global_textadv.qdel(self)
         return (EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION if self.block_all_messages else EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION)

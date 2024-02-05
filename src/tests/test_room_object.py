@@ -1,5 +1,5 @@
 from room import Room
-import globals
+import global_textadv
 from main import unit_test_genesis
 from player import Player
 from object import Object
@@ -19,7 +19,7 @@ class TestClass():
             self.called_genesis = True
             unit_test_genesis(False)
 
-        globals.qdel(self.fresh_room)
+        global_textadv.qdel(self.fresh_room)
 
         self.fresh_room = Room("unit_test", "")
 
@@ -50,21 +50,21 @@ class TestClass():
         # And they should know that, too
         assert not (player_ref.current_room == self.fresh_room)
 
-        globals.qdel(object1)
+        global_textadv.qdel(object1)
 
         # There shouldn't be anything in the room now
         assert (len(self.fresh_room.contents) == 0)
 
     def test_object_pickup(self):
         self.generate_fresh_room()
-        globals.player_ref: Player = Player()
+        global_textadv.player_ref: Player = Player()
 
-        self.fresh_room.add_to_room(globals.player_ref)
+        self.fresh_room.add_to_room(global_textadv.player_ref)
 
         object1 = Object("liquor_bottle")
         self.fresh_room.add_to_room(object1)
 
-        inventory_component: ComponentInventory = globals.player_ref.get_component(
+        inventory_component: ComponentInventory = global_textadv.player_ref.get_component(
             ComponentInventory)
 
         item_component1: ComponentItem = object1.get_component(ComponentItem)
@@ -77,4 +77,4 @@ class TestClass():
         # While still knowing what room it's in
         assert (object1.current_room == self.fresh_room)
 
-        globals.qdel(globals.player_ref)
+        global_textadv.qdel(global_textadv.player_ref)

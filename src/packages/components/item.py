@@ -4,7 +4,7 @@ from object import Object
 from events.events import EVENT_INVENTORY_ADD_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_ADD, EVENT_INVENTORY_REMOVE_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_REMOVE, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PHYSOBJ_LOCATION_MOVE
 from events.verb_events import EVENT_VERB_PICKUP, EVENT_VERB_DROP
 from ..verbs._verb_names import VERB_PICKUP, VERB_DROP
-import globals
+import global_textadv
 
 
 class ComponentItem(Component):
@@ -56,7 +56,7 @@ class ComponentItem(Component):
         ### EVENT FUNCT
         """
 
-        if self.send_event(globals.player_ref, EVENT_INVENTORY_ADD_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_ADD:
+        if self.send_event(global_textadv.player_ref, EVENT_INVENTORY_ADD_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_ADD:
             return False
 
         return True
@@ -66,7 +66,7 @@ class ComponentItem(Component):
         ### EVENT FUNCT
         """
 
-        if self.send_event(globals.player_ref, EVENT_INVENTORY_REMOVE_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_REMOVE:
+        if self.send_event(global_textadv.player_ref, EVENT_INVENTORY_REMOVE_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_REMOVE:
             return False
 
         return True

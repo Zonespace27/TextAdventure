@@ -50,6 +50,11 @@ def initialize_globals():
 
     element_id_to_ref = {}
 
+    # Dict of "dialogue_id" : Dialogue node
+    global dialogue_id_to_node
+
+    dialogue_id_to_node = {}
+
     parser = argparse.ArgumentParser(description='Run the program.')
     parser.add_argument('-d', '--development', action='store_true')
 

@@ -91,6 +91,9 @@
         "components": {
             "component_door": {
                 "door_to": "outside"
+            },
+            "component_door_telephone": {
+                
             }
         }
     },

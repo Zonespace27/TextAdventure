@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 from exception import NonExistentJsonObject
-import globals
+import global_textadv
 
 if TYPE_CHECKING:
     from packages.components._component import Component
@@ -27,22 +27,22 @@ class BaseObj(object):
 
         if object_id:
             try:
-                self.source_verbs = globals.object_id_data[object_id]["verbs"].copy(
+                self.source_verbs = global_textadv.object_id_data[object_id]["verbs"].copy(
                 )
             except KeyError:
                 raise NonExistentJsonObject
 
-            for component_id in list(globals.object_id_data[object_id]["components"].keys()):
+            for component_id in list(global_textadv.object_id_data[object_id]["components"].keys()):
                 component_id: str
                 key_index: int = list(
-                    globals.object_id_data[object_id]["components"].keys()).index(component_id)
-                dictkey: str = list(globals.object_id_data[object_id]["components"].keys())[
+                    global_textadv.object_id_data[object_id]["components"].keys()).index(component_id)
+                dictkey: str = list(global_textadv.object_id_data[object_id]["components"].keys())[
                     key_index]
                 # There's a better way to do this i'm sure
                 self.add_component(
-                    globals.component_id_to_class[component_id], globals.object_id_data[object_id]["components"][dictkey])
+                    global_textadv.component_id_to_class[component_id], global_textadv.object_id_data[object_id]["components"][dictkey])
 
-            for element_id in globals.object_id_data[object_id]["elements"]:
+            for element_id in global_textadv.object_id_data[object_id]["elements"]:
                 self.add_element(element_id)
 
     def dispose(self):
@@ -51,7 +51,7 @@ class BaseObj(object):
         The reason this is used over __del__ is that del is the destructor for *after* the ref count has hit 0
         """
         for component in list(self.object_components.values()):
-            globals.qdel(component)
+            global_textadv.qdel(component)
 
         self.source_verbs = []
 
@@ -209,45 +209,45 @@ class BaseObj(object):
 
     def remove_component(self, component_class: type["Component"]):
         # TODO: Make sure this cleans up the key
-        globals.qdel(self.object_components[component_class])
+        global_textadv.qdel(self.object_components[component_class])
 
     def add_verb(self, verb_id: str) -> bool:
-        if verb_id not in globals.verb_id_data:
+        if verb_id not in global_textadv.verb_id_data:
             return False
 
-        if globals.verb_id_data[verb_id] in self.source_verbs:
+        if global_textadv.verb_id_data[verb_id] in self.source_verbs:
             return True
 
-        verb: "Verb" = globals.verb_id_data[verb_id]
+        verb: "Verb" = global_textadv.verb_id_data[verb_id]
 
         if not verb.can_attach_to(self):
             return False
 
-        self.source_verbs.append(globals.verb_id_data[verb_id])
+        self.source_verbs.append(global_textadv.verb_id_data[verb_id])
         return True
 
     def remove_verb(self, verb_id: str) -> bool:
-        if verb_id not in list(globals.verb_id_data.keys()):
+        if verb_id not in list(global_textadv.verb_id_data.keys()):
             return False
 
-        if not (globals.verb_id_data[verb_id] in self.source_verbs):
+        if not (global_textadv.verb_id_data[verb_id] in self.source_verbs):
             return True
 
-        self.source_verbs.remove(globals.verb_id_data[verb_id])
+        self.source_verbs.remove(global_textadv.verb_id_data[verb_id])
         return True
 
     def add_element(self, element_id: str) -> bool:
-        if element_id not in list(globals.element_id_to_ref.keys()):
+        if element_id not in list(global_textadv.element_id_to_ref.keys()):
             return False
 
-        element: "Element" = globals.element_id_to_ref[element_id]
+        element: "Element" = global_textadv.element_id_to_ref[element_id]
         return element.hook_object(self)
 
     def remove_element(self, element_id: str) -> bool:
-        if element_id not in list(globals.element_id_to_ref.keys()):
+        if element_id not in list(global_textadv.element_id_to_ref.keys()):
             return False
 
-        element: "Element" = globals.element_id_to_ref[element_id]
+        element: "Element" = global_textadv.element_id_to_ref[element_id]
         return element.unhook_object(self)
 
     def add_trait(self, trait_to_add: str, trait_source: str):

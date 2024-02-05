@@ -5,7 +5,9 @@ from packages.components import *
 from packages.components._component import Component
 from packages.elements import *
 from packages.elements._element import Element
-from globals import get_subclasses_recursive, resource_path
+from packages.dialogue import *
+from global_textadv import get_subclasses_recursive, resource_path
+import pytest
 
 
 class TestClass():
@@ -17,6 +19,9 @@ class TestClass():
     ]
     room_file_locs: list[str] = [  # Same here
         resource_path('json/rooms.json'),
+    ]
+    dialogue_file_locs: list[str] = [
+        resource_path('json/dialogue/phone.json')
     ]
 
     def test_unique_object_ids(self):
@@ -115,3 +120,23 @@ class TestClass():
 
                 for element_id in data[object_id]["elements"]:
                     assert (element_id in found_element_ids)
+
+    def test_all_dialogue_valid(self):
+        found_dialogue_ids: list[str] = []
+        for file in self.dialogue_file_locs:
+            data = load(open(file))
+            for dialogue_id in data:
+                assert not (dialogue_id in found_dialogue_ids)
+
+                found_dialogue_ids.append(dialogue_id)
+
+                # Having text is necessary, but having select test is not, so we don't test for that
+                assert ("text" in data[dialogue_id])
+                assert (data[dialogue_id]["text"] != "")
+
+                if ("class_name" in data[dialogue_id]):
+                    try:
+                        globals()[data[dialogue_id]["class_name"]]
+                    except KeyError:
+                        pytest.fail(
+                            f"class_name of {dialogue_id} is not a valid class")

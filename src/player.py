@@ -77,7 +77,7 @@ class Player(PhysObj):
     # Once we find that "c" is a valid arg1, then we go to arg2, and see that "d e" is a valid arg2, making the final verb "ab [c] [d e]"
 
     def parse_text(self, text_to_parse: str) -> bool:
-        text_to_parse = re.sub(r" a\b| of\b| and\b| or\b| the\b| on\b| in\b| at\b| with\b",
+        text_to_parse = re.sub(r" a\b| of\b| and\b| or\b| the\b| on\b| in\b| to\b| at\b| with\b",
                                "", text_to_parse, flags=re.IGNORECASE).lower()
         word_list = text_to_parse.split(" ")
 

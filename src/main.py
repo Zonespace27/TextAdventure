@@ -1,13 +1,15 @@
 from packages.components import *
+from packages.components.scripting import *
 from packages.components._component import Component
 from packages.components.laying_down import ComponentLayingDown
+from packages.dialogue._node import DialogueNode
 from packages.verbs import *
 import packages.verbs._verb as verbs
 from packages.elements import *
 from packages.elements._element import Element
 from json import load
 import room
-import globals
+import global_textadv
 import player
 from os import system, getcwd, chdir
 from time import sleep
@@ -16,10 +18,11 @@ import pytest
 
 
 def genesis():
-    globals.initialize_globals()  # Must be first
+    global_textadv.initialize_globals()  # Must be first
     assemble_verbs()  # Must be before object init
     assemble_components()  # Must be before object init
     assemble_elements()  # Must be before object init
+    assemble_dialogue()  # Must be before object init
     assemble_all_objects()  # Must be before room init
     assemble_room_ids()  # Must be after object init
     init_player()  # Must be last
@@ -29,10 +32,11 @@ def unit_test_genesis(load_all_rooms: bool = False):
     """
     A version of genesis() used for unit testing so only necessary things are loaded
     """
-    globals.initialize_globals()  # Must be first
+    global_textadv.initialize_globals()  # Must be first
     assemble_verbs()  # Must be before object init
     assemble_components()  # Must be before object init
     assemble_elements()  # Must be before object init
+    assemble_dialogue()  # Must be before object init
     assemble_all_objects()  # Must be before room init
     if load_all_rooms:
         assemble_room_ids()  # Must be after object init
@@ -42,10 +46,10 @@ def unit_test_genesis(load_all_rooms: bool = False):
 
 def assemble_all_objects():
     file_locs: list[str] = [
-        globals.resource_path('json/objects.json'),
-        globals.resource_path('json/doors.json'),
-        globals.resource_path('json/objects/containers.json'),
-        globals.resource_path('json/objects/items.json')
+        global_textadv.resource_path('json/objects.json'),
+        global_textadv.resource_path('json/doors.json'),
+        global_textadv.resource_path('json/objects/containers.json'),
+        global_textadv.resource_path('json/objects/items.json')
     ]
     for file in file_locs:
         data = load(open(file))
@@ -69,9 +73,9 @@ def assemble_all_objects():
 
             for verb_id in data[object_id]["verbs"]:
                 # Makes a list of verb singletons from a list of verb IDs
-                verb_list.append(globals.verb_id_data[verb_id])
+                verb_list.append(global_textadv.verb_id_data[verb_id])
 
-            globals.object_id_data[object_id] = {
+            global_textadv.object_id_data[object_id] = {
                 "name": data[object_id]["name"],
                 "alternate_names": data[object_id]["alternate_names"],
                 "desc": data[object_id]["desc"],
@@ -82,13 +86,13 @@ def assemble_all_objects():
 
 
 def assemble_verbs():
-    for subclass in globals.get_subclasses_recursive(verbs.Verb):
+    for subclass in global_textadv.get_subclasses_recursive(verbs.Verb):
         new_subclass: verbs.Verb = subclass()
-        globals.verb_id_data[new_subclass.verb_id] = new_subclass
+        global_textadv.verb_id_data[new_subclass.verb_id] = new_subclass
 
 
 def assemble_room_ids():
-    data = load(open(globals.resource_path('json/rooms.json')))
+    data = load(open(global_textadv.resource_path('json/rooms.json')))
     for room_id in data:
         if not ("desc" in data[room_id]):
             data[room_id]["desc"] = ""
@@ -101,35 +105,64 @@ def assemble_room_ids():
         if not ("elements" in data[room_id]):
             data[room_id]["elements"]: list[str] = []
 
-        globals.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]
-                                                    ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
+        global_textadv.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]
+                                                           ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
+
+
+def assemble_dialogue():
+    file_locs: list[str] = [
+        global_textadv.resource_path('json/dialogue/phone.json'),
+    ]
+    for file in file_locs:
+        data = load(open(file))
+        for node_id in data:
+            if not ("text" in data[node_id]):
+                data[node_id]["text"] = ""
+            if not ("select_text" in data[node_id]):
+                data[node_id]["select_text"] = ""
+            if not ("result_nodes" in data[node_id]):
+                data[node_id]["result_nodes"]: list[str] = []
+            if not ("leave_allowed" in data[node_id]):
+                data[node_id]["leave_allowed"]: bool = False
+
+            new_node: DialogueNode
+            # We want to allow for custom functionality in nodes
+            if ("class_name" in data[node_id]):
+                new_node = globals()[data[node_id]["class_name"]]
+
+            else:
+                new_node = DialogueNode(
+                    node_id, data[node_id]["text"], data[node_id]["select_text"], data[node_id]["result_nodes"], data[node_id]["leave_allowed"])
+
+            global_textadv.dialogue_id_to_node[node_id] = new_node
 
 
 def assemble_components():
-    for subclass in globals.get_subclasses_recursive(Component):
+    for subclass in global_textadv.get_subclasses_recursive(Component):
         subclass: type[Component]
-        globals.component_id_to_class[subclass.id] = subclass
+        global_textadv.component_id_to_class[subclass.id] = subclass
 
 
 def init_player():
-    globals.player_ref = player.Player()
-    globals.roomid_to_room["office_backroom"].add_to_room(globals.player_ref)
-    globals.player_ref.add_component(ComponentLayingDown, {
-                                     "get_up_message": "You get up from the floor, accidentally knocking away an empty bottle. You look down at your clothes, your form a general mess. Your dress shirt is stained with a few different substances, your coat looks like it's been in the possession of a dozen cats, and your shoes... is that vomit on them? Eugh. Though, it might be a good idea to look around instead of staring at your clothes."})
-    asyncio.run(globals.player_ref.begin_taking_input())
+    global_textadv.player_ref = player.Player()
+    global_textadv.roomid_to_room["office_backroom"].add_to_room(
+        global_textadv.player_ref)
+    global_textadv.player_ref.add_component(ComponentLayingDown, {
+        "get_up_message": "You get up from the floor, accidentally knocking away an empty bottle. You look down at your clothes, your form a general mess. Your dress shirt is stained with a few different substances, your coat looks like it's been in the possession of a dozen cats, and your shoes... is that vomit on them? Eugh. Though, it might be a good idea to look around instead of staring at your clothes."})
+    asyncio.run(global_textadv.player_ref.begin_taking_input())
 
 
 def assemble_elements():
-    for subclass in globals.get_subclasses_recursive(Element):
+    for subclass in global_textadv.get_subclasses_recursive(Element):
         new_subclass: Element = subclass()
-        globals.element_id_to_ref[new_subclass.id] = new_subclass
+        global_textadv.element_id_to_ref[new_subclass.id] = new_subclass
 
 
 if __name__ == "__main__":
     if getcwd().endswith("\\src"):  # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\\src"))
 
-    if globals.UNIT_TESTING:
+    if global_textadv.UNIT_TESTING:
         pytest.main()
 
     else:

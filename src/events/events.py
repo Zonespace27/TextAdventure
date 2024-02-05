@@ -58,3 +58,9 @@ EVENT_LOCK_ATTEMPT_UNLOCK = "lock_attempt_unlock"
 
 EVENT_DOOR_ATTEMPT_OPEN = "door_attempt_open"
 EVENT_RETVAL_BLOCK_DOOR_OPEN = (1 << 0)
+
+# Generic event to enable dialogue on an object, should it have a ComponentDialogue
+EVENT_ENABLE_DIALOGUE = "enable_dialogue"
+
+# Generic event to disable dialogue on an object, should it have a ComponentDialogue
+EVENT_DISABLE_DIALOGUE = "disable_dialogue"
