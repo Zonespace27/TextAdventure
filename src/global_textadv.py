@@ -57,6 +57,7 @@ def initialize_globals():
 
     parser = argparse.ArgumentParser(description='Run the program.')
     parser.add_argument('-d', '--development', action='store_true')
+    parser.add_argument('--cov', action='codecov_enabled')
 
     args = parser.parse_args()
 
