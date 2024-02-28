@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 from sys import getrefcount
 from os import path, getcwd
-import argparse
+# import argparse
 from gc import get_referrers
 
 if TYPE_CHECKING:
@@ -55,11 +55,11 @@ def initialize_globals():
 
     dialogue_id_to_node = {}
 
-    parser = argparse.ArgumentParser(description='Run the program.')
-    parser.add_argument('-d', '--development', action='store_true')
-    parser.add_argument('--cov', action='codecov_enabled')
+    # parser = argparse.ArgumentParser(description='Run the program.')
+    # parser.add_argument('-d', '--development', action='store_true')
+    # parser.add_argument('--cov', action='codecov_enabled')
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
     # If we are running development mode or not, affecting some backend things
     global development_mode
