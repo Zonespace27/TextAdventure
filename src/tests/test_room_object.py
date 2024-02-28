@@ -57,7 +57,7 @@ class TestClass():
 
     def test_object_pickup(self):
         self.generate_fresh_room()
-        global_textadv.player_ref: Player = Player()
+        global_textadv.player_ref = Player()
 
         self.fresh_room.add_to_room(global_textadv.player_ref)
 

@@ -1,8 +1,9 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
             "name": "Python: main.py (Integrated Terminal)",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/src/main.py",
             "console": "integratedTerminal",
