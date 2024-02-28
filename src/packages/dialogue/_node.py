@@ -25,12 +25,14 @@ class DialogueNode():
 
     def offer_options(self):
         options = self.result_nodes.copy()
-        if self.leave_allowed:
-            options.append("leave")
 
         text_string: str = ""
         for node in options:
-            text_string += f"({options.index(node)}) {global_textadv.dialogue_id_to_node[options[picked_number]].select_text}\n"
+            text_string += f"({options.index(node)}) {global_textadv.dialogue_id_to_node[node].select_text}\n"
+
+        if self.leave_allowed:
+            options.append("leave")
+            text_string += f"({options.index('leave')}) Leave\n"
 
         while True:
             picked_number = input(text_string)
@@ -43,6 +45,14 @@ class DialogueNode():
             if len(options) - 1 < picked_number:
                 continue
 
+            if ("leave" in options) and (picked_number == options.index("leave")):
+                self.on_node_end()
+                break
+
             global_textadv.dialogue_id_to_node[options[picked_number]].trigger_node(
             )
+            self.on_node_end()
             break
+
+    def on_node_end(self):
+        return

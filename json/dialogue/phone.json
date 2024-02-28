@@ -10,11 +10,13 @@
     "phone_branch_1": {
         "text": "You say something serious into the phone.",
         "select_text": "Serious",
-        "result_nodes": []
+        "result_nodes": [],
+        "leave_allowed": true
     },
     "phone_branch_2": {
         "text": "You say something funny into the phone.",
         "select_text": "Funny",
-        "result_nodes": []
+        "result_nodes": [],
+        "leave_allowed": true
     }
 }

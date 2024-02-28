@@ -72,13 +72,13 @@ class ComponentDialogue(Component):
         node: DialogueNode = global_textadv.dialogue_id_to_node[self.dialogue_node]
         node.trigger_node()
 
-    def enable_dialogue(self):
+    def enable_dialogue(self, source):
         """
         ### EVENT FUNCT
         """
         self.enabled = True
 
-    def disable_dialogue(self):
+    def disable_dialogue(self, source):
         """
         ### EVENT FUNCT
         """

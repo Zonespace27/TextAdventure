@@ -51,7 +51,7 @@ class ComponentDoor(Component):
             print("You can't open this, it's locked!")
             return
 
-        if self.send_event(self, EVENT_DOOR_ATTEMPT_OPEN) & EVENT_RETVAL_BLOCK_DOOR_OPEN:
+        if self.send_event(self.parent, EVENT_DOOR_ATTEMPT_OPEN) & EVENT_RETVAL_BLOCK_DOOR_OPEN:
             return
 
         room_to_go_to: "Room" = global_textadv.roomid_to_room[self.door_to]
