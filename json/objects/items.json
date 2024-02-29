@@ -21,6 +21,19 @@
         },
         "elements": {}
     },
+    "apple": {
+        "name": "apple",
+        "desc": "You see a red apple.",
+        "verbs": [],
+        "components": {
+            "component_edible": {
+                "total_bites": 3,
+                "eat_message": "You take a bite of the apple.",
+                "final_eat_message": "You bite the apple down to the core, tossing it away."
+            },
+            "component_item": {}
+        } 
+    },
     "liquor_bottle": {
         "name": "bottle",
         "alternate_names": [

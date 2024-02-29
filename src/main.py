@@ -97,13 +97,13 @@ def assemble_room_ids():
         if not ("desc" in data[room_id]):
             data[room_id]["desc"] = ""
         if not ("objects" in data[room_id]):
-            data[room_id]["objects"]: list[str] = []
+            data[room_id]["objects"] = []
         if not ("verbs" in data[room_id]):
-            data[room_id]["verbs"]: list[str] = []
+            data[room_id]["verbs"] = []
         if not ("components" in data[room_id]):
-            data[room_id]["components"]: dict[str, dict[str]] = {}
+            data[room_id]["components"] = {}
         if not ("elements" in data[room_id]):
-            data[room_id]["elements"]: list[str] = []
+            data[room_id]["elements"] = []
 
         global_textadv.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]
                                                            ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
@@ -121,9 +121,9 @@ def assemble_dialogue():
             if not ("select_text" in data[node_id]):
                 data[node_id]["select_text"] = ""
             if not ("result_nodes" in data[node_id]):
-                data[node_id]["result_nodes"]: list[str] = []
+                data[node_id]["result_nodes"] = []
             if not ("leave_allowed" in data[node_id]):
-                data[node_id]["leave_allowed"]: bool = False
+                data[node_id]["leave_allowed"] = False
 
             new_node: DialogueNode
             # We want to allow for custom functionality in nodes

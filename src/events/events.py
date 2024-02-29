@@ -64,3 +64,6 @@ EVENT_ENABLE_DIALOGUE = "enable_dialogue"
 
 # Generic event to disable dialogue on an object, should it have a ComponentDialogue
 EVENT_DISABLE_DIALOGUE = "disable_dialogue"
+
+# Event that is called whenever dispose() is called on a baseobj
+EVENT_BASEOBJ_DISPOSED = "baseobj_disposed"

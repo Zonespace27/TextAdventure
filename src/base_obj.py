@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 from exception import NonExistentJsonObject
 import global_textadv
+from events.events import EVENT_BASEOBJ_DISPOSED
 
 if TYPE_CHECKING:
     from packages.components._component import Component
@@ -52,6 +53,8 @@ class BaseObj(object):
         """
         for component in list(self.object_components.values()):
             global_textadv.qdel(component)
+
+        self.send_event(self, EVENT_BASEOBJ_DISPOSED)
 
         self.source_verbs = []
 

@@ -11,7 +11,8 @@ from events.events import EVENT_INVENTORY_ADD_OBJECT, \
     EVENT_OBJECT_ADDED_TO_INVENTORY, \
     EVENT_OBJECT_REMOVING_FROM_INVENTORY, \
     EVENT_OBJECT_REMOVED_FROM_INVENTORY, \
-    EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_REMOVE
+    EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_REMOVE, \
+    EVENT_BASEOBJ_DISPOSED
 from events.verb_events import EVENT_VERB_CHECK_INVENTORY
 from object import Object
 from ..verbs._verb_names import VERB_CHECK_INVENTORY
@@ -90,6 +91,9 @@ class ComponentInventory(Component):
         self.send_event(
             object_to_add, EVENT_OBJECT_ADDED_TO_INVENTORY, self.parent, self)
 
+        self.register_event(
+            object_to_add, EVENT_BASEOBJ_DISPOSED, self.on_inventory_item_deleted)
+
         if not silent:
             print(f"You pick up the {object_to_add.name}.")
 
@@ -117,6 +121,8 @@ class ComponentInventory(Component):
 
         self.send_event(object_to_remove,
                         EVENT_OBJECT_REMOVED_FROM_INVENTORY, self.parent, self)
+
+        self.unregister_event(object_to_remove, EVENT_BASEOBJ_DISPOSED)
 
         if not silent:
             print(f"You drop the {object_to_remove.name}.")
@@ -147,3 +153,9 @@ class ComponentInventory(Component):
         ### EVENT FUNCT
         """
         return self.inventory
+
+    def on_inventory_item_deleted(self, source):
+        """
+        ### EVENT FUNCT
+        """
+        self.remove_object(source, True)

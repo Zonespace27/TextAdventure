@@ -29,8 +29,6 @@ class PhysObj(BaseObj):
 
         # The current room loc of this Obj
         self.current_room: "room.Room" = None
-        # If this object is in some form of inventory, instead of being directly in a room or such
-        self.in_inventory: bool = False
         # This object's location (e.g. an inventory component or a room)
         self.location: BaseObj = None
 
