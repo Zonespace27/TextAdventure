@@ -1,5 +1,5 @@
 from base_obj import BaseObj
-from events.events import EVENT_UNIT_TEST_SIGNAL, EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND
+from events.events import EVENT_UNIT_TEST_SIGNAL, EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND, EVENT_UNIT_TEST_SIGNAL_2
 
 
 class SignalTestBaseObj(BaseObj):
@@ -52,3 +52,28 @@ class TestClass():
         assert obj_1.signal_recieved
         assert return_value & EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND
         assert return_value == EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND
+
+    def test_signal_sanity(self):
+        obj_1: SignalTestBaseObj = SignalTestBaseObj()
+        obj_2: SignalTestBaseObj = SignalTestBaseObj()
+
+        obj_1.register_event(obj_1, EVENT_UNIT_TEST_SIGNAL,
+                             obj_1.recieve_signal)
+
+        assert obj_1.object_lookup
+        assert (EVENT_UNIT_TEST_SIGNAL in list(obj_1.object_lookup.keys()))
+
+        obj_1.register_event(obj_1, EVENT_UNIT_TEST_SIGNAL_2,
+                             obj_1.recieve_signal)
+
+        obj_1.unregister_event(
+            obj_1, [EVENT_UNIT_TEST_SIGNAL, EVENT_UNIT_TEST_SIGNAL_2])
+
+        assert not obj_1.object_lookup
+        assert not (EVENT_UNIT_TEST_SIGNAL in list(obj_1.object_lookup.keys()))
+        assert not (EVENT_UNIT_TEST_SIGNAL_2 in list(
+            obj_1.object_lookup.keys()))
+
+        obj_2.send_event(obj_1, EVENT_UNIT_TEST_SIGNAL)
+
+        assert not obj_1.signal_recieved
