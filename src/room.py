@@ -44,7 +44,9 @@ class Room(base_obj.BaseObj):
             physobj_to_add, events.EVENT_PHYSOBJ_ENTERED_ROOM, self)
 
     def remove_from_room(self, physobj_to_remove: PhysObj, deleted: bool = False):
-        self.contents.remove(physobj_to_remove)
+        # This can happen when an object is in an inventory but then moves rooms
+        if (physobj_to_remove in self.contents):
+            self.contents.remove(physobj_to_remove)
         physobj_to_remove.current_room = None
 
     def remove_from_contents(self, physobj_to_remove: PhysObj):
