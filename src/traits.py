@@ -2,3 +2,6 @@
 # Format is:
 # TRAIT_FOO_BAR = "foo-bar"
 TRAIT_LOCKED = "locked"
+
+TRAIT_SOURCE_UNIT_TESTING_1 = "unit-testing-1"
+TRAIT_SOURCE_UNIT_TESTING_2 = "unit-testing-2"
