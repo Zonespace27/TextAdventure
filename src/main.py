@@ -3,6 +3,7 @@ from packages.components.scripting import *
 from packages.components._component import Component
 from packages.components.laying_down import ComponentLayingDown
 from packages.dialogue._node import DialogueNode
+from packages.dialogue.phone.phone_node import PhoneNode
 from packages.verbs import *
 import packages.verbs._verb as verbs
 from packages.elements import *
@@ -124,15 +125,19 @@ def assemble_dialogue():
                 data[node_id]["result_nodes"] = []
             if not ("leave_allowed" in data[node_id]):
                 data[node_id]["leave_allowed"] = False
+            if not ("one_use_node" in data[node_id]):
+                data[node_id]["one_use_node"] = False
 
             new_node: DialogueNode
             # We want to allow for custom functionality in nodes
             if ("class_name" in data[node_id]):
-                new_node = globals()[data[node_id]["class_name"]]
+                node_class = globals()[data[node_id]["class_name"]]
+                new_node = node_class(node_id, data[node_id]["text"], data[node_id]["select_text"],
+                                      data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"])
 
             else:
                 new_node = DialogueNode(
-                    node_id, data[node_id]["text"], data[node_id]["select_text"], data[node_id]["result_nodes"], data[node_id]["leave_allowed"])
+                    node_id, data[node_id]["text"], data[node_id]["select_text"], data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"])
 
             global_textadv.dialogue_id_to_node[node_id] = new_node
 

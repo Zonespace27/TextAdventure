@@ -1,22 +1,49 @@
 {
     "phone_start": {
-        "text": "You pick up the phone.",
         "select_text": "",
+        "text": "As you pick up the handset and put it to your ear, you hear a woman's voice on the other end. \"Hello?\"",
         "result_nodes": [
-            "phone_branch_1",
-            "phone_branch_2"
-        ]
+            "phone_branch_1"
+        ],
+        "class_name": "PhoneNode"
     },
     "phone_branch_1": {
-        "text": "You say something serious into the phone.",
-        "select_text": "Serious",
-        "result_nodes": [],
-        "leave_allowed": true
+        "select_text": "\"Hello, this is the office of William Steward, private detective. How can I help?\"",
+        "text": "The woman hurriedly responds, \"This is Jane Evans, I scheduled a consultation with you yesterday, my apologies for not being able to come in person.\"\nConsidering your rather bedraggled form, you quietly think that not being seen is for the better.",
+        "result_nodes": [
+            "phone_branch_1_1"
+        ],
+        "class_name": "PhoneNode"
     },
-    "phone_branch_2": {
-        "text": "You say something funny into the phone.",
-        "select_text": "Funny",
+    "phone_branch_1_1": {
+        "select_text": "\"Not a problem, Miss Evans. Now what did you need consulting about?\"",
+        "text": "\"There's been a break-in at one of my employer's office branches nearby,\" she says, \"and you're wanted to investigate.\"",
+        "result_nodes": [
+            "phone_branch_1_1_1",
+            "phone_branch_1_1_2",
+            "phone_branch_1_1_3"
+        ],
+        "class_name": "PhoneNode"
+    },
+    "phone_branch_1_1_1": {
+        "select_text": "\"Who is your employer?\"",
+        "text": "The voice responds \"Oh, I thought you knew! My employer is McMiller Shipping International.\"",
         "result_nodes": [],
-        "leave_allowed": true
+        "class_name": "PhoneNode",
+        "one_use_node": true
+    },
+    "phone_branch_1_1_2": {
+        "select_text": "\"Why are you not going to the police for this?\"",
+        "text": "\"We'd like to keep this quiet if possible. Having the police look through our building doesn't give the best of looks,\" the woman answers, curtly.",
+        "result_nodes": [],
+        "class_name": "PhoneNode",
+        "one_use_node": true
+    },
+    "phone_branch_1_1_3": {
+        "select_text": "\"What are the details of this break-in?\"",
+        "text": "\"I'm not allowed to go over all the details until you agree to investigate. However, what I can tell you is that it seems to have been a fairly benign burglary, likely aimed at taking any cash that could be found inside. Nothing of extreme value was stolen, regardless,\" Evans says at length.",
+        "result_nodes": [],
+        "class_name": "PhoneNode",
+        "one_use_node": true
     }
 }
