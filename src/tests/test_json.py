@@ -6,6 +6,8 @@ from packages.components._component import Component
 from packages.elements import *
 from packages.elements._element import Element
 from packages.dialogue import *
+from packages.dialogue.phone import *
+from packages.dialogue.phone.phone_node import PhoneNode
 from global_textadv import get_subclasses_recursive, resource_path
 import pytest
 
