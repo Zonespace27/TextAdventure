@@ -21,7 +21,9 @@
         "result_nodes": [
             "phone_branch_1_1_1",
             "phone_branch_1_1_2",
-            "phone_branch_1_1_3"
+            "phone_branch_1_1_3",
+            "phone_branch_1_1_4",
+            "phone_branch_1_1_5"
         ],
         "class_name": "PhoneNode"
     },
@@ -41,7 +43,42 @@
     },
     "phone_branch_1_1_3": {
         "select_text": "\"What are the details of this break-in?\"",
-        "text": "\"I'm not allowed to go over all the details until you agree to investigate. However, what I can tell you is that it seems to have been a fairly benign burglary, likely aimed at taking any cash that could be found inside. Nothing of extreme value was stolen, regardless,\" Evans says at length.",
+        "text": "\"I'm not allowed to go over all the details until you agree to investigate. However, what I can tell you is that it seems to have been a fairly benign burglary and nothing of extreme value was stolen.\"",
+        "result_nodes": [],
+        "class_name": "PhoneNode",
+        "one_use_node": true,
+        "added_nodes": [
+            "phone_branch_1_1_3_1"
+        ]
+    },
+    "phone_branch_1_1_3_1": {
+        "select_text": "\"I feel you're being incredibly vague.\"",
+        "text": "\"As I said, I cannot tell you more unless you agree to take on the case,\" she says tersely, \"and if you will not do it, I will find someone else.\"\nLooking around your battered room, you think that you could quite use the money, even if there's certainly something... off, about all of this.",
+        "result_nodes": [],
+        "class_name": "PhoneNode",
+        "one_use_node": true
+    },
+    "phone_branch_1_1_4": {
+        "select_text": "\"Are you willing to pay my regular rate?\"",
+        "text": "\"Of course, detective. I have additionally been authorized to pay an extra twenty percent to ensure your discretion during and after the case.\"\nYou crack a thin smile. Discretion hasn't always been your strong suit, but you think you can manage for this kind of pay.",
+        "result_nodes": [],
+        "class_name": "PhoneNode",
+        "one_use_node": true
+    },
+    "phone_branch_1_1_5": {
+        "select_text": "\"I would be quite willing to take this case, Miss.\"",
+        "text": "\"Excellent,\" the telephone states matter-of-factly, \"I knew you would agree. The office that was broken into isn't far from yours; find it on the corner of 82nd and 3rd.\" The woman hangs up, leaving you with little but a promise and the low hum of a dial tone.",
+        "result_nodes": [
+            "phone_branch_1_1_5_1"
+        ],
+        "class_name": "PhoneNode",
+        "one_use_node": false,
+        "leave_allowed": true,
+        "special_leave_text": "Hang up"
+    },
+    "phone_branch_1_1_5_1": {
+        "select_text": "\"What have I gotten myself into?\"",
+        "text": "As those words echo in your empty, time-worn office, you get a feeling this won't be just a regular burglary.",
         "result_nodes": [],
         "class_name": "PhoneNode",
         "one_use_node": true

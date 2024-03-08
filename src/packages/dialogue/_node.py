@@ -3,7 +3,7 @@ import global_textadv
 
 class DialogueNode():
 
-    def __init__(self, id: str, text: str, select_text: str, result_nodes: list[str], leave_allowed: bool, one_use_node: bool):
+    def __init__(self, id: str, text: str, select_text: str, result_nodes: list[str], leave_allowed: bool, one_use_node: bool, added_nodes: list[str], special_leave_text: str):
         # The unique ID of this dialogue node
         self.id: str = id
 
@@ -22,6 +22,12 @@ class DialogueNode():
         # If True, the node is one-use and will revert to the previous node once used
         self.one_use_node: bool = one_use_node
 
+        # Only applies if one_use_node is true. Will add the listed nodes to the owning node once used
+        self.added_nodes: list[str] = added_nodes
+
+        # Only applies if leave_allowed is true. Will replace the generic "Leave" with whatever the value of this is
+        self.special_leave_text: str = special_leave_text
+
         self.node_used: bool = False
 
     def trigger_node(self):
@@ -34,6 +40,8 @@ class DialogueNode():
 
     def offer_options(self):
         options = self.result_nodes.copy()
+        if self.leave_allowed:
+            options.append("leave")
 
         text_string: str = self.generate_option_text()
 
@@ -45,20 +53,24 @@ class DialogueNode():
 
             picked_number = int(picked_number)
 
-            if len(options) - 1 < picked_number:
-                continue
-
             if ("leave" in options) and (picked_number == options.index("leave")):
                 self.on_node_end()
                 return
+
+            if len(options) - 1 < picked_number:
+                continue
 
             if global_textadv.dialogue_id_to_node[options[picked_number]].trigger_node():
                 self.on_node_end()
 
             if global_textadv.dialogue_id_to_node[options[picked_number]].one_use_node:
                 self.result_nodes.remove(options[picked_number])
+                for node_to_add in self.added_nodes:
+                    self.result_nodes.append(node_to_add)
                 text_string = self.generate_option_text()
                 options = self.result_nodes.copy()
+                if self.leave_allowed:
+                    options.append("leave")
                 continue
 
             break
@@ -71,7 +83,7 @@ class DialogueNode():
 
         if self.leave_allowed:
             options.append("leave")
-            text_string += f"({options.index('leave')}) Leave\n"
+            text_string += f"({options.index('leave')}) {self.special_leave_text if self.special_leave_text else 'Leave'}\n"
 
         return text_string
 

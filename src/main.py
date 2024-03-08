@@ -127,17 +127,21 @@ def assemble_dialogue():
                 data[node_id]["leave_allowed"] = False
             if not ("one_use_node" in data[node_id]):
                 data[node_id]["one_use_node"] = False
+            if not ("added_nodes" in data[node_id]):
+                data[node_id]["added_nodes"] = []
+            if not ("special_leave_text" in data[node_id]):
+                data[node_id]["special_leave_text"] = ""
 
             new_node: DialogueNode
             # We want to allow for custom functionality in nodes
             if ("class_name" in data[node_id]):
                 node_class = globals()[data[node_id]["class_name"]]
                 new_node = node_class(node_id, data[node_id]["text"], data[node_id]["select_text"],
-                                      data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"])
+                                      data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"], data[node_id]["added_nodes"], data[node_id]["special_leave_text"])
 
             else:
                 new_node = DialogueNode(
-                    node_id, data[node_id]["text"], data[node_id]["select_text"], data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"])
+                    node_id, data[node_id]["text"], data[node_id]["select_text"], data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"],  data[node_id]["added_nodes"], data[node_id]["special_leave_text"])
 
             global_textadv.dialogue_id_to_node[node_id] = new_node
 
