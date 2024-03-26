@@ -74,7 +74,7 @@
         "class_name": "PhoneNode",
         "one_use_node": false,
         "leave_allowed": true,
-        "special_leave_text": "Hang up"
+        "special_leave_text": "Hang up."
     },
     "phone_branch_1_1_5_1": {
         "select_text": "\"What have I gotten myself into?\"",

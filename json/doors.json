@@ -89,8 +89,8 @@
         "desc": "You see a glass door, letting you see outside to the road not far from your office.",
         "verbs": [],
         "components": {
-            "component_door": {
-                "door_to": "outside"
+            "component_hub_door": {
+                "hub_id": "outside"
             },
             "component_door_telephone": {
                 
@@ -107,8 +107,8 @@
         "desc": "You see a door to your office.",
         "verbs": [],
         "components": {
-            "component_door": {
-                "door_to": "office_frontroom"
+            "component_hub_door": {
+                "hub_id": "outside"
             }
         }
     }

@@ -14,7 +14,6 @@ from events.events import EVENT_INVENTORY_ADD_OBJECT, \
     EVENT_RETVAL_BLOCK_OBJECT_INVENTORY_REMOVE, \
     EVENT_BASEOBJ_DISPOSED
 from events.verb_events import EVENT_VERB_CHECK_INVENTORY
-from object import Object
 from ..verbs._verb_names import VERB_CHECK_INVENTORY
 
 
@@ -24,7 +23,7 @@ class ComponentInventory(Component):
     def __init__(self, args_dict=dict[str]) -> None:
         super().__init__()
 
-        self.inventory: list[Object] = []
+        self.inventory: list[PhysObj] = []
 
         # How many items can fit into this inventory
         self.inventory_size: int = self.arg_set(
@@ -62,7 +61,7 @@ class ComponentInventory(Component):
         return super().detach_from_parent()
 
     # is any of this good practice?
-    def on_attempt_object_add(self, source, object_to_add: Object, silent: bool = False):
+    def on_attempt_object_add(self, source, object_to_add: PhysObj, silent: bool = False):
         """
         ### EVENT FUNCT
         """
@@ -81,7 +80,7 @@ class ComponentInventory(Component):
 
         self.add_object(object_to_add, silent)
 
-    def add_object(self, object_to_add: Object, silent: bool = False):
+    def add_object(self, object_to_add: PhysObj, silent: bool = False):
         physobj_parent: PhysObj = self.parent
         object_to_add.current_room = physobj_parent.current_room
         object_to_add.move_location(self)
@@ -97,7 +96,7 @@ class ComponentInventory(Component):
         if not silent:
             print(f"You pick up the {object_to_add.name}.")
 
-    def on_attempt_object_remove(self, source, object_to_remove: Object, silent: bool = False):
+    def on_attempt_object_remove(self, source, object_to_remove: PhysObj, silent: bool = False):
         """
         ### EVENT FUNCT
         """
@@ -110,7 +109,7 @@ class ComponentInventory(Component):
 
         self.remove_object(object_to_remove, silent)
 
-    def remove_object(self, object_to_remove: Object, silent: bool = False):
+    def remove_object(self, object_to_remove: PhysObj, silent: bool = False):
         physobj_parent: PhysObj = self.parent
 
         self.inventory.remove(object_to_remove)
@@ -148,7 +147,7 @@ class ComponentInventory(Component):
 
         print(contents)
 
-    def return_inventory_contents(self, source) -> list[Object]:
+    def return_inventory_contents(self, source) -> list[PhysObj]:
         """
         ### EVENT FUNCT
         """

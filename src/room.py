@@ -1,4 +1,3 @@
-import object
 from physical_obj import PhysObj
 import events.events as events
 import base_obj as base_obj
@@ -16,7 +15,7 @@ class Room(base_obj.BaseObj):
         self.contents: list[PhysObj] = []
         self.verbs = {}
         for obj in room_objects:
-            self.add_to_room(object.Object(obj))
+            self.add_to_room(PhysObj(obj))
 
         for verb in room_verbs:
             self.add_verb(verb)

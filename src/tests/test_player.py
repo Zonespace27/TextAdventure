@@ -2,10 +2,10 @@ from room import Room
 import global_textadv
 from main import unit_test_genesis
 from packages.verbs import *
-from object import Object
 from packages.verbs._verb import Verb
 from global_textadv import get_subclasses_recursive
 from re import search
+from physical_obj import PhysObj
 from player import Player
 from packages.components.inventory import ComponentInventory
 from packages.components.edible import ComponentEdible
@@ -34,7 +34,7 @@ class TestClass():
 
         self.fresh_room.add_to_room(global_textadv.player_ref)
 
-        apple: Object = Object("apple")
+        apple: PhysObj = PhysObj("apple")
         self.fresh_room.add_to_room(apple)
 
         global_textadv.player_ref.parse_text("pick up apple")

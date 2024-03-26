@@ -2,7 +2,7 @@ from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_ANSWER_PHONE, EVENT_VERB_SPEAK
-from events.events import EVENT_ENABLE_DIALOGUE, EVENT_DISABLE_DIALOGUE
+from events.events import EVENT_ENABLE_DIALOGUE, EVENT_DISABLE_DIALOGUE, EVENT_DIALOGUE_COMPLETED
 from ..verbs._verb_names import VERB_ANSWER_PHONE, VERB_SPEAK
 import global_textadv
 from ..dialogue._node import DialogueNode
@@ -71,6 +71,7 @@ class ComponentDialogue(Component):
 
         node: DialogueNode = global_textadv.dialogue_id_to_node[self.dialogue_node]
         node.trigger_node()
+        self.send_event(self.parent, EVENT_DIALOGUE_COMPLETED)
 
     def enable_dialogue(self, source):
         """

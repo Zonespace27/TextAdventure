@@ -1,4 +1,4 @@
-# import object
+
 # from packages.components.edible import ComponentEdible
 # import globals
 from json import load

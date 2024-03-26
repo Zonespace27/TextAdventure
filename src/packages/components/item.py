@@ -1,6 +1,6 @@
 from ._component import Component
 from base_obj import BaseObj
-from object import Object
+from physical_obj import PhysObj
 from events.events import EVENT_INVENTORY_ADD_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_ADD, EVENT_INVENTORY_REMOVE_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_REMOVE, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PHYSOBJ_LOCATION_MOVE
 from events.verb_events import EVENT_VERB_PICKUP, EVENT_VERB_DROP
 from ..verbs._verb_names import VERB_PICKUP, VERB_DROP
@@ -18,10 +18,10 @@ class ComponentItem(Component):
             args_dict, "unmoved_examine", str)
 
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
-        if not isinstance(object_to_attach, Object):
+        if not isinstance(object_to_attach, PhysObj):
             return False
 
-        object_to_attach: Object
+        object_to_attach: PhysObj
 
         if not super().attach_to_parent(object_to_attach):
             return False
@@ -38,7 +38,7 @@ class ComponentItem(Component):
         object_to_attach.add_verb(VERB_DROP)
 
     def detach_from_parent(self):
-        obj_parent: Object = self.parent
+        obj_parent: PhysObj = self.parent
 
         if obj_parent:
             self.unregister_event(obj_parent, EVENT_VERB_PICKUP)

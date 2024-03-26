@@ -4,7 +4,6 @@ from base_obj import BaseObj
 from physical_obj import PhysObj
 from events.events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PLAYER_FIND_CONTENTS, EVENT_OBJECT_ADDED_TO_INVENTORY
 from events.verb_events import EVENT_VERB_OPEN_CONTAINER, EVENT_VERB_CLOSE_CONTAINER, EVENT_VERB_EXAMINE
-from object import Object
 from ..verbs._verb_names import VERB_OPEN_CONTAINER, VERB_EXAMINE, VERB_CLOSE_CONTAINER
 from traits import TRAIT_LOCKED
 
@@ -15,7 +14,7 @@ class ComponentContainer(Component):
     def __init__(self, args_dict=dict[str]) -> None:
         super().__init__()
 
-        self.contents: list[Object] = []
+        self.contents: list[PhysObj] = []
 
         # If the container is open or closed
         self.open = self.arg_set(args_dict, "open", bool)
@@ -87,15 +86,15 @@ class ComponentContainer(Component):
 
     def set_initial_contents(self, content_list: list[str]):
         for entry in content_list:
-            self.add_object(Object(entry))
+            self.add_object(PhysObj(entry))
 
-    def add_object(self, object: Object, silent: bool = False):
+    def add_object(self, object: PhysObj, silent: bool = False):
         self.register_event(
             object, EVENT_OBJECT_ADDED_TO_INVENTORY, self.on_object_taken)
         self.contents.append(object)
         object.move_location(self.parent)
 
-    def remove_object(self, object: Object, silent: bool = False):
+    def remove_object(self, object: PhysObj, silent: bool = False):
         self.unregister_event(object, EVENT_OBJECT_ADDED_TO_INVENTORY)
         self.contents.remove(object)
 
@@ -143,7 +142,7 @@ class ComponentContainer(Component):
         print(f"{phys_parent.desc} {open_or_close_string}")
         return EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION
 
-    def get_contents(self, source) -> list[Object]:
+    def get_contents(self, source) -> list[PhysObj]:
         """
         ### EVENT FUNCT
         """

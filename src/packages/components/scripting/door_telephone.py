@@ -1,7 +1,7 @@
 from .._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
-from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN, EVENT_ENABLE_DIALOGUE
+from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN, EVENT_ENABLE_DIALOGUE, EVENT_DIALOGUE_COMPLETED
 from global_textadv import qdel
 from ...verbs._verb_names import VERB_OPEN_DOOR
 
@@ -26,14 +26,16 @@ class ComponentDoorTelephone(Component):
 
         self.register_event(
             object_to_attach, EVENT_DOOR_ATTEMPT_OPEN, self.on_door_open)
-        object_to_attach.add_verb(VERB_OPEN_DOOR)
 
     def detach_from_parent(self):
         phys_parent: PhysObj = self.parent
 
         if phys_parent:
             self.unregister_event(phys_parent, EVENT_DOOR_ATTEMPT_OPEN)
-            phys_parent.remove_verb(VERB_OPEN_DOOR)
+            telephone: PhysObj = phys_parent.current_room.get_content_object(
+                "front_office_telephone")
+            if telephone:
+                self.unregister_event(telephone, EVENT_DIALOGUE_COMPLETED)
 
         return super().detach_from_parent()
 
@@ -47,8 +49,17 @@ class ComponentDoorTelephone(Component):
             phys_parent: PhysObj = self.parent
             self.send_event(phys_parent.current_room.get_content_object(
                 "front_office_telephone"), EVENT_ENABLE_DIALOGUE)
+            self.register_event(phys_parent.current_room.get_content_object(
+                "front_office_telephone"), EVENT_DIALOGUE_COMPLETED, self.on_phonecall_finished)
 
         else:
             print(
                 "You consider trying to leave the phone unanswered, but decide against it.")
         return EVENT_RETVAL_BLOCK_DOOR_OPEN
+
+    def on_phonecall_finished(self, source):
+        """
+        ### EVENT FUNCT
+        """
+
+        qdel(self)

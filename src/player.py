@@ -14,7 +14,6 @@ from events.events import EVENT_INVENTORY_GET_CONTENTS, \
 if TYPE_CHECKING:
     import room
     from packages.verbs._verb import Verb
-    from object import Object
 
 
 class Player(PhysObj):
@@ -245,7 +244,7 @@ class Player(PhysObj):
                 if verb:
                     valid_objects.append((object, i2, verb))
 
-                object_contents: list["Object"] = self.send_event(
+                object_contents: list[PhysObj] = self.send_event(
                     object, EVENT_PLAYER_FIND_CONTENTS) or []
                 for contained_object in object_contents:
                     verb = contained_object.action_is_valid(command)
