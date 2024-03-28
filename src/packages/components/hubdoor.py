@@ -3,7 +3,7 @@ from base_obj import BaseObj
 from physical_obj import PhysObj
 from room import Room
 from events.verb_events import EVENT_VERB_OPEN_DOOR
-from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN
+from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN, EVENT_OBJECT_INITIALIZED
 from ..verbs._verb_names import VERB_OPEN_DOOR
 import global_textadv
 from traits import TRAIT_LOCKED
@@ -33,6 +33,12 @@ class ComponentHubDoor(Component):
         # Description of the room that this door is in
         self.room_desc: str = self.arg_set(args_dict, "room_desc", str)
 
+        global_textadv.hubdoors.append(self)
+
+    def dispose(self):
+        global_textadv.hubdoors.remove(self)
+        return super().dispose()
+
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
         if not isinstance(object_to_attach, PhysObj):
             return False
@@ -49,8 +55,8 @@ class ComponentHubDoor(Component):
         if not (self.hub_id in self.hub_dict):
             self.hub_dict[self.hub_id] = {}
 
-        # errors, zonenote
-        self.hub_dict[self.hub_id][self.room_desc] = object_to_attach.current_room
+        self.register_event(
+            object_to_attach, EVENT_OBJECT_INITIALIZED, self.on_parent_init)
 
     def detach_from_parent(self):
         phys_parent: PhysObj = self.parent
@@ -77,11 +83,15 @@ class ComponentHubDoor(Component):
         self.offer_transit_options()
 
     def offer_transit_options(self):
+        phys_parent: PhysObj = self.parent
         offer_string: str = "Where would you like to go? (by number)\n"
         i: int = 0
         options: dict[str, Room] = self.hub_dict[self.hub_id].copy()
         options["Leave"] = None
         for option in options:
+            if options[option] == phys_parent.current_room:
+                continue
+
             offer_string += f"({i}) {option}\n"
             i += 1
         result: str = input(offer_string)
@@ -89,8 +99,18 @@ class ComponentHubDoor(Component):
         if not result.isnumeric():  # this cancels opening the door, unlike most input methods. May want to correct someday, zonenote
             return
 
-        chosen_string: str = list(options.values())[int(result)]
+        chosen_string: str = list(options.keys())[int(result)]
         if chosen_string == "Leave":
             return
 
         global_textadv.player_ref.move_rooms(options[chosen_string])
+
+    def on_parent_init(self, source):
+        """
+        EVENT FUNCT
+        """
+
+        phys_parent: PhysObj = self.parent
+        if phys_parent.current_room:
+            self.hub_dict[self.hub_id][self.room_desc] = phys_parent.current_room
+        self.unregister_event(phys_parent, EVENT_OBJECT_INITIALIZED)

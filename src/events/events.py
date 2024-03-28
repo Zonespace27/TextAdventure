@@ -77,3 +77,6 @@ EVENT_UNIT_TEST_SIGNAL_2 = "unit_test_signal_2"
 
 # Event called whenever a dialogue component finishes its dialogue
 EVENT_DIALOGUE_COMPLETED = "dialogue_completed"
+
+# Event called when an object finishes initialization from new_object()
+EVENT_OBJECT_INITIALIZED = "object_initialized"

@@ -1,5 +1,6 @@
 from base_obj import BaseObj
 from events.events import EVENT_UNIT_TEST_SIGNAL, EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND, EVENT_UNIT_TEST_SIGNAL_2
+from base_obj import new_object
 
 
 class SignalTestBaseObj(BaseObj):
@@ -19,8 +20,8 @@ class SignalTestBaseObj(BaseObj):
 
 class TestClass():
     def test_signal_basic(self):
-        obj_1: SignalTestBaseObj = SignalTestBaseObj()
-        obj_2: SignalTestBaseObj = SignalTestBaseObj()
+        obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
+        obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 
         obj_1.register_event(obj_1, EVENT_UNIT_TEST_SIGNAL,
                              obj_1.recieve_signal)
@@ -30,8 +31,8 @@ class TestClass():
         assert obj_1.signal_recieved
 
     def test_signal_crossobj(self):
-        obj_1: SignalTestBaseObj = SignalTestBaseObj()
-        obj_2: SignalTestBaseObj = SignalTestBaseObj()
+        obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
+        obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 
         obj_2.register_event(obj_1, EVENT_UNIT_TEST_SIGNAL,
                              obj_2.recieve_signal)
@@ -41,8 +42,8 @@ class TestClass():
         assert obj_2.signal_recieved
 
     def test_signal_retval(self):
-        obj_1: SignalTestBaseObj = SignalTestBaseObj()
-        obj_2: SignalTestBaseObj = SignalTestBaseObj()
+        obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
+        obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 
         obj_1.register_event(obj_1, EVENT_UNIT_TEST_SIGNAL,
                              obj_1.recieve_signal)
@@ -54,8 +55,8 @@ class TestClass():
         assert return_value == EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND
 
     def test_signal_sanity(self):
-        obj_1: SignalTestBaseObj = SignalTestBaseObj()
-        obj_2: SignalTestBaseObj = SignalTestBaseObj()
+        obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
+        obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 
         obj_1.register_event(obj_1, EVENT_UNIT_TEST_SIGNAL,
                              obj_1.recieve_signal)

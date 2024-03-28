@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 from exception import NonExistentJsonObject
 import global_textadv
-from events.events import EVENT_BASEOBJ_DISPOSED
+from events.events import EVENT_BASEOBJ_DISPOSED, EVENT_OBJECT_INITIALIZED
 
 if TYPE_CHECKING:
     from packages.components._component import Component
@@ -45,6 +45,9 @@ class BaseObj(object):
 
             for element_id in global_textadv.object_id_data[object_id]["elements"]:
                 self.add_element(element_id)
+
+    def post_init(self, *args) -> None:
+        return
 
     def dispose(self):
         """
@@ -104,7 +107,7 @@ class BaseObj(object):
             event_or_events = [event_or_events]
 
         for event in event_or_events:
-            if not self.event_callbacks[target][event]:
+            if not (event in self.event_callbacks[target]):
                 continue
 
             if isinstance(lookup[event], list):
@@ -138,7 +141,9 @@ class BaseObj(object):
                 lookup.pop(event)
 
         for event in event_or_events:
-            self.event_callbacks[target].pop(event)
+            if (event in self.event_callbacks[target]):
+                self.event_callbacks[target].pop(event)
+
         if not len(self.event_callbacks[target]):
             self.event_callbacks.pop(target)
 
@@ -202,7 +207,8 @@ class BaseObj(object):
         if isinstance(arg_dict, list):  # For the inherent components that are a list by default
             arg_dict = arg_dict[0]
 
-        component_class(arg_dict).attempt_attachment(self)
+        new_component: Component = new_object(component_class, arg_dict)
+        new_component.attempt_attachment(self)
 
     def get_component(self, component_class: type["Component"]) -> "Component":
         if component_class not in list(self.object_components.keys()):
@@ -294,3 +300,17 @@ class BaseObj(object):
             return False
 
         return (trait_source in self.traits[trait_to_find])
+
+
+def new_object(classtype: type, *args) -> object:
+    """
+    Use this as an initializer for new objects. This will call post_init() on all BaseObjs.
+    """
+
+    if not issubclass(classtype, BaseObj):
+        return classtype(*args)
+
+    new_obj: BaseObj = classtype(*args)
+    new_obj.post_init(*args)
+    new_obj.send_event(new_obj, EVENT_OBJECT_INITIALIZED)
+    return new_obj

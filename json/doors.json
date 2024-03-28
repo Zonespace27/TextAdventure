@@ -90,7 +90,8 @@
         "verbs": [],
         "components": {
             "component_hub_door": {
-                "hub_id": "outside"
+                "hub_id": "outside",
+                "room_desc": "Your office."
             },
             "component_door_telephone": {
                 
@@ -108,7 +109,8 @@
         "verbs": [],
         "components": {
             "component_hub_door": {
-                "hub_id": "outside"
+                "hub_id": "outside",
+                "room_desc": "The void."
             }
         }
     }

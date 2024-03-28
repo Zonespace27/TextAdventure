@@ -6,6 +6,7 @@ from events.events import EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BA
 from events.verb_events import EVENT_VERB_OPEN_CONTAINER, EVENT_VERB_CLOSE_CONTAINER, EVENT_VERB_EXAMINE
 from ..verbs._verb_names import VERB_OPEN_CONTAINER, VERB_EXAMINE, VERB_CLOSE_CONTAINER
 from traits import TRAIT_LOCKED
+from base_obj import new_object
 
 
 class ComponentContainer(Component):
@@ -86,7 +87,7 @@ class ComponentContainer(Component):
 
     def set_initial_contents(self, content_list: list[str]):
         for entry in content_list:
-            self.add_object(PhysObj(entry))
+            self.add_object(new_object(PhysObj, entry))
 
     def add_object(self, object: PhysObj, silent: bool = False):
         self.register_event(

@@ -68,6 +68,10 @@ def initialize_globals():
     # Fix me later when i figure out what the fuck the exe is looking for
     development_mode = False
 
+    global hubdoors
+
+    hubdoors = []
+
 
 def get_subclasses_recursive(class_to_use: type) -> list[type]:
     return_list: list[type] = []

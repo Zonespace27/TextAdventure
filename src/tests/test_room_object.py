@@ -1,5 +1,6 @@
 from room import Room
 import global_textadv
+from base_obj import new_object
 from main import unit_test_genesis
 from player import Player
 from physical_obj import PhysObj
@@ -34,7 +35,7 @@ class TestClass():
         # And the player should know what room it's in
         assert (player_ref.current_room == self.fresh_room)
 
-        object1 = PhysObj("liquor_bottle")
+        object1 = new_object(PhysObj, "liquor_bottle")
 
         self.fresh_room.add_to_room(object1)
 
@@ -61,7 +62,7 @@ class TestClass():
 
         self.fresh_room.add_to_room(global_textadv.player_ref)
 
-        object1 = PhysObj("liquor_bottle")
+        object1 = new_object(PhysObj, "liquor_bottle")
         self.fresh_room.add_to_room(object1)
 
         inventory_component: ComponentInventory = global_textadv.player_ref.get_component(

@@ -11,6 +11,7 @@ from packages.elements._element import Element
 from json import load
 import room
 import global_textadv
+from base_obj import new_object
 import player
 from os import system, getcwd, chdir
 from time import sleep
@@ -26,6 +27,7 @@ def genesis():
     assemble_dialogue()  # Must be before object init
     assemble_all_objects()  # Must be before room init
     assemble_room_ids()  # Must be after object init
+    assemble_hubdoors()  # Must be after room init
     init_player()  # Must be last
 
 
@@ -106,8 +108,8 @@ def assemble_room_ids():
         if not ("elements" in data[room_id]):
             data[room_id]["elements"] = []
 
-        global_textadv.roomid_to_room[room_id] = room.Room(room_id, data[room_id]["desc"], data[room_id]
-                                                           ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
+        global_textadv.roomid_to_room[room_id] = new_object(room.Room, room_id, data[room_id]["desc"], data[room_id]
+                                                            ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
 
 
 def assemble_dialogue():
@@ -153,7 +155,7 @@ def assemble_components():
 
 
 def init_player():
-    global_textadv.player_ref = player.Player()
+    global_textadv.player_ref = new_object(player.Player)
     global_textadv.roomid_to_room["office_backroom"].add_to_room(
         global_textadv.player_ref)
     global_textadv.player_ref.add_component(ComponentLayingDown, {
@@ -163,8 +165,12 @@ def init_player():
 
 def assemble_elements():
     for subclass in global_textadv.get_subclasses_recursive(Element):
-        new_subclass: Element = subclass()
+        new_subclass: Element = new_object(subclass)
         global_textadv.element_id_to_ref[new_subclass.id] = new_subclass
+
+def assemble_hubdoors():
+    for hubdoor in global_textadv.hubdoors:
+        hubdoor.on_parent_init(None)
 
 
 if __name__ == "__main__":

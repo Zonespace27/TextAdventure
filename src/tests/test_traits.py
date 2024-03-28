@@ -1,10 +1,11 @@
 from base_obj import BaseObj
+from base_obj import new_object
 from traits import TRAIT_LOCKED, TRAIT_SOURCE_UNIT_TESTING_1, TRAIT_SOURCE_UNIT_TESTING_2
 
 
 class TestClass():
     def test_traits(self):
-        new_obj: BaseObj = BaseObj()
+        new_obj: BaseObj = new_object(BaseObj)
         new_obj.add_trait(TRAIT_LOCKED, TRAIT_SOURCE_UNIT_TESTING_1)
 
         assert new_obj.has_trait(TRAIT_LOCKED)

@@ -2,6 +2,7 @@ from physical_obj import PhysObj
 import events.events as events
 import base_obj as base_obj
 import global_textadv
+from base_obj import new_object
 
 
 class Room(base_obj.BaseObj):
@@ -15,7 +16,7 @@ class Room(base_obj.BaseObj):
         self.contents: list[PhysObj] = []
         self.verbs = {}
         for obj in room_objects:
-            self.add_to_room(PhysObj(obj))
+            self.add_to_room(new_object(PhysObj, obj))
 
         for verb in room_verbs:
             self.add_verb(verb)
