@@ -64,11 +64,9 @@ class BaseObj(object):
 
     # Some time, make sure that an object with signals elsewhere being deleted doesn't cause fuckery
     def register_event(self, target: "BaseObj", event_type: str, func_to_callback, override=False):
-        try:
+        target_callbacks = {}
+        if target in self.event_callbacks:
             target_callbacks = self.event_callbacks[target]
-
-        except KeyError:
-            target_callbacks = {}
 
         lookup = target.object_lookup
         if not lookup:
@@ -82,10 +80,10 @@ class BaseObj(object):
         self.event_callbacks[target] = target_callbacks
         # Equivalent to looked_up
         lookup_list: list = []
-        try:
-            lookup_list = lookup[event_type]
 
-        except KeyError:
+        if event_type in lookup:
+            lookup_list = lookup[event_type]
+        else:
             lookup[event_type] = self
 
         if (lookup_list == self):
