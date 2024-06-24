@@ -3,7 +3,8 @@ import global_textadv
 from main import unit_test_genesis
 from packages.verbs import *
 from packages.verbs._verb import Verb
-from global_textadv import get_subclasses_recursive, new_object
+from global_textadv import get_subclasses_recursive
+from base_obj import new_object
 from re import search
 from physical_obj import PhysObj
 from player import Player
