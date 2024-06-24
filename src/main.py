@@ -168,6 +168,7 @@ def assemble_elements():
         new_subclass: Element = new_object(subclass)
         global_textadv.element_id_to_ref[new_subclass.id] = new_subclass
 
+
 def assemble_hubdoors():
     for hubdoor in global_textadv.hubdoors:
         hubdoor.on_parent_init(None)
@@ -177,18 +178,18 @@ if __name__ == "__main__":
     if getcwd().endswith("\\src"):  # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\\src"))
 
-    if global_textadv.UNIT_TESTING:
+    if global_textadv.unit_testing:
         pytest.main()
 
     else:
         """input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
         system("cls")
         sleep(0.5)
-        print("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
+        output("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
         sleep(0.5)
-        print("Work hasn't been great recently, you've been getting steadily fewer clients as the weeks and months go by, but since it's just you, you're still in business.")
+        output("Work hasn't been great recently, you've been getting steadily fewer clients as the weeks and months go by, but since it's just you, you're still in business.")
         sleep(0.5)
-        print("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
+        output("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
         sleep(1)
         input("Press ENTER to begin.")
         system("cls")"""  # Undo me when in prod

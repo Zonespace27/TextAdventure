@@ -4,6 +4,7 @@ from base_obj import BaseObj
 import global_textadv
 from events.events import EVENT_LOCK_ATTEMPT_UNLOCK, EVENT_BASEOBJ_PRINT_DESCRIPTION
 from traits import TRAIT_LOCKED
+from global_textadv import output
 
 
 class ComponentLocked(Component):
@@ -50,10 +51,10 @@ class ComponentLocked(Component):
         ### EVENT FUNCT
         """
         if not (key_id == self.lock_id):
-            print("You try to insert the key into the lock, only for it to not fit.")
+            output("You try to insert the key into the lock, only for it to not fit.")
             return
 
-        print(self.unlock_message)
+        output(self.unlock_message)
         global_textadv.qdel(self)
 
     def on_view(self, source):
@@ -63,4 +64,4 @@ class ComponentLocked(Component):
         if not (self.examine_message):
             return
 
-        print(self.examine_message)
+        output(self.examine_message)

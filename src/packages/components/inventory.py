@@ -15,6 +15,7 @@ from events.events import EVENT_INVENTORY_ADD_OBJECT, \
     EVENT_BASEOBJ_DISPOSED
 from events.verb_events import EVENT_VERB_CHECK_INVENTORY
 from ..verbs._verb_names import VERB_CHECK_INVENTORY
+from global_textadv import output
 
 
 class ComponentInventory(Component):
@@ -94,7 +95,7 @@ class ComponentInventory(Component):
             object_to_add, EVENT_BASEOBJ_DISPOSED, self.on_inventory_item_deleted)
 
         if not silent:
-            print(f"You pick up the {object_to_add.name}.")
+            output(f"You pick up the {object_to_add.name}.")
 
     def on_attempt_object_remove(self, source, object_to_remove: PhysObj, silent: bool = False):
         """
@@ -124,7 +125,7 @@ class ComponentInventory(Component):
         self.unregister_event(object_to_remove, EVENT_BASEOBJ_DISPOSED)
 
         if not silent:
-            print(f"You drop the {object_to_remove.name}.")
+            output(f"You drop the {object_to_remove.name}.")
 
     def check_inventory(self, source):
         """
@@ -145,7 +146,7 @@ class ComponentInventory(Component):
             contents = f"You currently have nothing in your inventory. It looks like it could hold {remaining_space} more thing" + (
                 "s." if remaining_space != 1 else ".")
 
-        print(contents)
+        output(contents)
 
     def return_inventory_contents(self, source) -> list[PhysObj]:
         """

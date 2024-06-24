@@ -6,6 +6,7 @@ from events.verb_events import EVENT_VERB_OPEN_DOOR
 from events.events import EVENT_DOOR_ATTEMPT_OPEN, EVENT_RETVAL_BLOCK_DOOR_OPEN, EVENT_OBJECT_INITIALIZED
 from ..verbs._verb_names import VERB_OPEN_DOOR
 import global_textadv
+from global_textadv import output
 from traits import TRAIT_LOCKED
 from typing import TYPE_CHECKING
 
@@ -74,7 +75,7 @@ class ComponentHubDoor(Component):
         ### EVENT FUNCT
         """
         if self.parent.has_trait(TRAIT_LOCKED):
-            print("You can't open this, it's locked!")
+            output("You can't open this, it's locked!")
             return
 
         if self.send_event(self.parent, EVENT_DOOR_ATTEMPT_OPEN) & EVENT_RETVAL_BLOCK_DOOR_OPEN:

@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 from exception import NonExistentJsonObject
 import global_textadv
+from global_textadv import output
 from events.events import EVENT_BASEOBJ_DISPOSED, EVENT_OBJECT_INITIALIZED
 
 if TYPE_CHECKING:
@@ -74,7 +75,7 @@ class BaseObj(object):
             lookup = {}
 
         if ((event_type in list(target_callbacks.keys())) and not override):
-            print(
+            output(
                 f"{event_type} overriden, set override = True to suppress this warning.")
 
         target_callbacks[event_type] = func_to_callback
@@ -157,7 +158,7 @@ class BaseObj(object):
 
             except AttributeError:
                 # Check if this runtimes either lmao
-                print(
+                output(
                     f"{listening_object.event_callbacks[self][event]} isn't an attribute of {listening_object}.")
 
             except KeyError:  # The object no longer exists in the listening_object's event_callbacks
@@ -182,7 +183,7 @@ class BaseObj(object):
 
             except AttributeError:
                 # Check if this runtimes either lmao
-                print(
+                output(
                     f"{listening_object.event_callbacks[self][event]} isn't an attribute of {listening_object}.")
 
             return_bitflag |= (method_to_call(*args) or 0)

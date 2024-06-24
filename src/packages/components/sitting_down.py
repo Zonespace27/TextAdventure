@@ -6,6 +6,7 @@ from ..verbs._verb_names import VERB_GET_UP
 from ..verbs._verb import Verb
 import global_textadv
 from bitflags import VERB_IGNORE_SITDOWN
+from global_textadv import output
 
 
 class ComponentSittingDown(Component):
@@ -46,7 +47,7 @@ class ComponentSittingDown(Component):
         """
         ### EVENT FUNCT
         """
-        print(self.get_up_message)  # TODO: make this work for sitting down in a chair #TODO: check if this TODO is valid
+        output(self.get_up_message)  # TODO: make this work for sitting down in a chair #TODO: check if this TODO is valid
         global_textadv.qdel(self)
 
     def on_verb_execute(self, source, executing_verb: Verb, owning_obj: BaseObj):
@@ -55,5 +56,5 @@ class ComponentSittingDown(Component):
         """
         if (executing_verb.verb_flags & VERB_IGNORE_SITDOWN):
             return
-        print("You can't do this while sitting down!")
+        output("You can't do this while sitting down!")
         return EVENT_RETVAL_BLOCK_VERB_EXECUTE

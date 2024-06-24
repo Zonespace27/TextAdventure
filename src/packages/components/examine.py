@@ -3,6 +3,7 @@ from base_obj import BaseObj
 from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_EXAMINE
 from ..verbs._verb_names import VERB_EXAMINE
+from global_textadv import output
 
 
 class ComponentExamine(Component):
@@ -40,4 +41,4 @@ class ComponentExamine(Component):
         """
         ### EVENT FUNCT
         """
-        print(self.examine_text)
+        output(self.examine_text)

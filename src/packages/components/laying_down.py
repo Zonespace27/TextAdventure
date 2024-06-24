@@ -5,6 +5,7 @@ from events.verb_events import EVENT_VERB_GET_UP, EVENT_VERB_TRY_EXECUTE, EVENT_
 from ..verbs._verb_names import VERB_GET_UP
 from ..verbs._verb import Verb
 import global_textadv
+from global_textadv import output
 from bitflags import VERB_IGNORE_LAYDOWN, PLAYER_LAYING_DOWN
 
 
@@ -48,7 +49,7 @@ class ComponentLayingDown(Component):
         """
         ### EVENT FUNCT
         """
-        print(self.get_up_message)
+        output(self.get_up_message)
         global_textadv.qdel(self)
 
     def on_verb_execute(self, source, executing_verb: Verb, owning_obj: BaseObj):
@@ -57,5 +58,5 @@ class ComponentLayingDown(Component):
         """
         if (executing_verb.verb_flags & VERB_IGNORE_LAYDOWN):
             return
-        print("You can't do this while lying down!")
+        output("You can't do this while lying down!")
         return EVENT_RETVAL_BLOCK_VERB_EXECUTE

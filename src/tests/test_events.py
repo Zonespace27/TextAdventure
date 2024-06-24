@@ -1,5 +1,5 @@
 from base_obj import BaseObj
-from events.events import EVENT_UNIT_TEST_SIGNAL, EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND, EVENT_UNIT_TEST_SIGNAL_2
+from events.unit_test_events import EVENT_UNIT_TEST_SIGNAL, EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND, EVENT_UNIT_TEST_SIGNAL_2
 from base_obj import new_object
 
 
