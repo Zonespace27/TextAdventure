@@ -4,6 +4,7 @@ from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_EXAMINE
 from ..verbs._verb_names import VERB_EXAMINE
 from global_textadv import output
+from bitflags import BASEOBJ_BASE_EXAMINE_OVERRIDDEN
 
 
 class ComponentExamine(Component):
@@ -41,4 +42,8 @@ class ComponentExamine(Component):
         """
         ### EVENT FUNCT
         """
+        phys_parent: PhysObj = self.parent
+        if not (phys_parent.baseobj_bitflags & BASEOBJ_BASE_EXAMINE_OVERRIDDEN):
+            return
+
         output(self.examine_text)

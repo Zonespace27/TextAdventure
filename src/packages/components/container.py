@@ -8,6 +8,7 @@ from ..verbs._verb_names import VERB_OPEN_CONTAINER, VERB_EXAMINE, VERB_CLOSE_CO
 from traits import TRAIT_LOCKED
 from base_obj import new_object
 from global_textadv import output
+from bitflags import BASEOBJ_BASE_EXAMINE_OVERRIDDEN
 
 
 class ComponentContainer(Component):
@@ -68,6 +69,7 @@ class ComponentContainer(Component):
         object_to_attach.add_verb(VERB_OPEN_CONTAINER)
         object_to_attach.add_verb(VERB_CLOSE_CONTAINER)
         object_to_attach.add_verb(VERB_EXAMINE)
+        object_to_attach.baseobj_bitflags |= BASEOBJ_BASE_EXAMINE_OVERRIDDEN
 
         return super().attach_to_parent(object_to_attach)
 
@@ -83,6 +85,7 @@ class ComponentContainer(Component):
             self.remove_verb(VERB_OPEN_CONTAINER)
             self.remove_verb(VERB_CLOSE_CONTAINER)
             self.remove_verb(VERB_EXAMINE)
+            phys_parent.baseobj_bitflags &= ~BASEOBJ_BASE_EXAMINE_OVERRIDDEN
 
         return super().detach_from_parent()
 

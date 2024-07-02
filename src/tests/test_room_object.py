@@ -1,30 +1,15 @@
-from room import Room
+from ._base_test_class import TestClass
 import global_textadv
 from base_obj import new_object
-from main import unit_test_genesis
 from player import Player
 from physical_obj import PhysObj
 from packages.components.item import ComponentItem
 from packages.components.inventory import ComponentInventory
 
 
-class TestClass():
-    fresh_room: Room = None
-    called_genesis: bool = False
-
-    def generate_fresh_room(self):
-        """
-        Generate a new, fresh room for testing
-        """
-        if not self.called_genesis:
-            self.called_genesis = True
-            unit_test_genesis(False)
-
-        global_textadv.qdel(self.fresh_room)
-
-        self.fresh_room = Room("unit_test", "")
-
+class TestClass2(TestClass):
     def test_add_remove_room(self):
+        self.init_things()
         self.generate_fresh_room()
         player_ref: Player = Player()
 
@@ -57,6 +42,7 @@ class TestClass():
         assert (len(self.fresh_room.contents) == 0)
 
     def test_object_pickup(self):
+        self.init_things()
         self.generate_fresh_room()
         global_textadv.player_ref = Player()
 

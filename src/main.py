@@ -16,7 +16,6 @@ import player
 from os import system, getcwd, chdir
 from time import sleep
 import asyncio
-import pytest
 
 
 def genesis():
@@ -178,8 +177,8 @@ if __name__ == "__main__":
     if getcwd().endswith("\\src"):  # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\\src"))
 
-    if global_textadv.unit_testing:
-        pytest.main()
+    # if global_textadv.unit_testing:
+     #   pytest.main()
 
     else:
         """input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)

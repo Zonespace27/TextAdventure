@@ -15,6 +15,7 @@ class OutputCatcher(BaseObj):
         self.outputted_text: str = ""
 
     def catch_output(self, callback, args: list, expected_text: str) -> bool:
+        self.outputted_text = ""
         self.register_event(self, EVENT_UNIT_TEST_OUTPUT, self.on_output)
         callback(*args)
         self.unregister_event(self, EVENT_UNIT_TEST_OUTPUT)

@@ -26,6 +26,8 @@ class BaseObj(object):
         self.source_verbs: list["Verb"] = []
         # A dict of "trait" : ["sources"], traits should be used when you want to have generic things (e.g. the inability to use verbs) possibly come from multiple sources at once
         self.traits: dict[str, list[str]] = {}
+        # For use with bitflags that start with BASEOBJ_
+        self.baseobj_bitflags: int = 0
 
         if object_id:
             try:

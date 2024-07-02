@@ -17,7 +17,9 @@
         "desc": "item object",
         "verbs": [],
         "components": {
-            "component_item": {}
+            "component_item": {
+                "unmoved_examine": "Unmoved examine text"
+            }
         },
         "elements": {}
     },
