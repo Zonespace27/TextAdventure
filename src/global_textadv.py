@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING
 from sys import getrefcount
+import sys
 from os import path, getcwd
+from events.unit_test_events import EVENT_UNIT_TEST_OUTPUT
 # import argparse
 from gc import get_referrers
 
@@ -9,9 +11,6 @@ if TYPE_CHECKING:
 
 # If True, will print any remaining references to an object on qdel
 GC_HUNTING = False
-
-# If True, will run the code in unit testing mode
-UNIT_TESTING = False
 
 
 def initialize_globals():
@@ -72,6 +71,18 @@ def initialize_globals():
 
     hubdoors = []
 
+    # An object used for catching output() calls for the sake of unit testing
+    global output_catcher
+
+    output_catcher = None
+
+    global unit_testing
+
+    unit_testing = False
+
+    if "pytest" in sys.modules:
+        unit_testing = True
+
 
 def get_subclasses_recursive(class_to_use: type) -> list[type]:
     return_list: list[type] = []
@@ -91,8 +102,8 @@ def qdel(object_to_delete: "BaseObj"):
 
     if GC_HUNTING:
         referrers = get_referrers(object_to_delete)
-        print(f"References of {object_to_delete}: {getrefcount(referrers)}")
-        print(str(referrers))
+        output(f"References of {object_to_delete}: {getrefcount(referrers)}")
+        output(str(referrers))
 
     del object_to_delete
 
@@ -103,3 +114,12 @@ def resource_path(relative_path):
     return relative_path  # Yet another thing to fix later when EXE has been figured out
     # base_path = getattr(sys, '_MEIPASS', path.dirname(path.abspath(__file__ if not development_mode else getcwd())))
    # return path.join(base_path, relative_path)
+
+
+def output(text: str):
+    """Use instead of print(). This is being used instead to make my life easier in the future and to be able to unit test for text being outputted."""
+    if unit_testing:
+        output_catcher.send_event(output_catcher, EVENT_UNIT_TEST_OUTPUT, text)
+        return
+
+    print(text)

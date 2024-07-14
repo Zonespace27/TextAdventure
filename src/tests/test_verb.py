@@ -1,11 +1,13 @@
+from ._base_test_class import TestClass
 from packages.verbs import *
 from packages.verbs._verb import Verb
 from global_textadv import get_subclasses_recursive
 from re import search
 
 
-class TestClass():
+class TestClass2(TestClass):
     def test_verb_names(self):
+        self.init_things()
         verb_ids: list[str] = []  # Verb IDs found from subclasses of Verb
         # Verb names found in the _verb_names.py file
         found_verb_names: list[str] = []

@@ -5,6 +5,7 @@ from events.events import EVENT_INVENTORY_ADD_OBJECT, EVENT_RETVAL_BLOCK_INVENTO
 from events.verb_events import EVENT_VERB_PICKUP, EVENT_VERB_DROP
 from ..verbs._verb_names import VERB_PICKUP, VERB_DROP
 import global_textadv
+from global_textadv import output
 
 
 class ComponentItem(Component):
@@ -86,6 +87,6 @@ class ComponentItem(Component):
         if not self.unmoved_examine:
             return
 
-        print(self.unmoved_examine)
+        output(self.unmoved_examine)
 
         return EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION

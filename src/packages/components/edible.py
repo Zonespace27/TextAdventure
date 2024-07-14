@@ -2,7 +2,7 @@ from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
 from events.verb_events import EVENT_VERB_EAT
-from global_textadv import qdel
+from global_textadv import qdel, output
 from ..verbs._verb_names import VERB_EAT
 
 
@@ -48,9 +48,9 @@ class ComponentEdible(Component):
         ### EVENT FUNCT
         """
         if self.remaining_bites > 1:
-            print(self.eat_message)
+            output(self.eat_message)
         else:
-            print(self.final_eat_message)
+            output(self.final_eat_message)
 
         self.remaining_bites -= 1
         if self.remaining_bites <= 0:

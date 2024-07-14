@@ -46,7 +46,8 @@ class PhysObj(BaseObj):
         return super().dispose()
 
     def move_rooms(self, new_room: "room.Room"):
-        self.current_room.remove_from_room(self)
+        if self.current_room:
+            self.current_room.remove_from_room(self)
         new_room.add_to_room(self)
 
     def action_is_valid(self, action_string: str) -> "Verb":

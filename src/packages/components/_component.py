@@ -48,5 +48,9 @@ class Component(BaseObj):
                 return 0
             elif return_type == list:
                 return []
+            elif return_type == dict:
+                return {}
+            elif return_type == tuple:
+                return ()
 
         return dict_to_use[key_name]

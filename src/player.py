@@ -10,6 +10,7 @@ from events.events import EVENT_INVENTORY_GET_CONTENTS, \
     EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, \
     EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION, \
     EVENT_PLAYER_FIND_CONTENTS
+from global_textadv import output
 
 if TYPE_CHECKING:
     import room
@@ -48,16 +49,16 @@ class Player(PhysObj):
         if event_retval == EVENT_RETVAL_BLOCK_ALL_PRINT_DESCRIPTION:
             return
 
-        print("\n")
+        output("\n")
 
         if not (event_retval == EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION):
-            print(room_to_look.desc)
+            output(room_to_look.desc)
 
         for obj in room_to_look.contents:
             if (self.send_event(obj, EVENT_BASEOBJ_PRINT_DESCRIPTION) & EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION):
                 continue
 
-            print(obj.desc)
+            output(obj.desc)
 
     async def begin_taking_input(self):
         while (True):

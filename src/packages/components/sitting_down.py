@@ -6,6 +6,7 @@ from ..verbs._verb_names import VERB_GET_UP
 from ..verbs._verb import Verb
 import global_textadv
 from bitflags import VERB_IGNORE_SITDOWN
+from global_textadv import output
 
 
 class ComponentSittingDown(Component):
@@ -17,6 +18,8 @@ class ComponentSittingDown(Component):
         # What message is given when you get up
         self.get_up_message = self.arg_set(
             args_dict, "get_up_message", str) or "You get up from the chair."
+
+        self.block_interaction_message: str = "You can't do this while sitting down!"
 
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
         if not isinstance(object_to_attach, Player):
@@ -46,7 +49,7 @@ class ComponentSittingDown(Component):
         """
         ### EVENT FUNCT
         """
-        print(self.get_up_message)  # TODO: make this work for sitting down in a chair #TODO: check if this TODO is valid
+        output(self.get_up_message)  # TODO: make this work for sitting down in a chair #TODO: check if this TODO is valid
         global_textadv.qdel(self)
 
     def on_verb_execute(self, source, executing_verb: Verb, owning_obj: BaseObj):
@@ -55,5 +58,5 @@ class ComponentSittingDown(Component):
         """
         if (executing_verb.verb_flags & VERB_IGNORE_SITDOWN):
             return
-        print("You can't do this while sitting down!")
+        output(self.block_interaction_message)
         return EVENT_RETVAL_BLOCK_VERB_EXECUTE
