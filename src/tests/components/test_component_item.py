@@ -17,11 +17,8 @@ class TestClass2(TestClass):
         item_component: ComponentItem = item.get_component(ComponentItem)
         self.fresh_room.add_to_room(item)
         item_component.unmoved_examine = "Unmoved examine text"
-        # assert self.output_catcher.catch_output(
-        #    global_textadv.player_ref.parse_text, ["examine item"], f"{item_component.unmoved_examine}")
         assert self.output_catcher.catch_output(
             global_textadv.player_ref.parse_text, ["pick up item"], f"You pick up the {item.name}.")
         assert self.output_catcher.catch_output(
             global_textadv.player_ref.parse_text, ["drop item"], f"You drop the {item.name}.")
-        # assert self.output_catcher.catch_output(
-        #    global_textadv.player_ref.parse_text, ["examine item"], "")
+        assert item_component.unmoved_examine == ""
