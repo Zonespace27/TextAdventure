@@ -19,6 +19,8 @@ class ComponentLayingDown(Component):
         self.get_up_message = self.arg_set(
             args_dict, "get_up_message", str) or "You get up from the floor."
 
+        self.block_interaction_message: str = "You can't do this while lying down!"
+
     def attach_to_parent(self, object_to_attach: BaseObj) -> bool:
         if not isinstance(object_to_attach, Player):
             return False
@@ -58,5 +60,5 @@ class ComponentLayingDown(Component):
         """
         if (executing_verb.verb_flags & VERB_IGNORE_LAYDOWN):
             return
-        output("You can't do this while lying down!")
+        output(self.block_interaction_message)
         return EVENT_RETVAL_BLOCK_VERB_EXECUTE
