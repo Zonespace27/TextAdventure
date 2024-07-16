@@ -20,3 +20,9 @@ class StringNotLocalized(Exception):
     """
     An exception raised if a string is fed into Localization.localize() without being a proper localization string, but only if ERROR_NONLOCALIZED is True.
     """
+
+
+class InvalidLocalizationFile(Exception):
+    """
+    An exception raised when a localization file is not formatted correctly (namely having something other than strings and dicts inside)
+    """

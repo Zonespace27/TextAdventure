@@ -10,6 +10,7 @@ from packages.dialogue import *
 from packages.dialogue.phone import *
 from packages.dialogue.phone.phone_node import PhoneNode
 from global_textadv import get_subclasses_recursive, resource_path
+from localization import Localization
 import pytest
 
 
@@ -25,6 +26,10 @@ class TestClass2(TestClass):
     ]
     dialogue_file_locs: list[str] = [
         resource_path('json/dialogue/phone.json')
+    ]
+    localization_file_locs: list[str] = [
+        resource_path('json/localization/en_us.json'),
+        resource_path('json/localization/unit_testing.json')
     ]
 
     def test_unique_object_ids(self):
@@ -149,3 +154,10 @@ class TestClass2(TestClass):
                     except KeyError:
                         pytest.fail(
                             f"class_name of {dialogue_id} is not a valid class")
+
+    def test_valid_localization_files(self):
+        self.init_things()
+        for file in self.localization_file_locs:
+            # It throws an exception if the json is incorrectly formatted already, so we can just run through every language that way
+            Localization.generate_localization(file)
+            Localization.localization_dict = {}

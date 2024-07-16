@@ -130,7 +130,7 @@ def resource_path(relative_path):
 
 
 def output(text: str, localize: bool = True):
-    """Use instead of print(). This is being used instead to make my life easier in the future and to be able to unit test for text being outputted."""
+    """Use instead of print(). This is being used instead to make my life easier in the future and to be able to unit test for text being outputted. Additionally has localization support."""
     if unit_testing:
         output_catcher.send_event(output_catcher, EVENT_UNIT_TEST_OUTPUT, text)
         return
