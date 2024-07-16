@@ -9,7 +9,7 @@ class Localization:
     localization_dict: dict[str, str] = {}
 
     @staticmethod
-    def generate_localization(file_override: str):
+    def generate_localization(file_override: str = ''):
         if not global_textadv.selected_language:
             raise NoLocalizationLanguage
 
