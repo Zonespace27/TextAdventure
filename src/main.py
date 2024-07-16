@@ -16,6 +16,7 @@ import player
 from os import system, getcwd, chdir
 from time import sleep
 import asyncio
+from localization import Localization
 
 
 def genesis():
@@ -27,6 +28,7 @@ def genesis():
     assemble_all_objects()  # Must be before room init
     assemble_room_ids()  # Must be after object init
     assemble_hubdoors()  # Must be after room init
+    Localization.generate_localization()  # Must be before player init
     init_player()  # Must be last
 
 
@@ -54,7 +56,8 @@ def assemble_all_objects():
         global_textadv.resource_path('json/objects/items.json')
     ]
     for file in file_locs:
-        data = load(open(file))
+        opened_file = open(file)
+        data = load(opened_file)
         for object_id in data:
 
             # Ensures there's no runtimes in this code by giving objects default values
@@ -85,6 +88,7 @@ def assemble_all_objects():
                 "components": data[object_id]["components"],
                 "elements": data[object_id]["elements"]
             }
+        opened_file.close
 
 
 def assemble_verbs():
@@ -94,7 +98,8 @@ def assemble_verbs():
 
 
 def assemble_room_ids():
-    data = load(open(global_textadv.resource_path('json/rooms.json')))
+    file = open(global_textadv.resource_path('json/rooms.json'))
+    data = load(file)
     for room_id in data:
         if not ("desc" in data[room_id]):
             data[room_id]["desc"] = ""
@@ -109,6 +114,7 @@ def assemble_room_ids():
 
         global_textadv.roomid_to_room[room_id] = new_object(room.Room, room_id, data[room_id]["desc"], data[room_id]
                                                             ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
+    file.close()
 
 
 def assemble_dialogue():
@@ -116,7 +122,8 @@ def assemble_dialogue():
         global_textadv.resource_path('json/dialogue/phone.json'),
     ]
     for file in file_locs:
-        data = load(open(file))
+        opened_file = open(file)
+        data = load(opened_file)
         for node_id in data:
             if not ("text" in data[node_id]):
                 data[node_id]["text"] = ""
@@ -145,6 +152,7 @@ def assemble_dialogue():
                     node_id, data[node_id]["text"], data[node_id]["select_text"], data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"],  data[node_id]["added_nodes"], data[node_id]["special_leave_text"])
 
             global_textadv.dialogue_id_to_node[node_id] = new_node
+        opened_file.close()
 
 
 def assemble_components():

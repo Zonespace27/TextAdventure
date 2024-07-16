@@ -1,0 +1,9 @@
+{
+    "base1": "Response1",
+    "base2": {
+        "inside1": "Response2",
+        "inside2": {
+            "inside^2": "Response3"
+        }
+    }
+}
