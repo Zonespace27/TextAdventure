@@ -5,6 +5,7 @@ from os import path, getcwd
 from events.unit_test_events import EVENT_UNIT_TEST_OUTPUT
 # import argparse
 from gc import get_referrers
+from localization import Localization
 
 if TYPE_CHECKING:
     from base_obj import BaseObj
@@ -83,6 +84,18 @@ def initialize_globals():
     if "pytest" in sys.modules:
         unit_testing = True
 
+    global allowed_languages
+
+    allowed_languages = ["en_us"]
+
+    global selected_language
+
+    selected_language = "en_us"
+
+    global ERROR_NONLOCALIZED
+
+    ERROR_NONLOCALIZED = False
+
 
 def get_subclasses_recursive(class_to_use: type) -> list[type]:
     return_list: list[type] = []
@@ -116,10 +129,13 @@ def resource_path(relative_path):
    # return path.join(base_path, relative_path)
 
 
-def output(text: str):
+def output(text: str, localize: bool = True):
     """Use instead of print(). This is being used instead to make my life easier in the future and to be able to unit test for text being outputted."""
     if unit_testing:
         output_catcher.send_event(output_catcher, EVENT_UNIT_TEST_OUTPUT, text)
         return
 
-    print(text)
+    if localize:
+        print(Localization.localize(text))
+    else:
+        print(text)
