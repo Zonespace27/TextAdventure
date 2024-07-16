@@ -97,7 +97,6 @@
         },
         "elements": {}
     },
-    
     "office_safe_key": {
         "name": "silver key",
         "alternate_names": [
@@ -111,6 +110,22 @@
             "component_item": {},
             "component_key": {
                 "key_id": "office_safe_lock"
+            }
+        },
+        "elements": {}
+    },
+    "forensic_kit": {
+        "name": "forensics kit",
+        "alternate_names": [
+            "forensical kit",
+            "forensic kit"
+        ],
+        "desc": "You see your trusty forensics kit. Everything someone as yourself would need for investigations, compacted into briefcase.",
+        "verbs": [],
+        "components": {
+            "component_item": {},
+            "component_examine": {
+                "examine_text": "You look inside your forensics kit. Among other things, you see your toolset, UV light, fingerprinting kit, fiber-retrieving adhesives, and evidence bags."
             }
         },
         "elements": {}

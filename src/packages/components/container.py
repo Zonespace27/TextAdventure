@@ -156,6 +156,12 @@ class ComponentContainer(Component):
 
         return (self.contents if self.open else [])
 
+    def get_content_item(self, object_id: str):
+        for item in self.contents:
+            if item.id != object_id:
+                continue
+            return item
+
     def on_examine(self, source):
         """
         ### EVENT FUNCT

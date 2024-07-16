@@ -73,3 +73,9 @@ EVENT_DIALOGUE_COMPLETED = "dialogue_completed"
 
 # Event called when an object finishes initialization from new_object()
 EVENT_OBJECT_INITIALIZED = "object_initialized"
+
+# Event called when an item is picked up
+EVENT_ITEM_PICKED_UP = "item_picked_up"
+
+# Event called when an item is dropped
+EVENT_ITEM_DROPPED = "item_dropped"

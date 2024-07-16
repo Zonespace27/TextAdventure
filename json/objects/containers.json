@@ -52,7 +52,7 @@
                 "open_examine_message": "You see a small cavity in the wall, lined with metal. A safe door hangs to the side, disengaged. Inside is:\n",
                 "closed_examine_message": "You see a steel safe door jutting out of the wall, perfectly flat and sheen aside from a keyhole.",
                 "initial_contents": [
-                    "pencil"
+                    "forensic_kit"
                 ]
             },
             "component_locked": {
