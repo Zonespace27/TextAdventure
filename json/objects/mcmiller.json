@@ -1,0 +1,62 @@
+{
+    "reception_desk_mcmiller": {
+        "name": "reception desk",
+        "alternate_names": [
+            "desk",
+            "receptionist's desk",
+            "drawer",
+            "desk drawer"
+        ],
+        "desc": "You see a finely polished receptionist's desk made from a dark brown wood.",
+        "verbs": [],
+        "components": {
+            "component_container": {
+                "requires_open": true,
+                "show_contents_examine": true,
+                "open_message": "You open the desk drawer.",
+                "close_message": "You close the desk drawer.",
+                "open_examine_message": "Looking inside the desk drawer, you see:\n",
+                "closed_examine_message": "You spot a drawer under the desk.",
+                "view_message": "Its desk drawer is",
+                "initial_contents": []
+            }
+        },
+        "elements": {} 
+    },
+    "reception_chair_mcmiller": {
+        "name": "chair",
+        "alternate_names": [
+            "seat",
+            "sitting object",
+            "seating"
+        ],
+        "desc": "You see a small wooden chair, of a similar polish and quality to the desk it stands behind.",
+        "verbs": [],
+        "components": {
+            "component_chair": {}
+        },
+        "elements": {} 
+    },
+    "jane_evans": {
+        "name": "Jane Evans",
+        "alternate_names": [
+            "jane",
+            "evans",
+            "ms. jane",
+            "ms. evans",
+            "miss jane",
+            "miss evans",
+            "j. evans",
+            "ms jane",
+            "ms evans"
+        ],
+        "desc": "You see a woman standing at about five feet and ten inches tall with bobbed brown hair. She's wearing a simple black business suit, one that would not be amiss in such a place as this. She's standing, stiff as a board, clearly waiting for you.",
+        "verbs": [],
+        "components": {
+            "component_dialogue": {
+                "dialogue_node": "jane_evans_meeting"
+            }
+        },
+        "elements": {} 
+    }
+}

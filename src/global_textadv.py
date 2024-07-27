@@ -72,6 +72,23 @@ def initialize_globals():
 
     hubdoors = []
 
+    global object_files
+
+    object_files = [
+        resource_path('json/objects.json'),
+        resource_path('json/doors.json'),
+        resource_path('json/objects/containers.json'),
+        resource_path('json/objects/items.json'),
+        resource_path('json/objects/mcmiller.json'),
+    ]
+
+    global dialogue_files
+
+    dialogue_files = [
+        resource_path('json/dialogue/jane_evans_meeting.json'),
+        resource_path('json/dialogue/phone.json'),
+    ]
+
 
 def get_subclasses_recursive(class_to_use: type) -> list[type]:
     return_list: list[type] = []

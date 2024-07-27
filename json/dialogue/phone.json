@@ -67,7 +67,7 @@
     },
     "phone_branch_1_1_5": {
         "select_text": "\"I would be quite willing to take this case, Miss.\"",
-        "text": "\"Excellent,\" the telephone states matter-of-factly, \"I knew you would agree. The office that was broken into isn't far from yours; find it on the corner of 82nd and 3rd.\" The woman hangs up, leaving you with little but a promise and the low hum of a dial tone.",
+        "text": "\"Excellent,\" the telephone states matter-of-factly, \"I'm glad you agreed. The office that was broken into isn't far from yours; find it on the corner of 82nd and 3rd. The front door will be unlocked, I will meet you inside.\" The woman hangs up, leaving you with little but a promise and the low hum of a dial tone.",
         "result_nodes": [
             "phone_branch_1_1_5_1"
         ],

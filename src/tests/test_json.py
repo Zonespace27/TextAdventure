@@ -9,22 +9,16 @@ from packages.dialogue import *
 from packages.dialogue.phone import *
 from packages.dialogue.phone.phone_node import PhoneNode
 from global_textadv import get_subclasses_recursive, resource_path
+import global_textadv
 import pytest
 
 
 class TestClass():
-    object_file_locs: list[str] = [  # Once i've got a concrete file structure down, i'll convert this to something better
-        resource_path('json/objects.json'),
-        resource_path('json/doors.json'),
-        resource_path('json/objects/containers.json'),
-        resource_path('json/objects/items.json')
-    ]
+    object_file_locs: list[str] = global_textadv.object_files
     room_file_locs: list[str] = [  # Same here
         resource_path('json/rooms.json'),
     ]
-    dialogue_file_locs: list[str] = [
-        resource_path('json/dialogue/phone.json')
-    ]
+    dialogue_file_locs: list[str] = global_textadv.dialogue_files
 
     def test_unique_object_ids(self):
         found_ids: list[str] = []

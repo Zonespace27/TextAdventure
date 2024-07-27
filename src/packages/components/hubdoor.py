@@ -33,6 +33,10 @@ class ComponentHubDoor(Component):
         # Description of the room that this door is in
         self.room_desc: str = self.arg_set(args_dict, "room_desc", str)
 
+        # Message to be sent to the player when traveling to this door's room
+        self.travel_message: str = self.arg_set(
+            args_dict, "travel_message", str)
+
         global_textadv.hubdoors.append(self)
 
     def dispose(self):
@@ -87,11 +91,10 @@ class ComponentHubDoor(Component):
         offer_string: str = "Where would you like to go? (by number)\n"
         i: int = 0
         options: dict[str, Room] = self.hub_dict[self.hub_id].copy()
+        options.pop(list(options.keys())[
+                    list(options.values()).index(phys_parent.current_room)])
         options["Leave"] = None
         for option in options:
-            if options[option] == phys_parent.current_room:
-                continue
-
             offer_string += f"({i}) {option}\n"
             i += 1
         result: str = input(offer_string)
@@ -102,6 +105,9 @@ class ComponentHubDoor(Component):
         chosen_string: str = list(options.keys())[int(result)]
         if chosen_string == "Leave":
             return
+
+        if (self.travel_message):
+            print(self.travel_message)
 
         global_textadv.player_ref.move_rooms(options[chosen_string])
 

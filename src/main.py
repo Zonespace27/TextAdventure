@@ -48,12 +48,7 @@ def unit_test_genesis(load_all_rooms: bool = False):
 
 
 def assemble_all_objects():
-    file_locs: list[str] = [
-        global_textadv.resource_path('json/objects.json'),
-        global_textadv.resource_path('json/doors.json'),
-        global_textadv.resource_path('json/objects/containers.json'),
-        global_textadv.resource_path('json/objects/items.json')
-    ]
+    file_locs: list[str] = global_textadv.object_files
     for file in file_locs:
         data = load(open(file))
         for object_id in data:
@@ -113,9 +108,7 @@ def assemble_room_ids():
 
 
 def assemble_dialogue():
-    file_locs: list[str] = [
-        global_textadv.resource_path('json/dialogue/phone.json'),
-    ]
+    file_locs: list[str] = global_textadv.dialogue_files
     for file in file_locs:
         data = load(open(file))
         for node_id in data:
@@ -167,6 +160,7 @@ def assemble_elements():
     for subclass in global_textadv.get_subclasses_recursive(Element):
         new_subclass: Element = new_object(subclass)
         global_textadv.element_id_to_ref[new_subclass.id] = new_subclass
+
 
 def assemble_hubdoors():
     for hubdoor in global_textadv.hubdoors:

@@ -3,12 +3,13 @@ import global_textadv
 from main import unit_test_genesis
 from packages.verbs import *
 from packages.verbs._verb import Verb
-from global_textadv import get_subclasses_recursive, new_object
+from global_textadv import get_subclasses_recursive
 from re import search
 from physical_obj import PhysObj
 from player import Player
 from packages.components.inventory import ComponentInventory
 from packages.components.edible import ComponentEdible
+from base_obj import new_object
 
 
 class TestClass():

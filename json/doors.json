@@ -79,7 +79,7 @@
             }
         }
     },
-    "door_office_frontroom_to_outside": {
+    "hubdoor_office": {
         "name": "glass door",
         "alternate_names": [
             "clear door",
@@ -98,19 +98,21 @@
             }
         }
     },
-    "door_outside_to_office_frontroom": {
+    "hubdoor_mcmiller_shipping": {
         "name": "office door",
         "alternate_names": [
-            "clear door",
-            "door",
-            "outside door"
+            "outside door",
+            "door"
         ],
-        "desc": "You see a door to your office.",
+        "desc": "You see a non-descript dark brown wooden door.",
         "verbs": [],
         "components": {
             "component_hub_door": {
                 "hub_id": "outside",
-                "room_desc": "The void."
+                "room_desc": "McMiller Shipping International office."
+            },
+            "component_examine": {
+                "examine_text": "You closely inspect the door, carefully trained eyes trying to make out any anomalies. You spot some scratches around the outside-facing door handle, perhaps indicative of the lock being picked."
             }
         }
     }

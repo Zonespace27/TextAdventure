@@ -62,15 +62,17 @@
       "front_office_chair",
       "front_office_chair",
       "door_office_frontroom_to_office_backroom",
-      "door_office_frontroom_to_outside"
+      "hubdoor_office"
     ],
     "verbs": [],
     "components": {}
   },
-  "outside": {
-    "desc": "Are you there, God? It's me, Deckard.",
+  "mcmiller_shipping_reception": {
+    "desc": "You see the reception room of McMiller Shipping International. The corporate cream-colored walls give off a feeling of apathy, that no-one in this room is more important than the corporation they serve. As you gaze around the room, you push down thoughts of the inadequacy of your office.",
     "objects": [
-        "door_outside_to_office_frontroom"
+        "reception_desk_mcmiller",
+        "reception_chair_mcmiller",
+        "hubdoor_mcmiller_shipping"
     ]
   }
 }

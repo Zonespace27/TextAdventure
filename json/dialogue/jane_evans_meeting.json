@@ -1,0 +1,37 @@
+{
+    "jane_evans_meeting": {
+        "select_text": "",
+        "text": "The woman gives a small smile as she sees you approach. \"Good to see you, Mister Steward.\"",
+        "result_nodes": [
+            "jane_evans_branch_1"
+        ]
+    },
+    "jane_evans_branch_1": {
+        "select_text": "\"Good to see you as well, Ms. Evans. Down to business?\"",
+        "text": "Evans nods. \"Yes, I do think so.\" The woman takes a moment to look around the room before continuing. \"There was a break-in two nights ago here, that much you know already. The burglar appears to have been able to access all of the rooms in the office, even the ones locked to regular employees.\"",
+        "result_nodes": [
+            "jane_evans_branch_1_1"
+        ]
+    },
+    "jane_evans_branch_1_1": {
+        "select_text": "\"Was anything stolen?\"",
+        "text": "The woman shakes her head. \"Not that we know of, though we haven't done an exhaustive inventory of everything in the office yet.\"",
+        "result_nodes": [
+            "jane_evans_branch_1_1"
+        ]
+    },
+    "jane_evans_branch_1_2": {
+        "select_text": "\"Do you know how they got inside the office?\"",
+        "text": "",
+        "result_nodes": [
+            "jane_evans_branch_1_1"
+        ]
+    },
+    "jane_evans_branch_1_3": {
+        "select_text": "\"Has anyone been here since the break-in?\"",
+        "text": "",
+        "result_nodes": [
+            "jane_evans_branch_1_1"
+        ]
+    }
+}
