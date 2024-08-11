@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 from physical_obj import PhysObj
 import events.events as events
 import re
@@ -81,13 +81,11 @@ class Player(PhysObj):
                                "", text_to_parse, flags=re.IGNORECASE).lower()
         word_list = text_to_parse.split(" ")
 
-        command_tuples: list[tuple[(
-            PhysObj | list[PhysObj]), int, "Verb"]] = self.check_command(word_list)
+        command_tuples: list[tuple[Union[PhysObj, list[PhysObj]], int, "Verb"]] = self.check_command(word_list)
         if not command_tuples:
             return False
 
-        working_tuples: list[tuple[tuple[(
-            PhysObj | list[PhysObj]), int, "Verb"], list[PhysObj]]] = []
+        working_tuples: list[tuple[tuple[Union[PhysObj, list[PhysObj]], int, "Verb"], list[PhysObj]]] = []
 
         for command_tuple in command_tuples:
             selected_object, words_used, verb = command_tuple
@@ -149,8 +147,7 @@ class Player(PhysObj):
 
         else:
             selection_string = "Which one? (by number)\n"
-            tuple_number_dict: dict[int, tuple[(
-                PhysObj | list[PhysObj], int, "Verb")]] = {}
+            tuple_number_dict: dict[int, tuple[(Union[PhysObj, list[PhysObj]], int, "Verb")]] = {}
             tuple_number = 1
             for tupl in working_tuples:
                 chosen_tuple, arglist = tupl
@@ -178,7 +175,7 @@ class Player(PhysObj):
                 verb.try_execute_verb(selected_object, arglist)
                 break
 
-    def arg_check(self, verb: "Verb", arg_list: list[str], verb_argument_pos: int) -> tuple[(PhysObj | list[PhysObj]), int]:
+    def arg_check(self, verb: "Verb", arg_list: list[str], verb_argument_pos: int) -> tuple[Union[PhysObj, list[PhysObj]], int]:
         arg_list_len = len(arg_list)
 
         reverse_list = list(range(arg_list_len))
@@ -215,7 +212,7 @@ class Player(PhysObj):
                 else:
                     return (valid_objects, i2)
 
-    def check_command(self, word_list: list[str]) -> list[tuple[(PhysObj | list[PhysObj]), int, "Verb"]]:
+    def check_command(self, word_list: list[str]) -> list[tuple[Union[PhysObj, list[PhysObj]], int, "Verb"]]:
         valid_objects: list[tuple[PhysObj, int, "Verb"]] = []
         word_list_reversed = list(range(len(word_list)))
         word_list_reversed.reverse()
