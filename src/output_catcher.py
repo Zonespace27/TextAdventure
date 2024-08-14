@@ -1,6 +1,7 @@
 from base_obj import BaseObj
 import global_textadv
 from events.unit_test_events import EVENT_UNIT_TEST_OUTPUT
+from typing import Callable
 
 
 class OutputCatcher(BaseObj):
@@ -14,7 +15,7 @@ class OutputCatcher(BaseObj):
 
         self.outputted_text: str = ""
 
-    def catch_output(self, callback, args: list, expected_text: str) -> bool:
+    def catch_output(self, callback: Callable, args: list, expected_text: str) -> bool:
         self.outputted_text = ""
         self.register_event(self, EVENT_UNIT_TEST_OUTPUT, self.on_output)
         callback(*args)
