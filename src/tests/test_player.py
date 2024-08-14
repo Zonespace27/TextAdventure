@@ -1,10 +1,7 @@
-from room import Room
+from ._base_test_class import TestClass
 import global_textadv
-from main import unit_test_genesis
 from packages.verbs import *
-from packages.verbs._verb import Verb
-from global_textadv import get_subclasses_recursive
-from re import search
+from base_obj import new_object
 from physical_obj import PhysObj
 from player import Player
 from packages.components.inventory import ComponentInventory
@@ -12,23 +9,9 @@ from packages.components.edible import ComponentEdible
 from base_obj import new_object
 
 
-class TestClass():
-    fresh_room: Room = None
-    called_genesis: bool = False
-
-    def generate_fresh_room(self):
-        """
-        Generate a new, fresh room for testing
-        """
-        if not self.called_genesis:
-            self.called_genesis = True
-            unit_test_genesis(False)
-
-        global_textadv.qdel(self.fresh_room)
-
-        self.fresh_room = Room("unit_test", "")
-
+class TestClass2(TestClass):
     def test_text_parser(self):
+        self.init_things()
         self.generate_fresh_room()
         global_textadv.player_ref = Player()
         assert (global_textadv.player_ref.get_component(ComponentInventory))

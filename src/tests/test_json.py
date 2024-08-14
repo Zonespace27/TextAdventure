@@ -1,3 +1,4 @@
+from ._base_test_class import TestClass
 from json import load
 from packages.verbs import *
 from packages.verbs._verb import Verb
@@ -11,16 +12,17 @@ from packages.dialogue.phone.phone_node import PhoneNode
 from global_textadv import get_subclasses_recursive, resource_path
 import global_textadv
 import pytest
+from localization import Localization
+import pytest
 
-
-class TestClass():
+class TestClass2(TestClass):
     object_file_locs: list[str] = global_textadv.object_files
-    room_file_locs: list[str] = [  # Same here
-        resource_path('json/rooms.json'),
-    ]
+    room_file_locs: list[str] = global_textadv.room_files
     dialogue_file_locs: list[str] = global_textadv.dialogue_files
-
+    localization_file_locs: list[str] = global_textadv.localization_files
+    
     def test_unique_object_ids(self):
+        self.init_things()
         found_ids: list[str] = []
         for file in self.object_file_locs:
             data = load(open(file))
@@ -29,6 +31,7 @@ class TestClass():
                 found_ids.append(object_id)
 
     def test_valid_room_objects(self):
+        self.init_things()
         found_object_ids: list[str] = []
         for file in self.object_file_locs:
             data = load(open(file))
@@ -45,6 +48,7 @@ class TestClass():
                     assert (object in found_object_ids)
 
     def test_all_verbs_valid(self):
+        self.init_things()
         found_verb_ids: list[str] = []
         verb_subclasses: list[Verb] = get_subclasses_recursive(Verb)
         for subclass in verb_subclasses:
@@ -69,6 +73,7 @@ class TestClass():
                     assert (verb_id in found_verb_ids)
 
     def test_all_components_valid(self):
+        self.init_things()
         found_component_ids: list[str] = []
         component_subclasses: list[Component] = get_subclasses_recursive(
             Component)
@@ -94,6 +99,7 @@ class TestClass():
                     assert (component_id in found_component_ids)
 
     def test_all_elements_valid(self):
+        self.init_things()
         found_element_ids: list[str] = []
         element_subclasses: list[Element] = get_subclasses_recursive(Element)
         for subclass in element_subclasses:
@@ -118,6 +124,7 @@ class TestClass():
                     assert (element_id in found_element_ids)
 
     def test_all_dialogue_valid(self):
+        self.init_things()
         found_dialogue_ids: list[str] = []
         for file in self.dialogue_file_locs:
             data = load(open(file))
@@ -136,3 +143,10 @@ class TestClass():
                     except KeyError:
                         pytest.fail(
                             f"class_name of {dialogue_id} is not a valid class")
+
+    def test_valid_localization_files(self):
+        self.init_things()
+        for file in self.localization_file_locs:
+            # It throws an exception if the json is incorrectly formatted already, so we can just run through every language that way
+            Localization.generate_localization(file)
+            Localization.localization_dict = {}

@@ -1,11 +1,13 @@
+from ._base_test_class import TestClass
 from packages.elements import *
 from packages.elements._element import Element
 from global_textadv import get_subclasses_recursive
 from re import search
 
 
-class TestClass():
+class TestClass2(TestClass):
     def test_element_names(self):
+        self.init_things()
         # Element IDs found from subclasses of Element
         element_ids: list[str] = []
         # Element names found in the _element_names.py file

@@ -1,5 +1,6 @@
+from ._base_test_class import TestClass
 from base_obj import BaseObj
-from events.events import EVENT_UNIT_TEST_SIGNAL, EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND, EVENT_UNIT_TEST_SIGNAL_2
+from events.unit_test_events import EVENT_UNIT_TEST_SIGNAL, EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND, EVENT_UNIT_TEST_SIGNAL_2
 from base_obj import new_object
 
 
@@ -18,8 +19,9 @@ class SignalTestBaseObj(BaseObj):
         return EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND
 
 
-class TestClass():
+class TestClass2(TestClass):
     def test_signal_basic(self):
+        self.init_things()
         obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
         obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 
@@ -31,6 +33,7 @@ class TestClass():
         assert obj_1.signal_recieved
 
     def test_signal_crossobj(self):
+        self.init_things()
         obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
         obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 
@@ -42,6 +45,7 @@ class TestClass():
         assert obj_2.signal_recieved
 
     def test_signal_retval(self):
+        self.init_things()
         obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
         obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 
@@ -55,6 +59,7 @@ class TestClass():
         assert return_value == EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND
 
     def test_signal_sanity(self):
+        self.init_things()
         obj_1: SignalTestBaseObj = new_object(SignalTestBaseObj)
         obj_2: SignalTestBaseObj = new_object(SignalTestBaseObj)
 

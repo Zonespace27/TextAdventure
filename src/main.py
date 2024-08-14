@@ -16,7 +16,7 @@ import player
 from os import system, getcwd, chdir
 from time import sleep
 import asyncio
-import pytest
+from localization import Localization
 
 
 def genesis():
@@ -28,6 +28,7 @@ def genesis():
     assemble_all_objects()  # Must be before room init
     assemble_room_ids()  # Must be after object init
     assemble_hubdoors()  # Must be after room init
+    Localization.generate_localization()  # Must be before player init
     init_player()  # Must be last
 
 
@@ -50,7 +51,8 @@ def unit_test_genesis(load_all_rooms: bool = False):
 def assemble_all_objects():
     file_locs: list[str] = global_textadv.object_files
     for file in file_locs:
-        data = load(open(file))
+        opened_file = open(file)
+        data = load(opened_file)
         for object_id in data:
 
             # Ensures there's no runtimes in this code by giving objects default values
@@ -81,6 +83,7 @@ def assemble_all_objects():
                 "components": data[object_id]["components"],
                 "elements": data[object_id]["elements"]
             }
+        opened_file.close
 
 
 def assemble_verbs():
@@ -90,7 +93,8 @@ def assemble_verbs():
 
 
 def assemble_room_ids():
-    data = load(open(global_textadv.resource_path('json/rooms.json')))
+    file = open(global_textadv.resource_path('json/rooms.json'))
+    data = load(file)
     for room_id in data:
         if not ("desc" in data[room_id]):
             data[room_id]["desc"] = ""
@@ -105,12 +109,14 @@ def assemble_room_ids():
 
         global_textadv.roomid_to_room[room_id] = new_object(room.Room, room_id, data[room_id]["desc"], data[room_id]
                                                             ["objects"], data[room_id]["verbs"], data[room_id]["components"], data[room_id]["elements"])
+    file.close()
 
 
 def assemble_dialogue():
     file_locs: list[str] = global_textadv.dialogue_files
     for file in file_locs:
-        data = load(open(file))
+        opened_file = open(file)
+        data = load(opened_file)
         for node_id in data:
             if not ("text" in data[node_id]):
                 data[node_id]["text"] = ""
@@ -139,6 +145,7 @@ def assemble_dialogue():
                     node_id, data[node_id]["text"], data[node_id]["select_text"], data[node_id]["result_nodes"], data[node_id]["leave_allowed"], data[node_id]["one_use_node"],  data[node_id]["added_nodes"], data[node_id]["special_leave_text"])
 
             global_textadv.dialogue_id_to_node[node_id] = new_node
+        opened_file.close()
 
 
 def assemble_components():
@@ -171,18 +178,18 @@ if __name__ == "__main__":
     if getcwd().endswith("\\src"):  # Gross hack that works for .bat junk
         chdir(getcwd().removesuffix("\\src"))
 
-    if global_textadv.UNIT_TESTING:
-        pytest.main()
+    # if global_textadv.unit_testing:
+     #   pytest.main()
 
     else:
         """input("Welcome to [WHATEVER I'M CALLING THIS], press the ENTER key to start.") # A working 'welcome' screen that'll stick around for as I don't switch to wincurses (aka lose the will to live)
         system("cls")
         sleep(0.5)
-        print("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
+        output("You are a down-on-their-luck detective, Mortimer Stevens. Mortimer is the PI (and sole employee) of the aptly named \"Mortimer & Co. Investigations\", located [PLACE].")
         sleep(0.5)
-        print("Work hasn't been great recently, you've been getting steadily fewer clients as the weeks and months go by, but since it's just you, you're still in business.")
+        output("Work hasn't been great recently, you've been getting steadily fewer clients as the weeks and months go by, but since it's just you, you're still in business.")
         sleep(0.5)
-        print("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
+        output("However, a possible client called a few days ago, asking for a consultation. You scheduled it for April 19th.")
         sleep(1)
         input("Press ENTER to begin.")
         system("cls")"""  # Undo me when in prod

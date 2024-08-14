@@ -7,6 +7,8 @@ from events.verb_events import EVENT_VERB_OPEN_CONTAINER, EVENT_VERB_CLOSE_CONTA
 from ..verbs._verb_names import VERB_OPEN_CONTAINER, VERB_EXAMINE, VERB_CLOSE_CONTAINER
 from traits import TRAIT_LOCKED
 from base_obj import new_object
+from global_textadv import output
+from bitflags import BASEOBJ_BASE_EXAMINE_OVERRIDDEN
 
 
 class ComponentContainer(Component):
@@ -67,6 +69,7 @@ class ComponentContainer(Component):
         object_to_attach.add_verb(VERB_OPEN_CONTAINER)
         object_to_attach.add_verb(VERB_CLOSE_CONTAINER)
         object_to_attach.add_verb(VERB_EXAMINE)
+        object_to_attach.baseobj_bitflags |= BASEOBJ_BASE_EXAMINE_OVERRIDDEN
 
         return super().attach_to_parent(object_to_attach)
 
@@ -82,6 +85,7 @@ class ComponentContainer(Component):
             self.remove_verb(VERB_OPEN_CONTAINER)
             self.remove_verb(VERB_CLOSE_CONTAINER)
             self.remove_verb(VERB_EXAMINE)
+            phys_parent.baseobj_bitflags &= ~BASEOBJ_BASE_EXAMINE_OVERRIDDEN
 
         return super().detach_from_parent()
 
@@ -113,11 +117,11 @@ class ComponentContainer(Component):
             return
 
         if self.parent.has_trait(TRAIT_LOCKED):
-            print("You can't open this, it's locked!")
+            output("You can't open this, it's locked!")
             return
 
         self.open = True
-        print(self.open_message)
+        output(self.open_message)
 
     def close_container(self, source):
         """
@@ -127,7 +131,7 @@ class ComponentContainer(Component):
             return
 
         self.open = False
-        print(self.close_message)
+        output(self.close_message)
 
     def on_view(self, source) -> str:
         """
@@ -140,7 +144,7 @@ class ComponentContainer(Component):
         open_or_close_string: str = f"{self.view_message} " + \
             ("open." if self.open else "closed.")
 
-        print(f"{phys_parent.desc} {open_or_close_string}")
+        output(f"{phys_parent.desc} {open_or_close_string}")
         return EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION
 
     def get_contents(self, source) -> list[PhysObj]:
@@ -152,27 +156,33 @@ class ComponentContainer(Component):
 
         return (self.contents if self.open else [])
 
+    def get_content_item(self, object_id: str):
+        for item in self.contents:
+            if item.id != object_id:
+                continue
+            return item
+
     def on_examine(self, source):
         """
         ### EVENT FUNCT
         """
         if not self.requires_open:
-            print(self.no_open_close_examine_message)
+            output(self.no_open_close_examine_message)
             if self.show_contents_examine:
                 content_objects: str = ""
                 for index, object in enumerate(self.contents):
                     content_objects += (object.name + (", " if index !=
                                         (len(self.contents) - 1) else "."))
-                print(content_objects)
+                output(content_objects)
             return
 
         if self.open:
-            print(self.open_examine_message)
+            output(self.open_examine_message)
             if self.show_contents_examine:
                 content_objects: str = ""
                 for index, object in enumerate(self.contents):
                     content_objects += (object.name + (", " if index !=
                                         (len(self.contents) - 1) else "."))
-                print(content_objects)
+                output(content_objects)
         else:
-            print(self.closed_examine_message)
+            output(self.closed_examine_message)

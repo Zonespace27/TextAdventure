@@ -1,4 +1,5 @@
 import global_textadv
+from global_textadv import output
 
 
 class DialogueNode():
@@ -31,7 +32,7 @@ class DialogueNode():
         self.node_used: bool = False
 
     def trigger_node(self):
-        print(self.text)
+        output(self.text)
         if not self.one_use_node:
             self.offer_options()
         if self.one_use_node:

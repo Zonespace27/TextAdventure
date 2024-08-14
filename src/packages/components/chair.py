@@ -5,6 +5,7 @@ from events.verb_events import EVENT_VERB_SIT
 from ..verbs._verb_names import VERB_SIT
 from .sitting_down import ComponentSittingDown
 import global_textadv
+from global_textadv import output
 
 
 class ComponentChair(Component):
@@ -45,6 +46,6 @@ class ComponentChair(Component):
         """
         ### EVENT FUNCT
         """
-        print(self.sit_down_message)
+        output(self.sit_down_message)
         global_textadv.player_ref.add_component(
             ComponentSittingDown, {"get_up_message": self.get_up_message})

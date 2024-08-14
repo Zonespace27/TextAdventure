@@ -68,15 +68,14 @@ EVENT_DISABLE_DIALOGUE = "disable_dialogue"
 # Event that is called whenever dispose() is called on a baseobj
 EVENT_BASEOBJ_DISPOSED = "baseobj_disposed"
 
-# Event used for unit testing to confirm that events work as intended
-EVENT_UNIT_TEST_SIGNAL = "unit_test_signal"
-EVENT_RETVAL_UNIT_TEST_SIGNAL_RESPOND = (1 << 0)
-
-# Second event used for unit testing
-EVENT_UNIT_TEST_SIGNAL_2 = "unit_test_signal_2"
-
 # Event called whenever a dialogue component finishes its dialogue
 EVENT_DIALOGUE_COMPLETED = "dialogue_completed"
 
 # Event called when an object finishes initialization from new_object()
 EVENT_OBJECT_INITIALIZED = "object_initialized"
+
+# Event called when an item is picked up
+EVENT_ITEM_PICKED_UP = "item_picked_up"
+
+# Event called when an item is dropped
+EVENT_ITEM_DROPPED = "item_dropped"

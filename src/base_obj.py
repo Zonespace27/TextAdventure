@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 from exception import NonExistentJsonObject
 import global_textadv
+from global_textadv import output
 from events.events import EVENT_BASEOBJ_DISPOSED, EVENT_OBJECT_INITIALIZED
 
 if TYPE_CHECKING:
@@ -25,6 +26,8 @@ class BaseObj(object):
         self.source_verbs: list["Verb"] = []
         # A dict of "trait" : ["sources"], traits should be used when you want to have generic things (e.g. the inability to use verbs) possibly come from multiple sources at once
         self.traits: dict[str, list[str]] = {}
+        # For use with bitflags that start with BASEOBJ_
+        self.baseobj_bitflags: int = 0
 
         if object_id:
             try:
@@ -63,28 +66,26 @@ class BaseObj(object):
 
     # Some time, make sure that an object with signals elsewhere being deleted doesn't cause fuckery
     def register_event(self, target: "BaseObj", event_type: str, func_to_callback, override=False):
-        try:
+        target_callbacks = {}
+        if target in self.event_callbacks:
             target_callbacks = self.event_callbacks[target]
-
-        except KeyError:
-            target_callbacks = {}
 
         lookup = target.object_lookup
         if not lookup:
             lookup = {}
 
         if ((event_type in list(target_callbacks.keys())) and not override):
-            print(
+            output(
                 f"{event_type} overriden, set override = True to suppress this warning.")
 
         target_callbacks[event_type] = func_to_callback
         self.event_callbacks[target] = target_callbacks
         # Equivalent to looked_up
         lookup_list: list = []
-        try:
-            lookup_list = lookup[event_type]
 
-        except KeyError:
+        if event_type in lookup:
+            lookup_list = lookup[event_type]
+        else:
             lookup[event_type] = self
 
         if (lookup_list == self):
@@ -157,7 +158,7 @@ class BaseObj(object):
 
             except AttributeError:
                 # Check if this runtimes either lmao
-                print(
+                output(
                     f"{listening_object.event_callbacks[self][event]} isn't an attribute of {listening_object}.")
 
             except KeyError:  # The object no longer exists in the listening_object's event_callbacks
@@ -182,7 +183,7 @@ class BaseObj(object):
 
             except AttributeError:
                 # Check if this runtimes either lmao
-                print(
+                output(
                     f"{listening_object.event_callbacks[self][event]} isn't an attribute of {listening_object}.")
 
             return_bitflag |= (method_to_call(*args) or 0)

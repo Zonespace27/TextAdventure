@@ -1,4 +1,5 @@
 from .._node import DialogueNode
+from global_textadv import output
 
 
 class PhoneNode(DialogueNode):
@@ -7,4 +8,4 @@ class PhoneNode(DialogueNode):
         return False
 
     def on_node_end(self):
-        print("You put down the phone reciever, ending the call.")
+        output("You put down the phone reciever, ending the call.")

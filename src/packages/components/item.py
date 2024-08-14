@@ -1,10 +1,11 @@
 from ._component import Component
 from base_obj import BaseObj
 from physical_obj import PhysObj
-from events.events import EVENT_INVENTORY_ADD_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_ADD, EVENT_INVENTORY_REMOVE_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_REMOVE, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PHYSOBJ_LOCATION_MOVE
+from events.events import EVENT_INVENTORY_ADD_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_ADD, EVENT_INVENTORY_REMOVE_OBJECT, EVENT_RETVAL_BLOCK_INVENTORY_REMOVE, EVENT_BASEOBJ_PRINT_DESCRIPTION, EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION, EVENT_PHYSOBJ_LOCATION_MOVE, EVENT_ITEM_PICKED_UP, EVENT_ITEM_DROPPED
 from events.verb_events import EVENT_VERB_PICKUP, EVENT_VERB_DROP
 from ..verbs._verb_names import VERB_PICKUP, VERB_DROP
 import global_textadv
+from global_textadv import output
 
 
 class ComponentItem(Component):
@@ -59,6 +60,8 @@ class ComponentItem(Component):
         if self.send_event(global_textadv.player_ref, EVENT_INVENTORY_ADD_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_ADD:
             return False
 
+        self.send_event(self.parent, EVENT_ITEM_PICKED_UP)
+
         return True
 
     def attempt_drop(self, source) -> bool:
@@ -68,6 +71,8 @@ class ComponentItem(Component):
 
         if self.send_event(global_textadv.player_ref, EVENT_INVENTORY_REMOVE_OBJECT, self.parent) & EVENT_RETVAL_BLOCK_INVENTORY_REMOVE:
             return False
+
+        self.send_event(self.parent, EVENT_ITEM_DROPPED)
 
         return True
 
@@ -86,6 +91,6 @@ class ComponentItem(Component):
         if not self.unmoved_examine:
             return
 
-        print(self.unmoved_examine)
+        output(self.unmoved_examine)
 
         return EVENT_RETVAL_BLOCK_BASEOBJ_PRINT_DESCRIPTION
